@@ -79,7 +79,7 @@ The president needs to distance himself from his party’s left fringe
 #### [Bond traders stir](https://www.economist.com/leaders/2021/11/06/revolt-of-the-bond-traders)
   
 The message from unruly fixed-income markets  
-![pic](/images/.leaders.2021.11.06.revolt-of-the-bond-traders-1.png)  
+![pic](/images/2021-11-06-economist-graphs/.leaders.2021.11.06.revolt-of-the-bond-traders-1.png)  
   
 
 ##### Government in Britain
@@ -93,8 +93,7 @@ He seems to think rules are for losers
 #### [The uses and abuses of green finance](https://www.economist.com/leaders/the-uses-and-abuses-of-green-finance/21806111)
   
 Why the net-zero pledges of financial firms won’t save the world  
-![pic](./images/.leaders.the-uses-and-abuses-of-green-finance.21806111-1.png)  
-  
+![pic](/images/2021-11-06-economist-graphs/.leaders.the-uses-and-abuses-of-green-finance.21806111-1.png) 
 
 ##### Abiy’s abyss
 
@@ -117,11 +116,11 @@ A selection of correspondence
 #### [Stuck in place](https://www.economist.com/briefing/2021/11/06/the-democrats-social-spending-package-cannot-repair-the-american-dream)
   
 Social mobility has dropped precipitously  
-![pic](./images/.briefing.2021.11.06.the-democrats-social-spending-package-cannot-repair-the-american-dream-1.png)  
+![pic](/images/2021-11-06-economist-graphs/.briefing.2021.11.06.the-democrats-social-spending-package-cannot-repair-the-american-dream-1.png)  
   
-![pic](./images/.briefing.2021.11.06.the-democrats-social-spending-package-cannot-repair-the-american-dream-2.png)  
+![pic](/images/2021-11-06-economist-graphs/.briefing.2021.11.06.the-democrats-social-spending-package-cannot-repair-the-american-dream-2.png)  
   
-![pic](./images/.briefing.2021.11.06.the-democrats-social-spending-package-cannot-repair-the-american-dream-3.png)  
+![pic](/images/2021-11-06-economist-graphs/.briefing.2021.11.06.the-democrats-social-spending-package-cannot-repair-the-american-dream-3.png)  
   
 
 ### Europe
@@ -131,9 +130,9 @@ Social mobility has dropped precipitously
 #### [The Mario magic](https://www.economist.com/europe/italys-new-prime-minister-has-had-a-good-first-nine-months/21806085)
   
 But there is a lot left to do, and not much time to do it in  
-![pic](./images/.europe.italys-new-prime-minister-has-had-a-good-first-nine-months.21806085-1.png)  
+![pic](/images/2021-11-06-economist-graphs/.europe.italys-new-prime-minister-has-had-a-good-first-nine-months.21806085-1.png)  
   
-![pic](./images/.europe.italys-new-prime-minister-has-had-a-good-first-nine-months.21806085-2.png)  
+![pic](/images/2021-11-06-economist-graphs/.europe.italys-new-prime-minister-has-had-a-good-first-nine-months.21806085-2.png)  
   
 
 ##### Portugal
@@ -159,7 +158,7 @@ It is not easy to spot
 #### [From guest worker to citizen?](https://www.economist.com/europe/2021/11/06/sixty-years-of-turkish-guest-workers-in-germany)
   
 More are integrated, but two-thirds of adults are not German citizens  
-![pic](./images/.europe.2021.11.06.sixty-years-of-turkish-guest-workers-in-germany-1.png)  
+![pic](/images/2021-11-06-economist-graphs/.europe.2021.11.06.sixty-years-of-turkish-guest-workers-in-germany-1.png)  
   
 
 ##### Charlemagne
@@ -193,7 +192,7 @@ Success or failure depends on more than the host, and will be clear only in hind
 #### [Vape nation](https://www.economist.com/britain/2021/11/04/britons-love-e-cigarettes-and-ministers-want-to-encourage-them)
   
 How the country became an international outlier  
-![pic](./images/.britain.2021.11.04.britons-love-e-cigarettes-and-ministers-want-to-encourage-them-1.png)  
+![pic](/images/2021-11-06-economist-graphs/.britain.2021.11.04.britons-love-e-cigarettes-and-ministers-want-to-encourage-them-1.png)  
   
 
 ##### Monetary policy
@@ -201,7 +200,7 @@ How the country became an international outlier
 #### [Raising the roof](https://www.economist.com/britain/2021/11/06/higher-interest-rates-mean-more-expensive-mortgages)
   
 But changes in the British housing market mute their effect  
-![pic](./images/.britain.2021.11.06.higher-interest-rates-mean-more-expensive-mortgages-1.png)  
+![pic](/images/2021-11-06-economist-graphs/.britain.2021.11.06.higher-interest-rates-mean-more-expensive-mortgages-1.png)  
   
 
 ##### Bagehot
@@ -217,7 +216,7 @@ The government is increasingly activist, from raising taxes to stoking culture w
 #### [A battle for the capital looms](https://www.economist.com/middle-east-and-africa/ethiopias-capital-is-under-threat/21806092)
   
 Tigray’s rebels are on a roll  
-![pic](./images/.middle-east-and-africa.ethiopias-capital-is-under-threat.21806092-1.png)  
+![pic](/images/2021-11-06-economist-graphs/.middle-east-and-africa.ethiopias-capital-is-under-threat.21806092-1.png)  
   
 
 ##### South Africa
@@ -225,7 +224,7 @@ Tigray’s rebels are on a roll
 #### [Hegemon no more](https://www.economist.com/middle-east-and-africa/2021/11/06/south-africa-is-slowly-souring-on-its-ruling-party)
   
 Local elections suggest the ANC will need coalitions to stay in charge  
-![pic](./images/.middle-east-and-africa.2021.11.06.south-africa-is-slowly-souring-on-its-ruling-party-1.png)  
+![pic](/images/2021-11-06-economist-graphs/.middle-east-and-africa.2021.11.06.south-africa-is-slowly-souring-on-its-ruling-party-1.png)  
   
 
 ##### Protecting the Congo basin
@@ -233,7 +232,7 @@ Local elections suggest the ANC will need coalitions to stay in charge
 #### [Money for old trees](https://www.economist.com/middle-east-and-africa/as-leaders-pledge-to-protect-forests-gabon-points-to-how/21806081)
   
 Trees in the Congo basin provide a service the world should pay for  
-![pic](./images/.middle-east-and-africa.as-leaders-pledge-to-protect-forests-gabon-points-to-how.21806081-1.png)  
+![pic](/images/2021-11-06-economist-graphs/.middle-east-and-africa.as-leaders-pledge-to-protect-forests-gabon-points-to-how.21806081-1.png)  
   
 
 ##### Algeria, Morocco and Western Sahara
@@ -241,7 +240,7 @@ Trees in the Congo basin provide a service the world should pay for
 #### [The disputed desert](https://www.economist.com/middle-east-and-africa/2021/11/06/things-are-heating-up-in-western-sahara)
   
 A desert dispute is aggravating the old rivalry between Algeria and Morocco  
-![pic](./images/.middle-east-and-africa.2021.11.06.things-are-heating-up-in-western-sahara-1.png)  
+![pic](/images/2021-11-06-economist-graphs/.middle-east-and-africa.2021.11.06.things-are-heating-up-in-western-sahara-1.png)  
   
 
 ### United States
@@ -289,7 +288,7 @@ Virginia’s governor-elect is the latest Republican culture warrior with an exp
 #### [From hero to villain](https://www.economist.com/the-americas/2021/11/06/brazil-wants-more-from-cop26-than-it-is-willing-to-give)
   
 The government’s green rhetoric in Glasgow clashes with inaction at home  
-![pic](./images/.the-americas.2021.11.06.brazil-wants-more-from-cop26-than-it-is-willing-to-give-1.png)  
+![pic](/images/2021-11-06-economist-graphs/.the-americas.2021.11.06.brazil-wants-more-from-cop26-than-it-is-willing-to-give-1.png)  
   
 
 ##### Latin American TV
@@ -311,9 +310,9 @@ By wrecking a country, a leftist regime inadvertently boosts support for the ill
 #### [Baby, it’s toxic outside](https://www.economist.com/asia/2021/11/06/indias-toxic-air-is-its-most-immediate-environmental-problem)
   
 Even as the country pledges climate action, its people are dying from breathing  
-![pic](./images/.asia.2021.11.06.indias-toxic-air-is-its-most-immediate-environmental-problem-1.png)  
+![pic](/images/2021-11-06-economist-graphs/.asia.2021.11.06.indias-toxic-air-is-its-most-immediate-environmental-problem-1.png)  
   
-![pic](./images/.asia.2021.11.06.indias-toxic-air-is-its-most-immediate-environmental-problem-2.png)  
+![pic](/images/2021-11-06-economist-graphs/.asia.2021.11.06.indias-toxic-air-is-its-most-immediate-environmental-problem-2.png)  
   
 
 ##### Instagram and youth culture
@@ -361,9 +360,9 @@ The Pentagon warns that China is fast building up its nukes, as well as its conv
 #### [Up a tree](https://www.economist.com/international/the-world-should-prove-its-love-for-forests-by-putting-carbon-prices-on-them/21806086)
   
 Without that, more trees may not mean less climate change  
-![pic](./images/.international.the-world-should-prove-its-love-for-forests-by-putting-carbon-prices-on-them.21806086-1.png)  
+![pic](/images/2021-11-06-economist-graphs/.international.the-world-should-prove-its-love-for-forests-by-putting-carbon-prices-on-them.21806086-1.png)  
   
-![pic](./images/.international.the-world-should-prove-its-love-for-forests-by-putting-carbon-prices-on-them.21806086-2.png)  
+![pic](/images/2021-11-06-economist-graphs/.international.the-world-should-prove-its-love-for-forests-by-putting-carbon-prices-on-them.21806086-2.png)  
   
 
 ### Business
@@ -373,9 +372,9 @@ Without that, more trees may not mean less climate change
 #### [Passing the buck](https://www.economist.com/business/2021/11/06/pricing-power-is-highly-prized-on-wall-street)
   
 At the moment there is a glut  
-![pic](./images/.business.2021.11.06.pricing-power-is-highly-prized-on-wall-street-1.png)  
+![pic](/images/2021-11-06-economist-graphs/.business.2021.11.06.pricing-power-is-highly-prized-on-wall-street-1.png)  
   
-![pic](./images/.business.2021.11.06.pricing-power-is-highly-prized-on-wall-street-2.png)  
+![pic](/images/2021-11-06-economist-graphs/.business.2021.11.06.pricing-power-is-highly-prized-on-wall-street-2.png)  
   
 
 ##### American basketball and China
@@ -401,7 +400,7 @@ But most Amazon workers are reluctant to join a strike
 #### [Reinvention as a service](https://www.economist.com/business/the-it-establishment-is-dressing-in-new-clothes/21806076)
   
 But taking on the big tech firms will be hard  
-![pic](./images/.business.the-it-establishment-is-dressing-in-new-clothes.21806076-1.png)  
+![pic](/images/2021-11-06-economist-graphs/.business.the-it-establishment-is-dressing-in-new-clothes.21806076-1.png)  
   
 
 ##### Bartleby
@@ -423,13 +422,13 @@ State-owned giants are squeezing them out of megaprojects
 #### [Inner strength](https://www.economist.com/finance-and-economics/even-after-a-weak-patch-americas-economy-is-still-in-high-gear/2180604)
   
 High inflation, supply snarls—and strong growth momentum  
-![pic](./images/.finance-and-economics.even-after-a-weak-patch-americas-economy-is-still-in-high-gear.2180604-1.png)  
+![pic](/images/2021-11-06-economist-graphs/.finance-and-economics.even-after-a-weak-patch-americas-economy-is-still-in-high-gear.2180604-1.png)  
   
-![pic](./images/.finance-and-economics.even-after-a-weak-patch-americas-economy-is-still-in-high-gear.2180604-2.png)  
+![pic](/images/2021-11-06-economist-graphs/.finance-and-economics.even-after-a-weak-patch-americas-economy-is-still-in-high-gear.2180604-2.png)  
   
-![pic](./images/.finance-and-economics.even-after-a-weak-patch-americas-economy-is-still-in-high-gear.2180604-3.png)  
+![pic](/images/2021-11-06-economist-graphs/.finance-and-economics.even-after-a-weak-patch-americas-economy-is-still-in-high-gear.2180604-3.png)  
   
-![pic](./images/.finance-and-economics.even-after-a-weak-patch-americas-economy-is-still-in-high-gear.2180604-4.png)  
+![pic](/images/2021-11-06-economist-graphs/.finance-and-economics.even-after-a-weak-patch-americas-economy-is-still-in-high-gear.2180604-4.png)  
   
 
 ##### Interest rates
@@ -437,7 +436,7 @@ High inflation, supply snarls—and strong growth momentum
 #### [Bond markets v central banks](https://www.economist.com/finance-and-economics/the-bond-markets-v-central-banks/21806082)
   
 Investors bet that policymakers will have to break their promises  
-![pic](./images/.finance-and-economics.the-bond-markets-v-central-banks.21806082-1.png)  
+![pic](/images/2021-11-06-economist-graphs/.finance-and-economics.the-bond-markets-v-central-banks.21806082-1.png)  
   
 
 ##### Emerging markets
@@ -445,7 +444,7 @@ Investors bet that policymakers will have to break their promises
 #### [Living the high life](https://www.economist.com/finance-and-economics/2021/11/06/cautionary-tales-from-high-inflation-emerging-economies)
   
 What Brazil, Argentina and Turkey say about the importance of fiscal and monetary policy  
-![pic](./images/.finance-and-economics.2021.11.06.cautionary-tales-from-high-inflation-emerging-economies-1.png)  
+![pic](/images/2021-11-06-economist-graphs/.finance-and-economics.2021.11.06.cautionary-tales-from-high-inflation-emerging-economies-1.png)  
   
 
 ##### Payments in Africa
@@ -473,7 +472,7 @@ Mothers’ careers suffer when parents maximise their combined income, says a ne
 #### [Set in green concrete](https://www.economist.com/science-and-technology/how-cement-may-yet-help-slow-global-warming/21806083)
   
 It is a big source of emissions, but might one day be the reverse  
-![pic](./images/.science-and-technology.how-cement-may-yet-help-slow-global-warming.21806083-1.png)  
+![pic](/images/2021-11-06-economist-graphs/.science-and-technology.how-cement-may-yet-help-slow-global-warming.21806083-1.png)  
   
 
 ##### Green aviation
@@ -547,11 +546,11 @@ MUNCH is one of the biggest museums anywhere devoted to a single artist
 #### [The used-car conundrum](https://www.economist.com/graphic-detail/2021/11/06/a-handful-of-items-are-driving-inflation-in-america)
   
 Our new measure shows that this portends lower inflation—but not enough for the Fed to lower its guard  
-![pic](./images/.graphic-detail.2021.11.06.a-handful-of-items-are-driving-inflation-in-america-2.png)  
+![pic](/images/2021-11-06-economist-graphs/.graphic-detail.2021.11.06.a-handful-of-items-are-driving-inflation-in-america-2.png)  
   
-![pic](./images/.graphic-detail.2021.11.06.a-handful-of-items-are-driving-inflation-in-america-3.png)  
+![pic](/images/2021-11-06-economist-graphs/.graphic-detail.2021.11.06.a-handful-of-items-are-driving-inflation-in-america-3.png)  
   
-![pic](./images/.graphic-detail.2021.11.06.a-handful-of-items-are-driving-inflation-in-america-4.png)  
+![pic](/images/2021-11-06-economist-graphs/.graphic-detail.2021.11.06.a-handful-of-items-are-driving-inflation-in-america-4.png)  
   
 
 ### Obituary
