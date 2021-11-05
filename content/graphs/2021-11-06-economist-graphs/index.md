@@ -11,7 +11,7 @@ author: ''
 
 date: '2021-11-06'
 
-slug: econ_graphs
+slug: '2021-11-06'
 
 categories: []
 
