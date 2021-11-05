@@ -1,5 +1,5 @@
 ---
-bio: PhD Candidate
+bio:
 education:
   courses:
   - course: MSc in Economics and Management Science

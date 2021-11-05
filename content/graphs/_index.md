@@ -5,4 +5,5 @@ header:
   image: ""
 title: Graphs
 view: 2
+profile: false
 ---
