@@ -96,7 +96,6 @@ If women are not allowed to organise, they will struggle to achieve equality
   
 Our auction reveals the promise of decentralised finance—and some big problems  
 ![pic](./images/leaders_2021_10_30_the-fun-in-non-fungible-1.png)  
-![png](./images/index_1_0.png)
 
 ### Letters
 
@@ -113,11 +112,11 @@ A selection of correspondence
 #### [African odyssey](https://www.economist.com/briefing/2021/10/30/many-more-africans-are-migrating-within-africa-than-to-europe)
   
 Some governments are trying to make moving easier  
-![pic](./images/.briefing.2021.10.30.many-more-africans-are-migrating-within-africa-than-to-europe-1.png)  
+![pic](./images/_briefing_2021_10_30_many-more-africans-are-migrating-within-africa-than-to-europe-1.png)  
   
-![pic](./images/.briefing.2021.10.30.many-more-africans-are-migrating-within-africa-than-to-europe-2.png)  
+![pic](./images/_briefing_2021_10_30_many-more-africans-are-migrating-within-africa-than-to-europe-2.png)  
   
-![pic](./images/.briefing.2021.10.30.many-more-africans-are-migrating-within-africa-than-to-europe-3.png)  
+![pic](./images/_briefing_2021_10_30_many-more-africans-are-migrating-within-africa-than-to-europe-3.png)  
   
 
 ### Europe
@@ -127,7 +126,7 @@ Some governments are trying to make moving easier
 #### [Autumn of the patriarch](https://www.economist.com/europe/2021/10/28/as-the-lira-tanks-so-does-the-stock-of-turkeys-president)
   
 But it is too soon to write off Recep Tayyip Erdogan  
-![pic](./images/.europe.2021.10.28.as-the-lira-tanks-so-does-the-stock-of-turkeys-president-1.png)  
+![pic](./images/_europe_2021_10_28_as-the-lira-tanks-so-does-the-stock-of-turkeys-president-1.png)  
   
 
 ##### The EU’s borders
@@ -141,7 +140,7 @@ It is reluctant, but may have to comply
 #### [A Balkans arms race](https://www.economist.com/europe/2021/10/30/serbia-is-on-a-shopping-spree-for-weapons)
   
 And its neighbours don’t like it  
-![pic](./images/.europe.2021.10.30.serbia-is-on-a-shopping-spree-for-weapons-1.png)  
+![pic](./images/_europe_2021_10_30_serbia-is-on-a-shopping-spree-for-weapons-1.png)  
   
 
 ##### French acronyms
@@ -169,9 +168,9 @@ France says it is green. Germany says it isn’t. France will win
 #### [Farewell to austerity](https://www.economist.com/britain/rishi-sunaks-budget-marks-a-turn-to-big-state-conservatism/21805957)
   
 British tax rates will rise to levels last seen in the 1950s  
-![pic](./images/.britain.rishi-sunaks-budget-marks-a-turn-to-big-state-conservatism.21805957-1.png)  
+![pic](./images/_britain_rishi-sunaks-budget-marks-a-turn-to-big-state-conservatism_21805957-1.png)  
   
-![pic](./images/.britain.rishi-sunaks-budget-marks-a-turn-to-big-state-conservatism.21805957-2.png)  
+![pic](./images/_britain_rishi-sunaks-budget-marks-a-turn-to-big-state-conservatism_21805957-2.png)  
   
 
 ##### The budget
@@ -217,7 +216,7 @@ The prime minister is gung-ho about climate change—perhaps too much so for his
 #### [The generals strike back](https://www.economist.com/middle-east-and-africa/sudans-democratic-transition-is-upended-by-a-second-coup-in-two-years/21805857)
   
 The generals acted just months before they were due to hand power to civilians  
-![pic](./images/.middle-east-and-africa.sudans-democratic-transition-is-upended-by-a-second-coup-in-two-years.21805857-1.png)  
+![pic](./images/_middle-east-and-africa_sudans-democratic-transition-is-upended-by-a-second-coup-in-two-years_21805857-1.png)  
   
 
 ##### African languages
@@ -237,7 +236,7 @@ Expensive lunch menus, high-end car washes and imported nibbles are some of the 
 #### [Diplomacy by other means](https://www.economist.com/middle-east-and-africa/israel-again-rattles-its-sabre-at-iran/21805921)
   
 A military response is readied as hope for a nuclear deal fades  
-![pic](./images/.middle-east-and-africa.israel-again-rattles-its-sabre-at-iran.21805921-1.png)  
+![pic](./images/_middle-east-and-africa_israel-again-rattles-its-sabre-at-iran_21805921-1.png)  
   
 
 ##### Israel
@@ -253,7 +252,7 @@ An unlikely coalition is surpassing expectations. But a crucial vote looms
 #### [The Democrats’ disadvantage](https://www.economist.com/united-states/the-democrats-disadvantage/21805946)
   
 The party faces long-term hurdles that will be hard to overcome  
-![pic](./images/.united-states.the-democrats-disadvantage.21805946-1.png)  
+![pic](./images/_united-states_the-democrats-disadvantage_21805946-1.png)  
   
 
 ##### Virginia’s next governor
@@ -261,7 +260,7 @@ The party faces long-term hurdles that will be hard to overcome
 #### [Down to the wire](https://www.economist.com/united-states/2021/10/30/the-message-from-our-model-for-virginias-gubernatorial-race)
   
 Bad news for Democrats  
-![pic](./images/.united-states.2021.10.30.the-message-from-our-model-for-virginias-gubernatorial-race-1.png)  
+![pic](./images/_united-states_2021_10_30_the-message-from-our-model-for-virginias-gubernatorial-race-1.png)  
   
 
 ##### Police and politics (1): Minneapolis
@@ -301,7 +300,7 @@ Americans elected the president to get rid of his predecessor. They’re not sur
 #### [Fuelling the flames](https://www.economist.com/the-americas/2021/10/28/chile-once-considered-latin-americas-finland-is-in-trouble)
   
 A constitutional convention, formed to battle populism, looks unlikely to help  
-![pic](./images/.the-americas.2021.10.28.chile-once-considered-latin-americas-finland-is-in-trouble-1.png)  
+![pic](./images/_the-americas_2021_10_28_chile-once-considered-latin-americas-finland-is-in-trouble-1.png)  
   
 
 ##### Digital currencies
@@ -323,7 +322,7 @@ But Peronism’s penchant for controls is holding the country back
 #### [ASEANgst](https://www.economist.com/asia/2021/10/30/south-east-asias-regional-club-faces-its-greatest-tests-yet)
   
 Credibility trumps consensus as ASEAN attempts to remain relevant  
-![pic](./images/.asia.2021.10.30.south-east-asias-regional-club-faces-its-greatest-tests-yet-1.png)  
+![pic](./images/_asia_2021_10_30_south-east-asias-regional-club-faces-its-greatest-tests-yet-1.png)  
   
 
 ##### Civil war in Myanmar
@@ -343,7 +342,7 @@ The BJP is menacing the country’s film industry
 #### [Zero effort](https://www.economist.com/asia/2021/10/30/australias-climate-policy-is-all-talk-and-no-trousers)
   
 It relies too much on future technology and not enough on present action  
-![pic](./images/.asia.2021.10.30.australias-climate-policy-is-all-talk-and-no-trousers-1.png)  
+![pic](./images/_asia_2021_10_30_australias-climate-policy-is-all-talk-and-no-trousers-1.png)  
   
 
 ##### Afghanistan’s economy
@@ -379,7 +378,7 @@ All the news sources that may be republished sound similar
 #### [Hard pass](https://www.economist.com/international/why-vaccine-passports-are-causing-chaos/21805939)
   
 The problem is with humans, not technology  
-![pic](./images/.international.why-vaccine-passports-are-causing-chaos.21805939-1.png)  
+![pic](./images/_international_why-vaccine-passports-are-causing-chaos_21805939-1.png)  
   
 
 ### Special report
@@ -389,7 +388,7 @@ The problem is with humans, not technology
 #### [The biggest picture](https://www.economist.com/special-report/2021/10/27/the-agenda-for-the-cop-26-summit)
   
 There has never been a collective human endeavour more ambitious than stabilising the climate. In this special report our journalists assess what it will take to meet the historic goals agreed on in Paris six years ago  
-![pic](./images/.special-report.2021.10.27.the-agenda-for-the-cop-26-summit-1.png)  
+![pic](./images/_special-report_2021_10_27_the-agenda-for-the-cop-26-summit-1.png)  
   
 
 ##### State of play
@@ -397,7 +396,7 @@ There has never been a collective human endeavour more ambitious than stabilisin
 #### [The Paris challenge](https://www.economist.com/special-report/2021/10/27/what-the-paris-agreement-of-2015-meant)
   
 Replacing fossil fuels is becoming easier. But temperatures are still likely to rise too far  
-![pic](./images/.special-report.2021.10.27.what-the-paris-agreement-of-2015-meant-1.png)  
+![pic](./images/_special-report_2021_10_27_what-the-paris-agreement-of-2015-meant-1.png)  
   
 
 ##### The Asian century’s emissions
@@ -405,7 +404,7 @@ Replacing fossil fuels is becoming easier. But temperatures are still likely to 
 #### [Eastern approaches](https://www.economist.com/special-report/2021/10/27/how-asia-is-crucial-in-the-battle-against-climate-change)
   
 Whether the climate can ever be stabilised depends largely on Asia  
-![pic](./images/.special-report.2021.10.27.how-asia-is-crucial-in-the-battle-against-climate-change-1.png)  
+![pic](./images/_special-report_2021_10_27_how-asia-is-crucial-in-the-battle-against-climate-change-1.png)  
   
 
 ##### Economics and energy
@@ -413,11 +412,11 @@ Whether the climate can ever be stabilised depends largely on Asia
 #### [Flows and fuel](https://www.economist.com/special-report/2021/10/27/the-economics-of-the-climate)
   
 Energy choices shape economies—and could reshape them  
-![pic](./images/.special-report.2021.10.27.the-economics-of-the-climate-1.png)  
+![pic](./images/_special-report_2021_10_27_the-economics-of-the-climate-1.png)  
   
-![pic](./images/.special-report.2021.10.27.the-economics-of-the-climate-2.png)  
+![pic](./images/_special-report_2021_10_27_the-economics-of-the-climate-2.png)  
   
-![pic](./images/.special-report.2021.10.27.the-economics-of-the-climate-3.png)  
+![pic](./images/_special-report_2021_10_27_the-economics-of-the-climate-3.png)  
   
 
 ##### Negative emissions
@@ -425,7 +424,7 @@ Energy choices shape economies—and could reshape them
 #### [If I could turn back time](https://www.economist.com/special-report/2021/10/27/why-the-world-needs-negative-emissions)
   
 If negative emissions are to play a role in policy much more needs to be done to make them practically achievable  
-![pic](./images/.special-report.2021.10.27.why-the-world-needs-negative-emissions-1.png)  
+![pic](./images/_special-report_2021_10_27_why-the-world-needs-negative-emissions-1.png)  
   
 
 ##### Veils and ignorance
@@ -441,7 +440,7 @@ Technologies which might stabilise the climate could do the reverse to internati
 #### [Cloudy with a dearth of chips](https://www.economist.com/business/2021/10/30/how-the-pandemic-has-changed-the-weather-in-the-technology-industry)
   
 The cloud, hardware and competition are gaining in importance  
-![pic](./images/.business.2021.10.30.how-the-pandemic-has-changed-the-weather-in-the-technology-industry-1.png)  
+![pic](./images/_business_2021_10_30_how-the-pandemic-has-changed-the-weather-in-the-technology-industry-1.png)  
   
 
 ##### Japanese corporate governance
@@ -487,7 +486,7 @@ For all its aura of precision, the digital-ad industry is as murky as ever
 #### [Through the looking glass](https://www.economist.com/finance-and-economics/2021/10/30/the-market-for-non-fungible-tokens-is-evolving)
   
 The Economist joins the fray by auctioning an NFT of our cover  
-![pic](./images/.finance-and-economics.2021.10.30.the-market-for-non-fungible-tokens-is-evolving-1.png)  
+![pic](./images/_finance-and-economics_2021_10_30_the-market-for-non-fungible-tokens-is-evolving-1.png)  
   
 
 ##### Our auction
@@ -495,7 +494,7 @@ The Economist joins the fray by auctioning an NFT of our cover
 #### [The NFT party](https://www.economist.com/finance-and-economics/2021/10/30/how-our-nft-auction-went)
   
 We raised around $420,000 for charity  
-![pic](./images/.finance-and-economics.2021.10.30.how-our-nft-auction-went-1.png)  
+![pic](./images/_finance-and-economics_2021_10_30_how-our-nft-auction-went-1.png)  
   
 
 ##### Tax in America
@@ -509,9 +508,9 @@ A minimum tax on corporate income seems alluring, but is likely to disappoint
 #### [Perverse but persistent](https://www.economist.com/finance-and-economics/2021/10/30/as-energy-prices-spike-governments-reach-for-the-dirtiest-tool-in-the-box)
   
 A new IMF study shows that fossil-fuel subsidies are a climate nightmare  
-![pic](./images/.finance-and-economics.2021.10.30.as-energy-prices-spike-governments-reach-for-the-dirtiest-tool-in-the-box-1.png)  
+![pic](./images/_finance-and-economics_2021_10_30_as-energy-prices-spike-governments-reach-for-the-dirtiest-tool-in-the-box-1.png)  
   
-![pic](./images/.finance-and-economics.2021.10.30.as-energy-prices-spike-governments-reach-for-the-dirtiest-tool-in-the-box-2.png)  
+![pic](./images/_finance-and-economics_2021_10_30_as-energy-prices-spike-governments-reach-for-the-dirtiest-tool-in-the-box-2.png)  
   
 
 ##### Buttonwood
@@ -551,7 +550,7 @@ An endangered bird may sometimes reproduce without males
 #### [A census of solar cells](https://www.economist.com/science-and-technology/an-accurate-tally-of-the-worlds-solar-power-stations/21805945)
   
 The method should work for other energy infrastructure, too  
-![pic](./images/.science-and-technology.an-accurate-tally-of-the-worlds-solar-power-stations.21805945-1.png)  
+![pic](./images/_science-and-technology_an-accurate-tally-of-the-worlds-solar-power-stations_21805945-1.png)  
   
 
 ### Books & arts
@@ -601,11 +600,11 @@ Ferdinand Mount’s new novel revolves around a publicity agency in London
 #### [The grid’s the thing](https://www.economist.com/graphic-detail/2021/10/30/a-new-study-argues-that-insufficient-infrastructure-doomed-the-first-electric-cars)
   
 With a more robust power grid, petrol-powered cars might have been a minority  
-![pic](./images/.graphic-detail.2021.10.30.a-new-study-argues-that-insufficient-infrastructure-doomed-the-first-electric-cars-1.png)  
+![pic](./images/_graphic-detail_2021_10_30_a-new-study-argues-that-insufficient-infrastructure-doomed-the-first-electric-cars-1.png)  
   
-![pic](./images/.graphic-detail.2021.10.30.a-new-study-argues-that-insufficient-infrastructure-doomed-the-first-electric-cars-2.png)  
+![pic](./images/_graphic-detail_2021_10_30_a-new-study-argues-that-insufficient-infrastructure-doomed-the-first-electric-cars-2.png)  
   
-![pic](./images/.graphic-detail.2021.10.30.a-new-study-argues-that-insufficient-infrastructure-doomed-the-first-electric-cars-3.png)  
+![pic](./images/_graphic-detail_2021_10_30_a-new-study-argues-that-insufficient-infrastructure-doomed-the-first-electric-cars-3.png)  
   
 
 ### Obituary
