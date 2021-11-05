@@ -79,7 +79,7 @@ The president needs to distance himself from his party’s left fringe
 #### [Bond traders stir](https://www.economist.com/leaders/2021/11/06/revolt-of-the-bond-traders)
   
 The message from unruly fixed-income markets  
-![pic](./images/.leaders.2021.11.06.revolt-of-the-bond-traders-1.png)  
+![pic](../images/.leaders.2021.11.06.revolt-of-the-bond-traders-1.png)  
   
 
 ##### Government in Britain
