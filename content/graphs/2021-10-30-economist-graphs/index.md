@@ -96,7 +96,7 @@ If women are not allowed to organise, they will struggle to achieve equality
   
 Our auction reveals the promise of decentralised finance—and some big problems  
 ![pic](./images/.leaders.2021.10.30.the-fun-in-non-fungible-1.png)  
-  
+![png](./images/index_1_0.png)
 
 ### Letters
 
