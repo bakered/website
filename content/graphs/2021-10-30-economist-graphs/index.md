@@ -95,7 +95,7 @@ If women are not allowed to organise, they will struggle to achieve equality
 #### [The fun in non-fungible](https://www.economist.com/leaders/2021/10/30/the-fun-in-non-fungible)
   
 Our auction reveals the promise of decentralised finance—and some big problems  
-![pic](./images/.leaders.2021.10.30.the-fun-in-non-fungible-1.png)  
+![pic](./images/leaders_2021_10_30_the-fun-in-non-fungible-1.png)  
 ![png](./images/index_1_0.png)
 
 ### Letters
