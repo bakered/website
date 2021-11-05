@@ -1,27 +1,26 @@
 ---
-bio: My research interests include distributed robotics, mobile computing and programmable
-  matter.
+bio: PhD Candidate
 education:
   courses:
-  - course: PhD in Artificial Intelligence
-    institution: Stanford University
+  - course: MSc in Economics and Management Science
+    institution: Humboldt Universität zu Berlin
+    year: 2017
+  - course: BA in Philosophy and Politics
+    institution: University of Manchester
     year: 2012
-  - course: MEng in Artificial Intelligence
-    institution: Massachusetts Institute of Technology
-    year: 2009
-  - course: BSc in Artificial Intelligence
-    institution: Massachusetts Institute of Technology
-    year: 2008
-email: ""
+email: "edmund.baker@fau.de"
 highlight_name: true
 interests:
-- Artificial Intelligence
-- Computational Linguistics
-- Information Retrieval
+- Behavioural Economics
+- Game Theory
+- Economic History
+- Discrimination
+- Social Learning
+- Social Preferences
 organizations:
-- name: Stanford University
-  url: https://www.stanford.edu/
-role: Professor of Artificial Intelligence
+- name: FAU
+  url: http://www.wirtschaftstheorie.wiso.uni-erlangen.de/en/
+role: 
 social:
 - icon: envelope
   icon_pack: fas
@@ -31,21 +30,16 @@ social:
   icon: twitter
   icon_pack: fab
   label: Follow me on Twitter
-  link: https://twitter.com/GeorgeCushen
-- icon: graduation-cap
-  icon_pack: fas
-  link: https://scholar.google.co.uk/citations?user=sIwtMXoAAAAJ
+  link: https://twitter.com/EdBaker3
 - icon: github
   icon_pack: fab
-  link: https://github.com/gcushen
+  link: https://github.com/bakered
 - icon: linkedin
   icon_pack: fab
-  link: https://www.linkedin.com/
+  link: https://linkedin.com/in/edmund-baker-88a4b11ba
 superuser: true
-title: Alice Bighetti (吳恩達)
+title: Edmund Baker
 ---
-
-Alice Bighetti is a professor of artificial intelligence at the Stanford AI Lab. Her research interests include distributed robotics, mobile computing and programmable matter. She leads the Robotic Neurobiology group, which develops self-reconfiguring robots, systems of self-organizing robots, and mobile sensor networks.
 
 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed neque elit, tristique placerat feugiat ac, facilisis vitae arcu. Proin eget egestas augue. Praesent ut sem nec arcu pellentesque aliquet. Duis dapibus diam vel metus tempus vulputate.
 
