@@ -2,7 +2,8 @@
 title: 2021-11-13-Economist Graphs
 author: ''
 date: '2021-11-13'
-publishDate: '2021-11-16'slug: 2021-11-13
+publishDate: '2021-11-16'
+slug: 2021-11-13
 categories: []
 tags: []
 subtitle: ''
