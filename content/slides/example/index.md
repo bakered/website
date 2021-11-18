@@ -4,7 +4,7 @@ categories: []
 date: "2019-02-05T00:00:00Z"
 slides:
   highlight_style: dracula
-  theme: black
+  theme: white
 summary: An introduction to using Wowchemy's Slides feature.
 tags: []
 title: Slides
@@ -13,6 +13,7 @@ title: Slides
 # Create slides in Markdown with Wowchemy
 
 [Wowchemy](https://wowchemy.com/) | [Documentation](https://owchemy.com/docs/managing-content/#create-slides)
+
 
 ---
 
