@@ -1,9 +1,9 @@
 ---
-title: 2021-11-18-Economist Graphs
+title: 2021-11-20-Economist Graphs
 author: ''
-date: '2021-11-18'
+date: '2021-11-20'
 publishDate: '2021-11-19'
-slug: 2021-11-18
+slug: 2021-11-20
 categories: []
 tags: []
 subtitle: ''
