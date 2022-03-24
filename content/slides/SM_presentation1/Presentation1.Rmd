@@ -1,0 +1,515 @@
+---
+title: "Using Social Media in Recruitment"
+author: "Edmund Baker, Veronika Grimm, Yuval Ofek-Shanny"
+output:
+  xaringan::moon_reader:
+    df_print: paged
+    lib_dir: libs
+    nature:
+      highlightStyle: github
+      countIncrementalSlides: false
+      ratio: 16:9
+    css: [my.pres2.css, default]
+  slidy_presentation: default
+  
+---
+
+```{r xaringan-panelset, echo=FALSE}
+xaringanExtra::use_panelset()
+```
+```{r xaringan-tile-view, echo=FALSE}
+xaringanExtra::use_tile_view()
+```
+
+```{r global options, include=FALSE}
+knitr::opts_chunk$set(#fig.path='Figs/', #fig.width=12, fig.height=8, 
+                      echo=FALSE, warning=FALSE, message=FALSE,
+                      out.extra = 'style="display:block; margin:auto;"')
+library(ggplot2)
+library(RColorBrewer)
+library(ggpubr)
+library(reshape)
+library(tikzDevice)
+library(plyr)
+library(dplyr)
+library(gtable)
+library(grid)
+library(gridExtra)
+library(cowplot)
+library(caroline)
+library(ggpmisc)
+library(tidyr)
+library(plotly)
+library(tidyquant)
+library(lfe)
+library(sjPlot)
+library(sjmisc)
+library(sjlabelled)
+library(arsenal)
+library(knitr)
+library(GGally)
+
+cbp <- c("#999999", mh="#E69F00", g="#56B4E9", c="#009E73", nd="#F0E442", gl="#0072B2", b="#D55E00", "#CC79A7")
+results = readRDS("C:\\Users\\fo06mafa\\Documents\\AuthenticApplications\\Data_amalgamate\\results.RDS")
+player_table = readRDS("C:\\Users\\fo06mafa\\Documents\\AuthenticApplications\\Data_amalgamate\\player_table.RDS")
+
+bin_function = function(column, number=3){ #column=results$mean_notelength
+  breaks = quantile(column, na.rm = T, probs = seq(0,1, length.out=number+1)) 
+  breaks = unique(breaks)
+  #while(breaks[1] == breaks[2]){
+  #  breaks = breaks[-1]
+  #}
+  tags <- vector(length=(length(breaks)-1))
+  if((class(breaks) == "POSIXct")[1]){
+    breakschar = strftime(breaks, format="%H:%M:%S")
+    for(b in 2:length(breaks)){ #b=2
+      tags[b-1] = paste0("[", breakschar[b-1], "-", breakschar[b], ")")
+    }
+  } else {
+    for(b in 2:length(breaks)){ #b=2
+      #tags[b-1] = paste0(gsub("0.",".", round(breaks[b-1], 2)), "-", gsub("0.",".", round(breaks[b],2)))
+      tags[b-1] = paste0("[", round(breaks[b-1], 2), "-", round(breaks[b],2), ")")
+      
+    }
+  }
+  #if(strsplit(tags[1], split = "-")[2] %in% c("",".")){
+  #  tags[1] = paste0("0", tags[1])
+  #}
+  group_tags <- cut(column, 
+                    breaks=breaks, 
+                    include.lowest=TRUE, 
+                    right=FALSE, 
+                    labels=tags)
+  out <- factor(group_tags, 
+                levels = tags,
+                ordered = TRUE)
+  return(out)
+}
+
+#var="notelength";  y.label = "Note Length"; y.positions = c(140, 145,150); tip.compar = 0.0005
+bar.by.treat = function(var="notelength",  y.label = "Note Length", y.positions = c(140, 145,150), tip.compar = 0.0005){
+  formula = as.formula(paste(var, "~", "treatment"))
+  control.level = max(aggregate(formula, results, mean)[,2])*1.1
+  stat.test <- compare_means(formula, data = results, method = "wilcox.test", ref.group = "control",
+                             symnum.args = list(cutpoints = c(0, 0.0001, 0.001, 0.01, 0.05, 1), 
+                                                symbols = c("****", "***", "**", "*", "ns")))
+  stat.test$y.position = c(control.level,
+                           control.level,
+                           control.level,
+                           control.level,
+                           control.level)  #y.positions
+  stat.test$p.signif = gsub("ns", "", stat.test$p.signif)
+  #stat.test$p.signif <- paste0(stat.test$p.signif, "*")
+  #stat.test <- stat.test[c(1,4),]
+  p1 = ggbarplot(results,
+                 x = "treatment", 
+                 y = var, 
+                 fill= "treatment",
+                 add = "mean_ci",
+                 add.params = list(group ="treatment")
+  )+
+    theme_minimal() +
+    stat_pvalue_manual(data = stat.test, 
+                       label = "p.signif",
+                       remove.bracket = T,
+                     #  hide.ns = T,
+                       tip.length = tip.compar
+    ) +
+    #lims(y=c(0,200)) +
+    scale_fill_manual(values = c("control" = unname(cbp["c"]),
+                                 "gap" = unname(cbp["g"]),
+                                 "gap_lie" = unname(cbp["gl"]),
+                                 "mental_health" = unname(cbp["mh"]),
+                                 "no_data" = unname(cbp["nd"]),
+                                 "bad" = unname(cbp["b"]))) +
+    labs(fill="", y= y.label, x="") +
+    theme(text = element_text(size=20),
+          axis.text.x=element_blank(),
+          axis.ticks.x = element_blank(),
+          panel.grid.major.x = element_blank())
+  p1 = p1 + coord_cartesian(ylim=c(0,(control.level*1.2)))
+  return(p1)
+}
+#var="CV_score"; y.label = "CV score"; by="treatment"; y.positions=NA;  facet="experience_years"; refgroup="control"; x.label=""
+#var="CV_score"; y.label = "CV score"; by="workExperienceInc"; y.positions=NA;  df=subset(results); facet="treatment"; refgroup = "0"; x.label=""
+boxplot = function(var="CV_score", by="experience_years", df=results, facet=NA, refgroup=".all.", y.label = "CV score", x.label="", y.positions=NA, include.count=T){
+  df[[by]] = factor(df[[by]], ordered=F)
+  formula = as.formula(paste(var, "~", by))
+  control.level = max(aggregate(formula, df, FUN = function(x){min(quantile(x, .75) + 0*IQR(x), max(x))})[,2])*1.1
+  if(is.na(facet)){groupvar = NULL} else {groupvar = facet}
+  stat.test <- compare_means(formula, data = df, method = "wilcox.test", ref.group = refgroup, group.by = groupvar,
+                             symnum.args = list(cutpoints = c(0, 0.0001, 0.001, 0.01, 0.05, 1), 
+                                                symbols = c("****", "***", "**", "*", "ns")))
+  
+  if(is.na(y.positions)){stat.test$y.position = rep(control.level, nrow(stat.test))} else {stat.test$y.position = y.positions}
+  stat.test$p.signif = gsub("ns", "", stat.test$p.signif)
+  #stat.test$p.signif <- paste0(stat.test$p.signif, "*")
+  #stat.test <- stat.test[c(1,4),]
+  p1 = ggplot(df, aes_string(x=by, y=var, fill="treatment", group=by)) + 
+    geom_boxplot(outlier.shape = NA, coef = 0) +
+    stat_summary(fun.y=mean, geom="point", shape=20, size=4, color="black", fill="black") +
+    stat_summary(fun.data = mean_cl_normal, geom = "errorbar", width = 0) +
+    theme_minimal() 
+  p1 = p1 + stat_pvalue_manual(data = stat.test, 
+                               inherit.aes = FALSE,
+                               label = "p.signif",
+                               position = "identity",
+                               remove.bracket = T,
+                               #  hide.ns = T,
+                               tip.length = tip.compar) # + lims(y=c(0,200)) 
+  if(!is.na(facet)){p1 = p1 + facet_grid(as.formula(paste(".~", facet)), switch="both")}
+  p1 = p1 + coord_cartesian(ylim=c(0,(control.level)))
+  if("treatment" %in% c(by, facet)){
+    p1 = p1 + scale_fill_manual(values = c("control" = unname(cbp["c"]),
+                                                                           "gap" = unname(cbp["g"]),
+                                                                           "gap_lie" = unname(cbp["gl"]),
+                                                                           "mental_health" = unname(cbp["mh"]),
+                                                                           "no_data" = unname(cbp["nd"]),
+                                                                           "bad" = unname(cbp["b"]))) +
+      theme(legend.position = "top",
+            text = element_text(size=20),
+            axis.ticks.x = element_blank(),
+            panel.grid.major.x = element_blank()) + labs(fill="", y=y.label, x=x.label)
+    if("treatment" %in% c(by)){p1 = p1 + theme(axis.text.x=element_blank())} else {p1 = p1 + theme(strip.text = element_blank())}
+  } else {
+    p1 = p1 + scale_fill_manual(values=c(rep(unname(cbp["a"]), length(unique(df[[by]]))))) +  
+      theme(legend.position = "none",
+            text = element_text(size=20),
+            axis.ticks.x = element_blank(),
+            panel.grid.major.x = element_blank()) + labs(fill="", y=y.label, x=x.label) 
+  }
+  if(include.count){
+    p1 = p1 + theme(strip.text = element_blank(), axis.text.x=element_blank()) + labs(fill="", y=y.label, x="")
+    p2 = ggplot(data = df, aes_string(x=by)) +
+      geom_bar() +
+      theme_minimal() +
+      theme(legend.position = "none",
+            axis.ticks.x = element_blank(),
+            axis.text.y = element_blank(),
+            panel.grid.minor.x = element_blank(),
+            panel.grid.major.x = element_blank(),
+            panel.grid.minor.y = element_blank())
+    if(!is.na(facet)){p2 = p2 + facet_grid(as.formula(paste(".~", facet)), switch="both")}
+    if("treatment" %in% c(by, facet)){
+      p2 = p2 + theme(legend.position = "top",
+                      text = element_text(size=20),
+                      axis.ticks.x = element_blank(),
+                      panel.grid.major.x = element_blank()) + labs(fill="", y="count", x=x.label)
+      if("treatment" %in% c(by)){p2 = p2 + theme(axis.text.x=element_blank())} else {p2 = p2 + theme(strip.text = element_blank())}
+    } else {
+      p2 = p2 + scale_fill_manual(values=c(rep(unname(cbp["a"]), length(unique(df[[by]]))))) +  
+        theme(legend.position = "none",
+              text = element_text(size=20),
+              axis.ticks.x = element_blank(),
+              panel.grid.major.x = element_blank()) + labs(fill="", y="count", x=x.label) 
+    }
+    
+    plot = cowplot::plot_grid(p1, p2, align = "v", nrow = 2, rel_heights = c(4/4, 1/4))
+  } else {
+    plot = p1
+  }
+   
+  return(plot)
+}
+##### lines of best fit
+#variable="CV_score";  by="SMcontents"; group="treatment"; df=results; include.count=T; x.label="Contents of the candidate's social media accounts (are important)"; leg.label = "Treatment"; cut.outliers=F
+score.means.by.var.line2 <- function(variable, by, group, df, include.count=T, x.label="", leg.label="", cut.outliers=T){
+  if(cut.outliers){df = df[!df[[by]] %in% boxplot.stats(df[[by]])$out,]}
+  p1 = ggplot(df , aes_string(x=by, y=variable, group=group, colour=group)) + 
+    geom_point(position=position_jitter(height=0), alpha=0.025) +
+    #geom_ma(ma_fun = SMA, n = 20, linetype = 1, size = 1, na.rm = TRUE) +
+    geom_smooth() +  # method=lm loess method=lm
+    #lims(x=c(0,10)) +
+    #geom_hline(yintercept = 0)+
+    #facet_grid(treatment~.) +
+    labs(y=variable, x=NULL) +
+    theme_classic()
+  p1 = p1 +  geom_hline(yintercept = mean(df[[variable]], na.rm=T)) + labs(colour = leg.label)
+  if(group=="treatment"){
+    p1 = p1 + scale_colour_manual(values = c("control" = unname(cbp["c"]),
+                                             "gap" = unname(cbp["g"]),
+                                             "gap_lie" = unname(cbp["gl"]),
+                                             "mental_health" = unname(cbp["mh"]),
+                                             "no_data" = unname(cbp["nd"]),
+                                             "bad" = unname(cbp["b"])))
+  }
+  if(include.count){
+    p1 = p1 + theme_minimal() +
+      theme(#legend.title = element_blank(),
+            legend.position = "top",
+            panel.grid.major.x = element_blank(),
+            panel.grid.minor.x = element_blank(),
+            axis.text.x = element_blank(),
+            axis.ticks.x = element_blank())
+    p2 = ggplot(data = df, aes_string(x=by)) +
+      geom_bar() +
+      theme_minimal() +
+      theme(legend.position = "none",
+            axis.ticks.x = element_blank(),
+            axis.text.y = element_blank(),
+            panel.grid.minor.x = element_blank(),
+            panel.grid.major.x = element_blank(),
+            panel.grid.minor.y = element_blank())
+    p2 = p2 + labs(x = x.label, colour=leg.label)
+    plot = cowplot::plot_grid(p1, p2, align = "v", nrow = 2, rel_heights = c(4/4, 1/4))
+  } else {
+    p1 = p1 + theme_minimal() +
+      theme(#legend.title = element_blank(),
+            legend.position = "top",
+            panel.grid.major.x = element_blank(),
+            panel.grid.minor.x = element_blank())
+    plot = p1
+  }
+  return(plot)
+}
+
+```
+
+## Supporting internal validity
+- People react as expected to the CVs, (more experience/education is better)
+
+```{r, fig.width=12, fig.height=6}
+p1 = boxplot(var="CV_score", y.label = "CV score", by="experience_years", y.positions=NA,  facet=NA, refgroup = "4", include.count = F)
+p2 = boxplot(var="CV_score", y.label = "CV score", by="education_yt", y.positions=NA,  facet=NA, refgroup = "1", include.count = F)
+cowplot::plot_grid(p1, p2, ncol = 2)
+
+```
+---
+
+## Supporting internal validity
+- People make effort and react to treatment 
+
+```{r, fig.width=12, fig.height=6}
+p1 = boxplot(var="notelength",  y.label = "Note Length Characters", by="treatment", y.positions=NA,  facet=NA, refgroup = "control", include.count = F)
+p2 = boxplot(var="length_viewed",  y.label = "Minutes on CV", by="treatment", y.positions=NA,  facet=NA, refgroup = "control", include.count = F)
+p3 = boxplot(var="no_times_viewed",  y.label = "Times Clicked on CV", by="treatment", y.positions=NA,  facet=NA, refgroup = "control", include.count = F)
+
+legend = get_legend(p1 + theme(legend.position = "top"))
+plots = cowplot::plot_grid(
+  p1 + theme(legend.position = "none"),  
+  p2 + theme(legend.position = "none"), 
+  #  p3 + theme(legend.position = "none"),
+  nrow = 1)
+
+cowplot::plot_grid(legend, plots, ncol = 1, rel_heights = c(0.2, 2))
+
+```
+---
+
+## SM information matters
+```{r, fig.width=12, fig.height=7}
+boxplot(var="CV_score",  y.label  = "CV score", by="treatment", y.positions=NA,  facet=NA, refgroup = "control", include.count = F)
+```
+---
+
+## Experience and SM Treatment
+```{r, fig.width=12, fig.height=7}
+boxplot(var="CV_score",  y.label = "CV score", by="treatment", y.positions=NA,  facet="experience_years", refgroup = "control", include.count = F)
+```
+---
+
+## Education and SM Treatment
+```{r, fig.width=12, fig.height=7}
+boxplot(var="CV_score",  y.label = "CV score", by="treatment", y.positions=NA,  facet="education_yt", refgroup = "control", include.count = F)
+```
+---
+
+.reduced2[
+```{r}
+scaletab = function(LM_tab, scale_ind = T, scale = T, index){ #LM_tab = LM_tab[LM_tab$Treated1,]
+  if(scale){
+    if(scale_ind){
+      LM_tab = subset(LM_tab, index)
+    }
+    for(v in formula_vars){
+      if(is.numeric(LM_tab[[v]])){
+        LM_tab[[v]] = scale(LM_tab[[v]])[,1]
+      } else if(is.factor(LM_tab[[v]])){
+        LM_tab[[v]] = factor(LM_tab[[v]], ordered = F)
+      }
+    }
+    if(!scale_ind){
+      LM_tab = subset(LM_tab, index)
+    }
+  }
+  if(!scale){
+    LM_tab = subset(LM_tab, index)
+  }
+  return(LM_tab)
+}
+
+############################ LINEAR MODELS ############################
+y = "CV_score"
+formula_vars = c(
+  "experience_years",
+  "education_yt" ,
+  "skills_1.2", 
+  "interests_1.2",
+  "endorsements",
+  "Female",
+  "gap",
+  "gap_lie",
+  "mental_health",
+  "no_data",
+  "bad"
+)
+cluster_on = "mturkID" #"state" #
+for_table<-gsub("_"," ", formula_vars)
+
+formula =  paste(formula_vars, collapse = "+") %>%  paste("|0|0|", cluster_on) %>% paste(y,"~", ., sep="") %>% as.formula()
+
+LM_tab = scaletab(results, index=rep(T,nrow(results)))
+fitmodp = felm(keepX=TRUE, formula = formula, data = LM_tab)
+
+LM_tab = results
+fitmodp2 = felm(keepX=TRUE, formula = formula, data = LM_tab)
+
+pl = c(#"(Intercept)" = "Intercept", 
+  "experience_years" = "CV Experience", 
+  "skills_1.2" = "CV Skills", 
+  "interests_1.2" = "CV Interests", 
+  "education_yt" = "CV Education", 
+  "endorsements" = "SM Endorsements",
+  "FemaleTRUE" = "Female", 
+  "Order" = "Order",
+  "skill_level" = "SM Skills",
+  "gapTRUE" = "Gap",
+  "gap_lieTRUE"= "Lie about Gap"     ,
+  "mental_healthTRUE"= "Mental Health" ,
+  "no_dataTRUE"= "No SM"      ,
+  "badTRUE" = "Bad SM"
+)
+
+modellist = factor(c("Standardised", "Original"))
+tab_model(fitmodp, fitmodp2,
+          title="Linear Models",
+          dv.labels = modellist, 
+          pred.labels = pl, 
+          show.ci = F, show.p = F, show.se=T, show.aic = T, show.intercept = F,
+          string.pred = " ", string.est = gsub("_", " ", y),
+          p.style = "stars", collapse.se = F
+          )
+```
+]
+---
+
+```{r, fig.width=12, fig.height=7}
+boxplot(var="CV_score", y.label = "CV score", by="treatment", y.positions=NA,  df=subset(results, gap|control), facet="workExperienceInc", refgroup = "control", x.label = "Noticed Work Experience Inconsistencies")
+```
+---
+
+```{r, fig.width=12, fig.height=7}
+boxplot(var="CV_score", y.label = "CV score", by="treatment", y.positions=NA,  df=subset(results, mental_health|control), facet="health", refgroup = "control", x.label = "Noticed 'Health Problems'")
+
+```
+---
+
+```{r, fig.width=12, fig.height=7}
+df. = results$age %>% bin_function(number = 5) %>% cbind(subgroup=. , results) %>% subset(mental_health|control) 
+#boxplot(var="CV_score", y.label = "CV score", x.label = "age", by="treatment", y.positions=NA,  df=df., facet="subgroup", refgroup = "control")
+boxplot(var="CV_score", y.label = "CV score", x.label = "age", by="subgroup", y.positions=NA,  df=df., facet="treatment", refgroup = levels(df.$subgroup)[1])
+
+
+
+
+```
+---
+
+```{r, fig.width=12, fig.height=7}
+boxplot(var="CV_score", y.label = "CV score", x.label = "lib_con", by="lib_con", y.positions=NA,  df=subset(results, mental_health|control), facet="treatment", refgroup = "1")
+
+```
+---
+
+
+## Balance Table
+.reduced2[
+```{r}
+############# tableby ################
+form_pre = c("experience_years",
+             "education_yt" ,
+             "skills_1.2", 
+             "interests_1.2",
+             "Order")
+formula = form_pre %>% paste(collapse = "+") %>% paste("treatment", "~", .) %>% as.formula() 
+balance_table = tableby(formula, results, control = tableby.control(numeric.test = "kwt"))
+tab1 = as.data.frame(summary(balance_table))
+
+formula = "applicant.gender" %>% paste("treatment", "~", .) %>% as.formula() 
+balance_table = tableby(formula, subset(results, !no_data), control = tableby.control(numeric.test = "kwt"))
+tab2 = as.data.frame(summary(balance_table))
+tab2 = cbind(tab2[,1:5], c("", "n/a", ""), tab2[6:8])
+colnames(tab2) = colnames(tab1)
+rbind(tab1, tab2) %>% kable()  
+```
+]
+---
+
+```{r fig.width=12, fig.height=8}
+redcolssec = match(c("participant.gender", "age",  
+                     "highest_education2", "marital_status2", "employment_status2",  
+                     "lib_con", 
+                     "SM_active",
+                     # "lib_con", "Twitter", "Instagram", "Facebook", "Snapchat", "LinkedIn","TikTok",
+                     "SM_approval",
+                     # "stayintouch", "toomuchtime", "potentialemployers","professional", 
+                     "privacy_no_problem",
+                     #  "lostControl", "advertisers", "employers",  #privacy
+                       "teams", "communicate", "administration", "customerService", "ITskills", 
+                       "experience", "education", "hobbies", "CVcontents", "SMcontents", 
+                     #"workExperienceIncLength", "educationIncLength","healthLength", "crimeLength", "discriminationLength", "anythingElseLength",
+                     "total_time", "TimeSpentInstruc", "mean_no_times_viewed", "mean_notelength", 
+                     "median_length_viewed", "min_length_viewed",
+                     "control", "gap", "gap_lie", "mental_health", "no_data", "bad"
+                  ),
+                colnames(player_table))
+
+tempdf = subset(player_table, select = redcolssec)
+tempdf$participant.gender = revalue(tempdf$participant.gender,
+                        c("Male"=0,
+                          "Female" = 1,
+                          "Other" = NA))
+
+tempdf = apply(tempdf, 2, FUN = as.numeric)
+
+#cor(tempdf, method = "pearson", use = "complete.obs")
+ggcorr(tempdf)
+
+
+```
+---
+
+## People who say education is important use education
+```{r fig.width=12, fig.height=6}
+score.means.by.var.line2("CV_score", "education","education_yt.factor",  results, include.count=T, cut.outliers = F, x.label="Candidate's Education (is important)", leg.label = "Years Education")
+
+```
+---
+
+## People who say experience is important use experience
+```{r fig.width=12, fig.height=6}
+score.means.by.var.line2("CV_score", "experience","CV.experience.factor",  results, include.count=T, cut.outliers = F, x.label="Candidate's Experience (is important)", leg.label = "Years Experience")
+```
+---
+
+## People who say CV is important use experience
+```{r fig.width=12, fig.height=6}
+score.means.by.var.line2("CV_score", "CVcontents","CV.experience.factor",  results, include.count=T, cut.outliers = F, x.label="Contents of the candidate's CV (is) important)", leg.label = "Years Experience")
+
+```
+---
+
+## People who say SM is important use SM
+```{r fig.width=12, fig.height=6}
+score.means.by.var.line2("CV_score", "SMcontents","treatment",  results, include.count=T, cut.outliers = F, x.label="Contents of the candidate's social media accounts (are important)", leg.label = "Treatment")
+```
+---
+## Conclusions
+
+.bullet-content[
+
+]
+
+---
+
+
