@@ -16,7 +16,10 @@
 
 .reduced{
 	font-size: 11px;
-	float: left;
+	position: absolute;
+  left: 60px;
+  top: 50px;
+	vertical-align: middle;
 }
 .reduced2{
 	font-size: 9px;
@@ -35,6 +38,7 @@
 	font-size: 8px;
 	position: absolute;
   left: 50px;
+  top: 50px;
 }
 .pull-right3 {
   position: absolute;

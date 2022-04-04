@@ -113,7 +113,7 @@ educ_boxplot
 ---
 
 ## SM information matters
-```{r, fig.asp=0.6 fig.width=12}
+```{r, fig.asp=0.5, fig.width=12}
 tr_boxplot = readRDS(file = "..\\exhibits\\tr_boxplot.RDS")
 tr_boxplot
 ```
@@ -148,7 +148,7 @@ ggplotly(linearModel_tr_plot2) %>% layout(legend = list(orientation = "h")) %>% 
 ---
 
 ## Experience and SM Treatment
-```{r, fig.asp=0.6 fig.width=12}
+```{r, fig.asp=0.5, fig.width=12}
 exp_tr_boxplot3 = readRDS(file = "..\\exhibits\\exp_tr_boxplot3.RDS")
 exp_tr_boxplot3
 ```
@@ -161,7 +161,7 @@ linearModel_tr_tab3
 ```
 ]
 .pull-right3[
-```{r,  fig.asp=0.85, fig.width=10.5}
+```{r,  fig.asp=0.85, fig.width=9.5}
 linearModel_tr_plot3 = readRDS(file = "..\\exhibits\\linearModel_tr_plot3.RDS")
 ggplotly(linearModel_tr_plot3) %>%layout(legend = list(orientation = "h")) %>% reverse_legend_labels()
 ```
@@ -169,70 +169,70 @@ ggplotly(linearModel_tr_plot3) %>%layout(legend = list(orientation = "h")) %>% r
 ---
 
 ## People who noticed gaps.
-```{r, fig.asp=0.6 fig.width=12}
+```{r, fig.asp=0.5, fig.width=12}
 noticWorkExpInc_boxplot = readRDS(file = "..\\exhibits\\noticWorkExpInc_boxplot.RDS")
 noticWorkExpInc_boxplot
 ```
 ---
 
 ## People who noticed health problems.
-```{r, fig.asp=0.6 fig.width=12}
+```{r, fig.asp=0.5, fig.width=12}
 noticHealth_boxplot = readRDS(file = "..\\exhibits\\noticHealth_boxplot.RDS")
 noticHealth_boxplot
 ```
 ---
 
 ## Age
-```{r, fig.asp=0.6 fig.width=12}
+```{r, fig.asp=0.5, fig.width=12}
 ageMentalHelath_boxplot = readRDS(file = "..\\exhibits\\ageMentalHelath_boxplot.RDS")
 ageMentalHelath_boxplot
 ```
 ---
 
 ## Conservatives
-```{r, fig.asp=0.6 fig.width=12}
+```{r, fig.asp=0.5, fig.width=12}
 libConMentalHealth_boxplot = readRDS(file = "..\\exhibits\\libConMentalHealth_boxplot.RDS")
 libConMentalHealth_boxplot
 ```
 ---
 
 ## Active on SM
-```{r, fig.asp=0.6 fig.width=12}
+```{r, fig.asp=0.5, fig.width=12}
 SMActiveno_data_boxplot = readRDS(file = "..\\exhibits\\SMActiveno_data_boxplot.RDS")
 SMActiveno_data_boxplot
 ```
 ---
 
 ## People who believe SM is a tool
-```{r, fig.asp=0.6 fig.width=12}
+```{r, fig.asp=0.5, fig.width=12}
 potentialEmployersBad_boxplot = readRDS(file = "..\\exhibits\\potentialEmployersBad_boxplot.RDS")
 potentialEmployersBad_boxplot
 ```
 ---
 
 ## People who believe SM is Important
-```{r, fig.asp=0.6 fig.width=12}
+```{r, fig.asp=0.5, fig.width=12}
 SMContentBad_boxplot = readRDS(file = "..\\exhibits\\SMContentBad_boxplot.RDS")
 SMContentBad_boxplot
 ```
 ---
 
 ## People who say SM is important use SM
-```{r, fig.asp=0.6 fig.width=12}
+```{r, fig.asp=0.5, fig.width=12}
 trSMImp_lineplot = readRDS(file = "..\\exhibits\\trSMImp_lineplot.RDS")
 trSMImp_lineplot
 ```
 ---
 
 ## People who say education is important use education
-```{r, fig.asp=0.6 fig.width=12}
+```{r, fig.asp=0.5, fig.width=12}
 educEducImp_lineplot = readRDS(file = "..\\exhibits\\educEducImp_lineplot.RDS")
 educEducImp_lineplot
 ```
 ---
 
 ## People who say experience is important use experience
-```{r, fig.asp=0.6 fig.width=12}
+```{r, fig.asp=0.5, fig.width=12}
 expEXpImp_lineplot = readRDS(file = "..\\exhibits\\expEXpImp_lineplot.RDS")
 expEXpImp_lineplot
 ```
@@ -247,7 +247,7 @@ BLP_tr_tab
 ```
 ]
 .pull-right3[
-```{r,  fig.asp=0.85, fig.width=10.5}
+```{r,  fig.asp=0.85, fig.width=9.5}
 BLP_tr_plot = readRDS(file = "..\\exhibits\\BLP_tr_plot.RDS")
 ggplotly(BLP_tr_plot) %>%layout(legend = list(orientation = "h")) %>% reverse_legend_labels()
 ```
@@ -269,7 +269,7 @@ ggplotly(BLP_tr_plot) %>%layout(legend = list(orientation = "h")) %>% reverse_le
 ---
 
 ##CATE
-```{r, fig.asp=0.6 fig.width=12}
+```{r, fig.asp=0.5, fig.width=12}
 CATE_hist = readRDS(file = "..\\exhibits\\CATE_hist.RDS")
 CATE_hist
 ```
@@ -293,7 +293,7 @@ tableby1 = readRDS(file = "..\\exhibits\\tableby1.RDS")
 ## Conclusions
 
 .bullet-content[
-
+- ?
 ]
 
 ---
