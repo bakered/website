@@ -18,18 +18,18 @@ date: '2022-06-14'
 ```{r xaringan-themer, include=FALSE, warning=FALSE}
 library(xaringanthemer)
 style_mono_accent(
-  base_color = "#1c5253",
+  base_color =  "#8CA88E", #"#1c5253", "#C8102E"
   header_font_google = google_font("Josefin Sans"),
   text_font_google   = google_font("Montserrat", "300", "300i"),
   code_font_google   = google_font("Fira Mono")
 )
 ```
 
-```{r xaringan-panelset, echo=FALSE}
-#xaringanExtra::use_panelset()
+```{r xaringan-panelset, echo=FALSE, include=FALSE, warning=FALSE}
+xaringanExtra::use_panelset()
 ```
-```{r xaringan-tile-view, echo=FALSE}
-#xaringanExtra::use_tile_view()
+```{r xaringan-tile-view, echo=FALSE, include=FALSE, warning=FALSE}
+xaringanExtra::use_tile_view()
 ```
 
 
@@ -449,6 +449,7 @@ count: false
 
 
 ---
+count: false
 
 **Baseline:** 
 - CV varies according to experience, education, hobbies, gender, skills.  
@@ -787,3 +788,4 @@ count: false
 <iframe src="https://ourworldindata.org/grapher/daily-hours-spent-with-digital-media-per-adult-user?country=~USA" loading="lazy" style="width: 100%; height: 600px; border: 0px none;"></iframe>
 
 ---
+count: false
