@@ -961,7 +961,14 @@ gghistogram(data=subset(results, finished), x="advertisers", bins = 7, title = "
 gghistogram(data=subset(results, finished), x="employers", bins = 7, title = "", xlab = "", fill = "agebin") +
   facet_grid(rows = vars(agebin)) 
 
+library(googlesheets4)
+table_one = googlesheets4::read_sheet(ss = "https://docs.google.com/spreadsheets/d/1ge2VBuHf-VnGXiqwI_S_esAF7Ccpef5iJZTdyIaBGFs/edit#gid=1383283235", sheet = "tab.sum")
+1
+table_one.tidy = table_one[1:57,1:3] %>% as.data.frame() 
+colnames(table_one.tidy) = c("", "Our Evaluators (N=1500)", "U.S Population") 
 
-
-
+table_one.tidy$`U.S Population`[sapply(table_one.tidy$`U.S Population`, is.null)] = NA
+table_one.tidy$`Our Evaluators (N=1500)` = as.character(table_one.tidy$`Our Evaluators (N=1500)`)
+table_one.tidy$`Our Evaluators (N=1500)`[table_one.tidy$`Our Evaluators (N=1500)` %>% is.na()] = NA
+saveRDS(table_one.tidy, file = "exhibits\\table_one.tidy.RDS")
 

@@ -21,7 +21,9 @@ style_mono_accent(
   base_color =  "#8CA88E", #"#1c5253", "#C8102E"
   header_font_google = google_font("Josefin Sans"),
   text_font_google   = google_font("Montserrat", "300", "300i"),
-  code_font_google   = google_font("Fira Mono")
+  code_font_google   = google_font("Fira Mono"),
+  text_bold_color = "#000000", 
+  text_color = "#000000"
 )
 ```
 
@@ -34,7 +36,7 @@ xaringanExtra::use_tile_view()
 
 
 
-```{r global options, include=FALSE}
+```{r global options, include=FALSE, warning=FALSE}
 knitr::opts_chunk$set(#fig.path='Figs/', #fig.width=12, fig.height=8, 
                       echo=FALSE, warning=FALSE, message=FALSE,
                       out.extra = 'style="display:block; margin:auto;"')
@@ -94,13 +96,8 @@ options(htmltools.dir.version = FALSE)
 ---
 
 # Social Media is a New Signal
-.pull-left[
-.center[
-[<img src="SM_Flowchart2.png" width="450"/>](SM_Flowchart2.png)
-]
-]
 
-.pull-right[
+.pull-left[
 .bigtab[
 <table>
   <tr>
@@ -128,7 +125,7 @@ options(htmltools.dir.version = FALSE)
     <td>?</td>
   </tr>
   <tr>
-    <td>Attire</td>
+    <td>Clothing</td>
     <td>Cheap</td>
   </tr>
   <tr>
@@ -146,6 +143,14 @@ options(htmltools.dir.version = FALSE)
 </table>
 ]
 ]
+
+.pull-right[
+.center[
+[<img src="SM_Flowchart2.png" width="450"/>](SM_Flowchart2.png)
+]
+]
+
+
 ---
 .center[
 [<img src="employers_use_sm.png" width="700"/>](employers_use_sm.png)
@@ -357,10 +362,10 @@ mental_health.blp.tab
 # Results: Mental Health
 
 .center[
-```{r, fig.asp=1, fig.width=6}
-linear_libcon_mental_health_plot = readRDS(file = "..\\exhibits\\linear_libcon_mental_health_plot.RDS")
-#ggplotly(linear_libcon_mental_health_plot) %>% layout(legend = list(orientation = "h")) %>% reverse_legend_labels()
-linear_libcon_mental_health_plot + theme_xaringan()
+```{r, fig.asp=0.66, fig.width=9}
+linear_SM_active_no_data_plot = readRDS(file = "..\\exhibits\\linear_SM_active_no_data_plot.RDS")
+#ggplotly(linear_SM_active_no_data_plot) %>% layout(legend = list(orientation = "h")) %>% reverse_legend_labels()
+linear_SM_active_no_data_plot + theme_xaringan()
 ```
 ]
 
@@ -392,7 +397,13 @@ no_data.blp.tab
 
 # Results: No SM
 
-- include ATE Conditional on active on SM
+.center[
+```{r, fig.asp=1, fig.width=6}
+linear_SM_active_mental_health_plot = readRDS(file = "..\\exhibits\\linear_SM_active_mental_health_plot.RDS")
+#ggplotly(linear_SM_active_mental_health_plot) %>% layout(legend = list(orientation = "h")) %>% reverse_legend_labels()
+linear_SM_active_mental_health_plot + theme_xaringan()
+```
+]
 
 ---
 
@@ -419,7 +430,13 @@ bad.blp.tab
 
 #Results: 'Bad'
 
-- include ATE conditional on SM Contents
+.center[
+```{r, fig.asp=1, fig.width=6}
+linear_SMcontents_bad_plot = readRDS(file = "..\\exhibits\\linear_SMcontents_bad_plot.RDS")
+#ggplotly(linear_SMcontents_bad_plot) %>% layout(legend = list(orientation = "h")) %>% reverse_legend_labels()
+linear_SMcontents_bad_plot + theme_xaringan()
+```
+]
 
 ---
 # Recruiters Do What They Say They Do
@@ -427,13 +444,20 @@ bad.blp.tab
 
 
 ---
-# Questionnaire
-
+## Questionnaire
 
 
 ---
 # Comparison with the US population
-
+.smalltab[
+```{r}
+table_one.tidy = readRDS(file = "..\\exhibits\\table_one.tidy.RDS")
+DT::datatable(
+  table_one.tidy,
+  fillContainer = FALSE, options = list(pageLength = 12)
+)
+```
+]
 ---
 class: center, middle
 count: false
@@ -789,3 +813,9 @@ count: false
 
 ---
 count: false
+
+<iframe src="https://www.pewresearch.org/internet/chart/which-social-media-platforms-are-most-popular/iframe/#chart" loading="lazy" style="width: 100%; height: 600px; border: 0px none;"></iframe> 		
+
+---
+count: false
+

@@ -24,20 +24,20 @@
 }
 .bigtab table {
   border-collapse: collapse;
-  padding: 0px;
-  border-spacing: 0px;
-  width: 80%;
+  padding: 10px;
+  border-spacing: 5px;
+  width: 100%;
 }
 .bigtab tr {
   margin-top:-10px;
 }
 .bigtab th {
-  font-size: 24px;
-  padding: 0px;
+  font-size: 20px;
+  padding: 5px;
 }
 .bigtab td {
-  font-size: 15px;
-  padding: 0px;
+  font-size: 20px;
+  padding: 5px;
 }
 .testcal{
 
@@ -62,10 +62,11 @@
   padding: 0px;
 }
 .smalltab table {
+  color: black
   border-collapse: collapse;
   padding: 0px;
   border-spacing: 0px;
-  width: 80%;
+  width: 100%;
 }
 .smalltab tr {
   margin-top:-10px;

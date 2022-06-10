@@ -43,11 +43,11 @@
   --header-h3-font-size: 1.75rem;
 
   /* Colors */
-  --text-color: #272822;
+  --text-color: #000000;
   --header-color: #8CA88E;
   --background-color: #FFFFFF;
   --link-color: #8CA88E;
-  --text-bold-color: #8CA88E;
+  --text-bold-color: #000000;
   --code-highlight-color: rgba(255,255,0,0.5);
   --inverse-text-color: #FFFFFF;
   --inverse-background-color: #8CA88E;
