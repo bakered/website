@@ -160,6 +160,30 @@ options(htmltools.dir.version = FALSE)
 ]
 
 ---
+
+# Literature
+.bullet-content[
+Under construction
+- Correspondence lit
+- Social media
+(Incentivized Resume Rating (Kessler, 2019))
+]
+
+---
+
+# Research Questions
+
+.bullet-content[
+1. How do recruiters weigh social media info compared to traditional CV info?
+
+2. How do recruiters react to contradictory info in SM and CV?
+
+3. Does revealing mental health issues on SM hinder a job applicant? 
+
+4. Does a lack of online presence hinder a job applicant?
+]
+
+---
 # The Hiring Decision
 
 .pull-left[
@@ -179,28 +203,7 @@ options(htmltools.dir.version = FALSE)
 
 ---
 
-# Literature
-.bullet-content[
-- Correspondence/Audit
-- Incentivized Resume Rating (Kessler, 2019)
-- Theory
-]
 
----
-
-# Research Questions
-
-.bullet-content[
-1. How do recruiters weigh social media info compared to traditional CV info?
-
-2. How do recruiters react to contradictory info in SM and CV?
-
-3. Does revealing mental health issues on SM hinder a job applicant? 
-
-4. Does a lack of online presence hinder a job applicant?
-]
-
----
 # Experimental Design
 
 .center[
@@ -439,26 +442,6 @@ linear_SMcontents_bad_plot + theme_xaringan()
 ]
 
 ---
-# Recruiters Do What They Say They Do
-
-
-
----
-## Questionnaire
-
-
----
-# Comparison with the US population
-.smalltab[
-```{r}
-table_one.tidy = readRDS(file = "..\\exhibits\\table_one.tidy.RDS")
-DT::datatable(
-  table_one.tidy,
-  fillContainer = FALSE, options = list(pageLength = 12)
-)
-```
-]
----
 class: center, middle
 count: false
 
@@ -471,9 +454,32 @@ count: false
 
 # Appendix
 
+---
+
+# Comparison with the US population
+.smalltab[
+```{r}
+table_one.tidy = readRDS(file = "..\\exhibits\\table_one.tidy.RDS")
+DT::datatable(
+  table_one.tidy,
+  fillContainer = FALSE, options = list(pageLength = 12)
+)
+```
+]
+---
+count: false
+# Recruiters Do What They Say They Do
+
+
+
+---
+count: false 
+## Questionnaire
+
 
 ---
 count: false
+
 
 **Baseline:** 
 - CV varies according to experience, education, hobbies, gender, skills.  
@@ -816,6 +822,5 @@ count: false
 
 <iframe src="https://www.pewresearch.org/internet/chart/which-social-media-platforms-are-most-popular/iframe/#chart" loading="lazy" style="width: 100%; height: 600px; border: 0px none;"></iframe> 		
 
----
-count: false
+
 
