@@ -15,8 +15,16 @@
 .mag{
 	font-size: 20px;
 }
+
+.beta th {
+  font-size: 40%;
+}
+.beta td {
+  font-size: 40%;
+}
+
 .bigtab {
-  margin: 0;
+  margin: 50px;
   position: absolute;
   top: 50%;
   -ms-transform: translateY(-50%);
@@ -24,7 +32,7 @@
 }
 .bigtab table {
   border-collapse: collapse;
-  padding: 10px;
+  padding: 0px;
   border-spacing: 5px;
   width: 100%;
 }

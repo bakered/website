@@ -1,5 +1,5 @@
 
-#install.packages("xaringanthemer")
+#install.packages("tufte")
 library(xaringanExtra)
 library(ggplot2)
 library(RColorBrewer)
@@ -25,6 +25,10 @@ library(arsenal)
 library(knitr)
 library(GGally)
 library(grf)
+library(tufte)
+
+library(mgcv)
+library(stats)
 
 results = readRDS("C:\\Users\\fo06mafa\\Documents\\AuthenticApplications\\Data_amalgamate\\results.RDS")
 player_table = readRDS("C:\\Users\\fo06mafa\\Documents\\AuthenticApplications\\Data_amalgamate\\player_table.RDS")
@@ -241,9 +245,9 @@ score.means.by.var.line2 <- function(variable, by, group, df, include.count=T, x
   k = length(unique(df[[by]]))
   if(k<10){formula = as.formula(paste0('y ~ s(x, bs = "cs", k=',k,')'))} else {formula = as.formula('y ~ s(x, bs = "cs")')}
   p1 = ggplot(df , aes_string(x=by, y=variable, group=group, colour=group)) + 
-    geom_point(position=position_jitter(height=0), alpha=0.025) +
+    #geom_point(position=position_jitter(height=0), alpha=0.025) +
     #geom_ma(ma_fun = SMA, n = 20, linetype = 1, size = 1, na.rm = TRUE) +
-    geom_smooth(method="gam", formula=formula, alpha = 0.5) +  # method=lm loess method=lm
+    geom_smooth(method=gam, formula=formula, alpha = 0.5) +  # method=lm loess method=lm
     #lims(x=c(0,10)) +
     #geom_hline(yintercept = 0)+
     #facet_grid(treatment~.) +

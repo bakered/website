@@ -66,6 +66,7 @@ library(sjlabelled)
 library(arsenal)
 library(knitr)
 library(GGally)
+library(tufte)
 
 reverse_legend_labels <- function(plotly_plot) {
   n_labels <- length(plotly_plot$x$data)
@@ -74,18 +75,6 @@ reverse_legend_labels <- function(plotly_plot) {
 }
 ```
 
-
-<style>
-table {
-
-}
-.beta th {
-  font-size: 70%;
-}
-.beta td {
-  font-size: 60%;
-}
-</style>
 
 ```{r setup, include=FALSE}
 library(knitr)
@@ -161,12 +150,19 @@ options(htmltools.dir.version = FALSE)
 
 ---
 
-# Literature
+## Literature
 .bullet-content[
-Under construction
-- Correspondence lit
-- Social media
-(Incentivized Resume Rating (Kessler, 2019))
+> Although organizations use SM to assist in staffing decisions, such use is not well understood by researchers
+> `r tufte::quote_footer('Roth et al, 2016')`  
+
+- Correspondence
+  - Religion, sexual orientation (Acquisti and Fong, 2020)
+  - Appearance (Baert, 2018)
+  - Origin / Race (Manant, Pajak, and Soulie, 2019)
+
+- Survey / Vignette
+ - Alcohol (Becton et al., 2019; Bohnert and Ross, 2010) 
+ - Self-absorption, opinionatedness, and alcohol and drug use (Tews, Stafford, and Kudler, 2020) 
 ]
 
 ---
@@ -174,13 +170,11 @@ Under construction
 # Research Questions
 
 .bullet-content[
-1. How do recruiters weigh social media info compared to traditional CV info?
-
-2. How do recruiters react to contradictory info in SM and CV?
-
-3. Does revealing mental health issues on SM hinder a job applicant? 
-
-4. Does a lack of online presence hinder a job applicant?
+How do application evaluators …  
+1. react to less appealing SM content?  
+2. react to candidates with mental health issues?  
+3. contradictory info in SM and CV?  
+4. a lack of an online presence?  
 ]
 
 ---
@@ -306,7 +300,7 @@ notelegnth_hist + theme_xaringan()
 # Results: Treatment Effects
 
 .center[
-```{r, fig.asp=0.66, fig.width=9}
+```{r, fig.asp=0.5, fig.width=12}
 linear_fitmodp_plot = readRDS(file = "..\\exhibits\\linear_fitmodp_plot.RDS")
 linear_fitmodp_plot + theme_xaringan()
 #ggplotly(linear_fitmodp_plot) %>% layout(legend = list(orientation = "h")) %>% reverse_legend_labels()
@@ -318,7 +312,11 @@ linear_fitmodp_plot + theme_xaringan()
 # Results
 ```{r, fig.asp=1, fig.width=6}
 CATE_hist = readRDS(file = "..\\exhibits\\CATE_hist.RDS")
-CATE_hist + theme_xaringan()
+CATE_hist + 
+  theme(strip.text.y = element_blank(), 
+        axis.text.y = element_text(size = 10),
+        legend.text = element_text(size = 15),
+        legend.title = element_text(size = 17))  + theme_xaringan()
 ```
 ]
 
@@ -366,9 +364,9 @@ mental_health.blp.tab
 
 .center[
 ```{r, fig.asp=0.66, fig.width=9}
-linear_SM_active_no_data_plot = readRDS(file = "..\\exhibits\\linear_SM_active_no_data_plot.RDS")
+linear_libcon_mental_health_plot = readRDS(file = "..\\exhibits\\linear_libcon_mental_health_plot.RDS")
 #ggplotly(linear_SM_active_no_data_plot) %>% layout(legend = list(orientation = "h")) %>% reverse_legend_labels()
-linear_SM_active_no_data_plot + theme_xaringan()
+linear_libcon_mental_health_plot + theme_xaringan()
 ```
 ]
 
@@ -401,10 +399,10 @@ no_data.blp.tab
 # Results: No SM
 
 .center[
-```{r, fig.asp=1, fig.width=6}
-linear_SM_active_mental_health_plot = readRDS(file = "..\\exhibits\\linear_SM_active_mental_health_plot.RDS")
+```{r, fig.asp=0.66, fig.width=9}
+linear_SM_active_no_data_plot = readRDS(file = "..\\exhibits\\linear_SM_active_no_data_plot.RDS")
 #ggplotly(linear_SM_active_mental_health_plot) %>% layout(legend = list(orientation = "h")) %>% reverse_legend_labels()
-linear_SM_active_mental_health_plot + theme_xaringan()
+linear_SM_active_no_data_plot + theme_xaringan()
 ```
 ]
 
@@ -434,393 +432,26 @@ bad.blp.tab
 #Results: 'Bad'
 
 .center[
-```{r, fig.asp=1, fig.width=6}
+```{r, fig.asp=0.66, fig.width=9}
 linear_SMcontents_bad_plot = readRDS(file = "..\\exhibits\\linear_SMcontents_bad_plot.RDS")
 #ggplotly(linear_SMcontents_bad_plot) %>% layout(legend = list(orientation = "h")) %>% reverse_legend_labels()
 linear_SMcontents_bad_plot + theme_xaringan()
 ```
 ]
-
----
-class: center, middle
-count: false
-
-# Thank You!  
-
-
----
-class: center, middle
-count: false
-
-# Appendix
-
 ---
 
-# Comparison with the US population
-.smalltab[
-```{r}
-table_one.tidy = readRDS(file = "..\\exhibits\\table_one.tidy.RDS")
-DT::datatable(
-  table_one.tidy,
-  fillContainer = FALSE, options = list(pageLength = 12)
-)
-```
-]
----
-count: false
 # Recruiters Do What They Say They Do
 
+```{r, fig.asp=0.5, fig.width=12 }
+trSMImp_lineplot = readRDS(file = "..\\exhibits\\trSMImp_lineplot.RDS") 
+expEXpImp_lineplot = readRDS(file = "..\\exhibits\\expEXpImp_lineplot.RDS") 
+educEducImp_lineplot = readRDS(file = "..\\exhibits\\educEducImp_lineplot.RDS") 
+grid.arrange(trSMImp_lineplot, expEXpImp_lineplot, educEducImp_lineplot, ncol = 3)  
 
-
----
-count: false 
-## Questionnaire
-
-
----
-count: false
-
-
-**Baseline:** 
-- CV varies according to experience, education, hobbies, gender, skills.  
-- SM varies according to connections, most active groups, most used keywords & hashtags, automatic AI screening report. Hobbies and skills match CV.
-
-
-<table>
-  <tr>
-    <th style = "border: solid 0px #DDEEEE;"></th>
-    <th>Baseline</th>
-    <th>Reasonable Bad</th>
-    <th>Mental Health Issues</th>
-    <th>No SM</th>
-    <th>Gap</th>
-    <th>Lie about Gap</th>
-  </tr>
-  <tr>
-    <th>CV</th>
-    <td>Normal</td>
-    <td>Normal</td>
-    <td>Normal</td>
-    <td>Normal</td>
-    <td>Employment Gap</td>
-    <td>No Employment Gap</td>
-  </tr>
-  <tr>
-    <th>Social Media</th>
-    <td>Normal</td>
-    <td>"bad" / inconsistent</td>
-    <td>Mental Health Issues</td>
-    <td>No Data</td>
-    <td>Employment Gap</td>
-    <td>Employment Gap</td>
-  </tr>
-</table>
-
----
-count: false
-
-# Treatment Mechanism
-
-<table class = "beta">
-  <tr>
-    <th style = "border: solid 0px #DDEEEE;"></th>
-    <th>Baseline</th>
-    <th>Reasonable Bad</th>
-    <th>Mental Health Issues </th>
-  </tr>
-  <tr>
-    <th>Relevant Skills and Endorsements</th>
-    <td>Teamwork: 26<br>Time Management: 9<br>Microsoft Office: 23<br>Administration: 25<br>Customer Service: 5</td>
-    <td>Teamwork: 7<br>Time Management: 2<br>Microsoft Office: 9<br>Administration: 3<br>Customer Service: 1</td>
-    <td>Baseline</td>
-  </tr>
-  <tr>
-    <th>Most used Hashtags & Keywords</th>
-    <td style = "column-count: 2;">#teambuilding, <br>#teamwork, <br>#team, <br>#goteam, <br>#teammate, <br>#together, <br>#collaborationiskey, <br>#thankyou, <br>#community, </td>
-    <td style = "column-count: 2;">#xbox, <br>#gaming, <br>#fortnite, <br>#memes, <br>#fuckmylife, <br>#tgif, <br>#weekendvibes, <br>#tired, <br>#nosleep, <br>#itsonlytuesday, <br>#party, <br>#happyhour </td>
-    <td style = "column-count: 2;">#Therapy, <br>#bipolar, <br>#bipolardisorder, <br>#mentalhealth</td>
-  </tr>
-  <tr>
-    <th>Most Active Groups / Pages</th>
-    <td style = "column-count: 2;">Youth basketball development group, <br>the basketball community, <br>the triangle hiking club, <br>walking and talking, <br>philadelphia roommates, <br>philadelphia networking group, <br>Philly Social Adventures, <br>being neighbourly: philadelphia, <br>Exton/Lionville Community Group, <br>Ardmore community social group</td>
-    <td style = "column-count: 2;">Grand Theft Auto V, <br>Call of Duty, <br>Super Smash Bros, <br>Pokemon Sword, <br>Monster Hunter World,  <br>Diablo, <br>Borderlands, <br>Work Sucks Meme Factory, <br>I Love/Hate My Job, <br>I Hate Monday Mornings</td>
-    <td style = "column-count: 2;">Mental Health America, <br>Mental Health awareness, <br>Mental Health Food, <br>Defeat Depression,  <br>Anxiety and Depression Support Group, <br>Depression and Anxiety Talk</td>
-  </tr>
-  <tr>
-    <th>Automatic Screening Report on SM Activity</th>
-    <td>Social Media language generally positive, interactions generally positive</td>
-    <td>Social Media language is generally neutral, interactions sometimes negative</td>
-    <td>Baseline</td>
-  </tr>
-</table>
-
----
-count: false
-
-## Supporting  Validity
-
-
-.pull-left[
-```{r, fig.asp=1, fig.width=6}
-lengthViewed_tr_boxplot = readRDS(file = "..\\exhibits\\lengthViewed_tr_boxplot.RDS")
-lengthViewed_tr_boxplot
-```
-]
-.pull-right[
-```{r, fig.asp=1, fig.width=6}
-notelength_tr_boxplot = readRDS(file = "..\\exhibits\\notelength_tr_boxplot.RDS")
-notelength_tr_boxplot
-```
-]
----
-count: false
-
-## Supporting  Validity
-- People react as expected to the CVs, (more experience/education is better)
-
-.pull-left[
-```{r, fig.asp=1, fig.width=6}
-exp_boxplot = readRDS(file = "..\\exhibits\\exp_boxplot.RDS")
-exp_boxplot
-
-```
-]
-.pull-right[
-```{r, fig.asp=1, fig.width=6}
-educ_boxplot = readRDS(file = "..\\exhibits\\educ_boxplot.RDS")
-educ_boxplot
-```
-]
----
-count: false
-
-## SM information matters
-```{r, fig.asp=0.5, fig.width=12}
-tr_boxplot = readRDS(file = "..\\exhibits\\tr_boxplot.RDS")
-tr_boxplot
 ```
 ---
-count: false
 
-.reduced2[
-```{r}
-linearModel_tr_tab1 = readRDS(file = "..\\exhibits\\linearModel_tr_tab1.RDS")
-linearModel_tr_tab1
-```
-]
-.pull-right2[
-```{r,  fig.asp=1.01, fig.width=8}
-linearModel_tr_plot1 = readRDS(file = "..\\exhibits\\linearModel_tr_plot1.RDS")
-ggplotly(linearModel_tr_plot1) %>% layout(legend = list(orientation = "h")) %>% reverse_legend_labels()
-```
-]
----
-count: false
+class: center, middle
 
-.reduced[
-```{r}
-linearModel_tr_tab2 = readRDS(file = "..\\exhibits\\linearModel_tr_tab2.RDS")
-linearModel_tr_tab2
-```
-]
-.pull-right2[
-```{r,  fig.asp=1.01, fig.width=8}
-linearModel_tr_plot2 = readRDS(file = "..\\exhibits\\linearModel_tr_plot2.RDS")
-ggplotly(linearModel_tr_plot2) %>% layout(legend = list(orientation = "h")) %>% reverse_legend_labels()
-```
-]
----
-count: false
-
-## Experience and SM Treatment
-```{r, fig.asp=0.5, fig.width=12}
-exp_tr_boxplot3 = readRDS(file = "..\\exhibits\\exp_tr_boxplot3.RDS")
-exp_tr_boxplot3
-```
----
-count: false
-
-.reduced3[
-```{r}
-linearModel_tr_tab3 = readRDS(file = "..\\exhibits\\linearModel_tr_tab3.RDS")
-linearModel_tr_tab3
-```
-]
-.pull-right3[
-```{r,  fig.asp=0.85, fig.width=9.5}
-linearModel_tr_plot3 = readRDS(file = "..\\exhibits\\linearModel_tr_plot3.RDS")
-ggplotly(linearModel_tr_plot3) %>%layout(legend = list(orientation = "h")) %>% reverse_legend_labels()
-```
-]
----
-count: false
-
-## People who noticed gaps.
-```{r, fig.asp=0.5, fig.width=12}
-noticWorkExpInc_boxplot = readRDS(file = "..\\exhibits\\noticWorkExpInc_boxplot.RDS")
-noticWorkExpInc_boxplot
-```
----
-count: false
-
-## People who noticed health problems.
-```{r, fig.asp=0.5, fig.width=12}
-noticHealth_boxplot = readRDS(file = "..\\exhibits\\noticHealth_boxplot.RDS")
-noticHealth_boxplot
-```
----
-count: false
-
-## Age
-```{r, fig.asp=0.5, fig.width=12}
-ageMentalHelath_boxplot = readRDS(file = "..\\exhibits\\ageMentalHelath_boxplot.RDS")
-ageMentalHelath_boxplot
-```
----
-count: false
-
-## Conservatives
-```{r, fig.asp=0.5, fig.width=12}
-libConMentalHealth_boxplot = readRDS(file = "..\\exhibits\\libConMentalHealth_boxplot.RDS")
-libConMentalHealth_boxplot
-```
----
-count: false
-
-## Active on SM
-```{r, fig.asp=0.5, fig.width=12}
-SMActiveno_data_boxplot = readRDS(file = "..\\exhibits\\SMActiveno_data_boxplot.RDS")
-SMActiveno_data_boxplot
-```
----
-count: false
-
-## People who believe SM is a tool
-```{r, fig.asp=0.5, fig.width=12}
-potentialEmployersBad_boxplot = readRDS(file = "..\\exhibits\\potentialEmployersBad_boxplot.RDS")
-potentialEmployersBad_boxplot
-```
----
-count: false
-
-## People who believe SM is Important
-```{r, fig.asp=0.5, fig.width=12}
-SMContentBad_boxplot = readRDS(file = "..\\exhibits\\SMContentBad_boxplot.RDS")
-SMContentBad_boxplot
-```
----
-count: false
-
-## People who say SM is important use SM
-```{r, fig.asp=0.5, fig.width=12}
-trSMImp_lineplot = readRDS(file = "..\\exhibits\\trSMImp_lineplot.RDS")
-trSMImp_lineplot
-```
----
-count: false
-
-## People who say education is important use education
-```{r, fig.asp=0.5, fig.width=12}
-educEducImp_lineplot = readRDS(file = "..\\exhibits\\educEducImp_lineplot.RDS")
-educEducImp_lineplot
-```
----
-count: false
-
-## People who say experience is important use experience
-```{r, fig.asp=0.5, fig.width=12}
-expEXpImp_lineplot = readRDS(file = "..\\exhibits\\expEXpImp_lineplot.RDS")
-expEXpImp_lineplot
-```
----
-count: false
-
-
-.reduced3[
-```{r}
-BLP_tr_tab = readRDS(file = "..\\exhibits\\BLP_tr_tab.RDS")
-BLP_tr_tab
-```
-]
-.pull-right3[
-```{r,  fig.asp=0.85, fig.width=9.5}
-BLP_tr_plot = readRDS(file = "..\\exhibits\\BLP_tr_plot.RDS")
-ggplotly(BLP_tr_plot) %>%layout(legend = list(orientation = "h")) %>% reverse_legend_labels()
-```
-]
----
-count: false
-
-.pull-left[
-```{r, fig.asp=1.3, fig.width=7}
-linearModel_tr_plot3 = readRDS(file = "..\\exhibits\\linearModel_tr_plot3.RDS")
-ggplotly(linearModel_tr_plot3) %>%layout(legend = list(orientation = "h")) %>% reverse_legend_labels()
-```
-]
-.pull-right[
-```{r,  fig.asp=1.3, fig.width=7}
-BLP_tr_plot = readRDS(file = "..\\exhibits\\BLP_tr_plot.RDS")
-ggplotly(BLP_tr_plot) %>%layout(legend = list(orientation = "h")) %>% reverse_legend_labels()
-```
-]
----
-count: false
-
-
-
-```{r fig.asp=0.66, fig.width=12}
-corr_plot = readRDS(file = "..\\exhibits\\corr_plot.RDS")
-corr_plot
-```
----
-count: false
-
-.reduced[
-```{r}
-tableby1 = readRDS(file = "..\\exhibits\\tableby1.RDS")
-#tableby1 %>% kable()
-```
-]
-
-
-## Conclusions
-
-.bullet-content[
-- ?
-]
-
----
-count: false
-
-## Education and SM Treatment
-```{r, fig.asp=0.5, fig.width=12}
-educ_tr_boxplot = readRDS(file = "..\\exhibits\\educ_tr_boxplot.RDS")
-educ_tr_boxplot
-```
----
-count: false
-
-<iframe src="https://ourworldindata.org/grapher/users-by-social-media-platform?time=2004..latest&country=Facebook~Instagram~MySpace~Pinterest~Reddit~Snapchat~TikTok~Tumblr~Twitter~WeChat~Whatsapp~YouTube" loading="lazy" style="width: 100%; height: 600px; border: 0px none;"></iframe>
-
----
-count: false
-
-```{r, echo=F}
-# All defaults
-include_graphics("https://kinsta.com/wp-content/uploads/2018/10/linkedin-members-map.png")
-```
-
-.center[Linkedin has 310 MAUs and 740 million members. (Only 16M in DACH) ]
-
----
-count: false
-
-<iframe src="https://ourworldindata.org/grapher/daily-hours-spent-with-digital-media-per-adult-user?country=~USA" loading="lazy" style="width: 100%; height: 600px; border: 0px none;"></iframe>
-
----
-count: false
-
-<iframe src="https://www.pewresearch.org/internet/chart/which-social-media-platforms-are-most-popular/iframe/#chart" loading="lazy" style="width: 100%; height: 600px; border: 0px none;"></iframe> 		
-
-
+# Thank You!  
 
