@@ -215,6 +215,8 @@ include_graphics("https://kinsta.com/wp-content/uploads/2018/10/linkedin-members
 ]
 ]
 
+---
+
 # Treatment Summary
 
 **Baseline:** 
@@ -297,8 +299,6 @@ include_graphics("https://kinsta.com/wp-content/uploads/2018/10/linkedin-members
     <td>Baseline</td>
   </tr>
 </table>
-
----
 
 ---
 
