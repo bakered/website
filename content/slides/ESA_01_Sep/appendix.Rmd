@@ -12,7 +12,7 @@ output:
       ratio: 16:9
     css: [my.pres2.css, xaringan-themer.css]
   slidy_presentation: default
-date: '2022-06-14'
+date: '2022-09-01'
 ---
 
 ```{r xaringan-themer, include=FALSE, warning=FALSE}
@@ -99,6 +99,30 @@ Roth, P.L., Bobko, P., Van Iddekinge, C.H. and Thatcher, J.B., 2016. Social medi
 <iframe src="https://ourworldindata.org/grapher/technology-adoption-by-households-in-the-united-states?time=1930..2019&country=~Social+media+usage" loading="lazy" style="width: 100%; height: 600px; border: 0px none;"></iframe>
 ---
 
+<iframe src="https://ourworldindata.org/grapher/users-by-social-media-platform?time=2004..latest&country=Facebook~Instagram~MySpace~Pinterest~Reddit~Snapchat~TikTok~Tumblr~Twitter~WeChat~Whatsapp~YouTube" loading="lazy" style="width: 100%; height: 600px; border: 0px none;"></iframe>
+
+---
+
+
+```{r, echo=F}
+# All defaults
+include_graphics("https://kinsta.com/wp-content/uploads/2018/10/linkedin-members-map.png")
+```
+
+.center[Linkedin has 310 MAUs and 740 million members. (Only 16M in DACH) ]
+
+---
+
+
+<iframe src="https://ourworldindata.org/grapher/daily-hours-spent-with-digital-media-per-adult-user?country=~USA" loading="lazy" style="width: 100%; height: 600px; border: 0px none;"></iframe>
+
+---
+
+
+<iframe src="https://www.pewresearch.org/internet/chart/which-social-media-platforms-are-most-popular/iframe/#chart" loading="lazy" style="width: 100%; height: 600px; border: 0px none;"></iframe> 		
+
+---
+
 # Social Media is a New Signal
 
 .pull-left[
@@ -174,7 +198,6 @@ Roth, P.L., Bobko, P., Van Iddekinge, C.H. and Thatcher, J.B., 2016. Social medi
 
 ---
 
----
 # The Hiring Decision
 
 .pull-left[
@@ -191,6 +214,117 @@ Roth, P.L., Bobko, P., Van Iddekinge, C.H. and Thatcher, J.B., 2016. Social medi
   .small[(source: [Hirshman, C, (2003). Incentives for Recruiters?. HR Magazine, Nov 2003](https://www.shrm.org/hr-today/news/hr-magazine/pages/1103hirschman.aspx))]
 ]
 ]
+
+# Treatment Summary
+
+**Baseline:** 
+- CV varies according to experience, education, hobbies, gender, skills.  
+- SM varies according to connections, most active groups, most used keywords & hashtags, automatic AI screening report. Hobbies and skills match CV.
+
+
+<table>
+  <tr>
+    <th style = "border: solid 0px #DDEEEE;"></th>
+    <th>Baseline</th>
+    <th>Reasonable Bad</th>
+    <th>Mental Health Issues</th>
+    <th>No SM</th>
+    <th>Gap</th>
+    <th>Lie about Gap</th>
+  </tr>
+  <tr>
+    <th>CV</th>
+    <td>Normal</td>
+    <td>Normal</td>
+    <td>Normal</td>
+    <td>Normal</td>
+    <td>Employment Gap</td>
+    <td>No Employment Gap</td>
+  </tr>
+  <tr>
+    <th>Social Media</th>
+    <td>Normal</td>
+    <td>"bad" / inconsistent</td>
+    <td>Mental Health Issues</td>
+    <td>No Data</td>
+    <td>Employment Gap</td>
+    <td>Employment Gap</td>
+  </tr>
+</table>
+
+---
+
+# Treatment Mechanism
+
+<table class = "beta">
+  <tr>
+    <th style = "border: solid 0px #DDEEEE;"></th>
+    <th>Baseline</th>
+    <th>Reasonable Bad</th>
+    <th>Mental Health Issues </th>
+  </tr>
+  <tr>
+    <th>Relevant Skills and Endorsements</th>
+    <td>Teamwork: 26<br>Time Management: 9<br>Microsoft Office: 23<br>Administration: 25<br>Customer Service: 5</td>
+    <td>Teamwork: 7<br>Time Management: 2<br>Microsoft Office: 9<br>Administration: 3<br>Customer Service: 1</td>
+    <td>Baseline</td>
+  </tr>
+  <tr>
+    <th>Most used Hashtags & Keywords</th>
+    <td style = "column-count: 2;">#teamwork, <br>	#Nature, <br> #fitness, <br> #blessed, <br> #together, <br>	#Travel, <br> #life, <br> #music, <br> #collaborationiskey, <br>	#Happy, <br> #photooftheday, <br> #photography, <br> #thankyou, <br>	#selfie, <br> #funny, <br> #bestoftheday, <br> #community, <br>	#summer, <br> #art, <br> #style, <br> #teammate, <br>	#beautiful, <br> #food, <br> #sunset</td>
+    <td style = "column-count: 2;">#tgif, <br> #weekendvibes, <br> #itsonlytuesday, <br> #tired, <br> #fuckmylife, <br> #nosleep, <br>  #party, <br> #happyhour, <br> #xbox, <br> #gaming, <br> #fortnite </td>
+    <td style = "column-count: 2;">#therapy, <br> #bipolar, <br> #bipolardisorder, <br> #recovery</td>
+  </tr>
+  <tr>
+    <th>Most Active Groups / Pages</th>
+    <td style = "column-count: 2;">Walking and talking, <br>	NowThis, <br> Adele, <br> Rate My Plate, <br> Group, <br> The Simpsons, <br> The triangle hiking club, <br>	It's Gone Viral, <br> Will Smith, <br> STREET FOOD LOVE, <br> House, <br>  Philadelphia networking group, <br>	Chefclub, <br> vin Diesel, <br> Food & Wine, <br> The Big Bang Theory, <br> Being neighbourly: philadelphia, <br>	Tasty, <br> Taylor Swift, <br> Fine Cooking, <br> Game of Thrones, <br> Philly Social Adventures, <br>	Viral TRND, <br> Katy Perry, <br> Food52, <br> FRIENDS (TV Show), <br> Philadelphia roommates, <br>	Bored Panda, <br> Bruno Mars, <br> Cooking Light, <br> Greys Anatomy </td>
+    <td style = "column-count: 2;">Work Sucks Meme Factory, <br>I Love/Hate My Job, <br>I Hate Monday Mornings, <br>grand theft auto V, <br>Call of Duty, <br>Super Smash Bros, <br>Pokemon Sword, <br>Monster Hunter World, <br>Diablo, <br>Borderlands
+</td>
+    <td style = "column-count: 2;">Defeat Depression, <br>Anxiety and Depression Support Group, <br>Depression and Anxiety Talk, <br>Anxiety Lounge, <br>Schizophrenia Support Group, <br>Bipolar disorder and Manic depression SUPPORT GROUP, <br>Positive Depression/Bipolar Happy Place</td>
+  </tr>
+  <tr>
+    <th>Automatic Screening Report on SM Activity</th>
+    <td><ul>
+    <li>Social media language: generally positive </li>
+    <li>Interactions: generally positive </li>
+    <li> Spelling and grammar: very good </li>
+    </ul></td>
+    <td><ul>
+    <li>Social media language: generally neutral </li>
+    <li>Interactions: sometimes negative, sometimes offensive language </li>
+    <li> Spelling and grammar: bad</li>
+    </ul></td>
+    <td>Baseline</td>
+  </tr>
+</table>
+
+---
+
+---
+
+# Treatment 2: Mental Health
+.center[
+[<img src="treatment_mental_health.jpg" width="700"/>](treatment_mental_health.jpg)
+]
+
+---
+# Treatment 3: Gap
+.center[
+[<img src="treatment_gap.jpg" width="700"/>](treatment_gap.jpg)
+]
+
+---
+# Treatment 4: Gap + Lie
+.center[
+[<img src="treatment_gap_lie.jpg" width="700"/>](treatment_gap_lie.jpg)
+]
+
+---
+# Treatment 5: No Social Media
+.center[
+[<img src="treatment_no_info.jpg" width="400"/>](treatment_no_info.jpg)
+]
+
 
 .pull-left[
 # Results
@@ -219,31 +353,6 @@ testcalbadtab =  readRDS(file = "..\\forests\\testcalbadtab.RDS")
 testcalbadtab
 ```
 ]
-]
-
----
-
-# Treatment 2: Mental Health
-.center[
-[<img src="treatment_mental_health.jpg" width="700"/>](treatment_mental_health.jpg)
-]
-
----
-# Treatment 3: Gap
-.center[
-[<img src="treatment_gap.jpg" width="700"/>](treatment_gap.jpg)
-]
-
----
-# Treatment 4: Gap + Lie
-.center[
-[<img src="treatment_gap_lie.jpg" width="700"/>](treatment_gap_lie.jpg)
-]
-
----
-# Treatment 5: No Social Media
-.center[
-[<img src="treatment_no_info.jpg" width="400"/>](treatment_no_info.jpg)
 ]
 
 ---
@@ -372,91 +481,6 @@ DT::datatable(
 ]
 ---
 
-
-
-**Baseline:** 
-- CV varies according to experience, education, hobbies, gender, skills.  
-- SM varies according to connections, most active groups, most used keywords & hashtags, automatic AI screening report. Hobbies and skills match CV.
-
-
-<table>
-  <tr>
-    <th style = "border: solid 0px #DDEEEE;"></th>
-    <th>Baseline</th>
-    <th>Reasonable Bad</th>
-    <th>Mental Health Issues</th>
-    <th>No SM</th>
-    <th>Gap</th>
-    <th>Lie about Gap</th>
-  </tr>
-  <tr>
-    <th>CV</th>
-    <td>Normal</td>
-    <td>Normal</td>
-    <td>Normal</td>
-    <td>Normal</td>
-    <td>Employment Gap</td>
-    <td>No Employment Gap</td>
-  </tr>
-  <tr>
-    <th>Social Media</th>
-    <td>Normal</td>
-    <td>"bad" / inconsistent</td>
-    <td>Mental Health Issues</td>
-    <td>No Data</td>
-    <td>Employment Gap</td>
-    <td>Employment Gap</td>
-  </tr>
-</table>
-
----
-
-
-# Treatment Mechanism
-
-<table class = "beta">
-  <tr>
-    <th style = "border: solid 0px #DDEEEE;"></th>
-    <th>Baseline</th>
-    <th>Reasonable Bad</th>
-    <th>Mental Health Issues </th>
-  </tr>
-  <tr>
-    <th>Relevant Skills and Endorsements</th>
-    <td>Teamwork: 26<br>Time Management: 9<br>Microsoft Office: 23<br>Administration: 25<br>Customer Service: 5</td>
-    <td>Teamwork: 7<br>Time Management: 2<br>Microsoft Office: 9<br>Administration: 3<br>Customer Service: 1</td>
-    <td>Baseline</td>
-  </tr>
-  <tr>
-    <th>Most used Hashtags & Keywords</th>
-    <td style = "column-count: 2;">#teamwork, <br>	#Nature, <br> #fitness, <br> #blessed, <br> #together, <br>	#Travel, <br> #life, <br> #music, <br> #collaborationiskey, <br>	#Happy, <br> #photooftheday, <br> #photography, <br> #thankyou, <br>	#selfie, <br> #funny, <br> #bestoftheday, <br> #community, <br>	#summer, <br> #art, <br> #style, <br> #teammate, <br>	#beautiful, <br> #food, <br> #sunset</td>
-    <td style = "column-count: 2;">#tgif, <br> #weekendvibes, <br> #itsonlytuesday, <br> #tired, <br> #fuckmylife, <br> #nosleep, <br>  #party, <br> #happyhour, <br> #xbox, <br> #gaming, <br> #fortnite </td>
-    <td style = "column-count: 2;">#therapy, <br> #bipolar, <br> #bipolardisorder, <br> #recovery</td>
-  </tr>
-  <tr>
-    <th>Most Active Groups / Pages</th>
-    <td style = "column-count: 2;">Walking and talking, <br>	NowThis, <br> Adele, <br> Rate My Plate, <br> Group, <br> The Simpsons, <br> The triangle hiking club, <br>	It's Gone Viral, <br> Will Smith, <br> STREET FOOD LOVE, <br> House, <br>  Philadelphia networking group, <br>	Chefclub, <br> vin Diesel, <br> Food & Wine, <br> The Big Bang Theory, <br> Being neighbourly: philadelphia, <br>	Tasty, <br> Taylor Swift, <br> Fine Cooking, <br> Game of Thrones, <br> Philly Social Adventures, <br>	Viral TRND, <br> Katy Perry, <br> Food52, <br> FRIENDS (TV Show), <br> Philadelphia roommates, <br>	Bored Panda, <br> Bruno Mars, <br> Cooking Light, <br> Greys Anatomy </td>
-    <td style = "column-count: 2;">Work Sucks Meme Factory, <br>I Love/Hate My Job, <br>I Hate Monday Mornings, <br>grand theft auto V, <br>Call of Duty, <br>Super Smash Bros, <br>Pokemon Sword, <br>Monster Hunter World, <br>Diablo, <br>Borderlands
-</td>
-    <td style = "column-count: 2;">Defeat Depression, <br>Anxiety and Depression Support Group, <br>Depression and Anxiety Talk, <br>Anxiety Lounge, <br>Schizophrenia Support Group, <br>Bipolar disorder and Manic depression SUPPORT GROUP, <br>Positive Depression/Bipolar Happy Place</td>
-  </tr>
-  <tr>
-    <th>Automatic Screening Report on SM Activity</th>
-    <td><ul>
-    <li>Social media language: generally positive </li>
-    <li>Interactions: generally positive </li>
-    <li> Spelling and grammar: very good </li>
-    </ul></td>
-    <td><ul>
-    <li>Social media language: generally neutral </li>
-    <li>Interactions: sometimes negative, sometimes offensive language </li>
-    <li> Spelling and grammar: bad</li>
-    </ul></td>
-    <td>Baseline</td>
-  </tr>
-</table>
-
----
 
 
 ## Supporting  Validity
@@ -684,48 +708,17 @@ tableby1 = readRDS(file = "..\\exhibits\\tableby1.RDS")
 ```
 ]
 
-
-## Conclusions
-
-.bullet-content[
-- ?
-]
-
 ---
-
 
 ## Education and SM Treatment
 ```{r, fig.asp=0.5, fig.width=12}
 educ_tr_boxplot = readRDS(file = "..\\exhibits\\educ_tr_boxplot.RDS")
 educ_tr_boxplot
 ```
----
 
-
-<iframe src="https://ourworldindata.org/grapher/users-by-social-media-platform?time=2004..latest&country=Facebook~Instagram~MySpace~Pinterest~Reddit~Snapchat~TikTok~Tumblr~Twitter~WeChat~Whatsapp~YouTube" loading="lazy" style="width: 100%; height: 600px; border: 0px none;"></iframe>
 
 ---
-
-
-```{r, echo=F}
-# All defaults
-include_graphics("https://kinsta.com/wp-content/uploads/2018/10/linkedin-members-map.png")
-```
-
-.center[Linkedin has 310 MAUs and 740 million members. (Only 16M in DACH) ]
-
----
-
-
-<iframe src="https://ourworldindata.org/grapher/daily-hours-spent-with-digital-media-per-adult-user?country=~USA" loading="lazy" style="width: 100%; height: 600px; border: 0px none;"></iframe>
-
----
-
-
-<iframe src="https://www.pewresearch.org/internet/chart/which-social-media-platforms-are-most-popular/iframe/#chart" loading="lazy" style="width: 100%; height: 600px; border: 0px none;"></iframe> 		
-
----
-
+## Some Feedback:
 
 "I'm assuming that this is just a pool meant to limit to the next phase, interviews. I know I said that for some applicants they might need to get an office clerk position, but I would say make sure you contact them to ask them if you want to interview for those positions. Do anything else would be almost disrespectful, in my opinion."
 
@@ -735,7 +728,6 @@ include_graphics("https://kinsta.com/wp-content/uploads/2018/10/linkedin-members
 
 "Was this for research or actual candidacy?" 
 
----
 
 
 
