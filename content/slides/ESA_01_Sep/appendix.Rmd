@@ -222,6 +222,31 @@ testcalbadtab
 ]
 
 ---
+
+# Treatment 2: Mental Health
+.center[
+[<img src="treatment_mental_health.jpg" width="700"/>](treatment_mental_health.jpg)
+]
+
+---
+# Treatment 3: Gap
+.center[
+[<img src="treatment_gap.jpg" width="700"/>](treatment_gap.jpg)
+]
+
+---
+# Treatment 4: Gap + Lie
+.center[
+[<img src="treatment_gap_lie.jpg" width="700"/>](treatment_gap_lie.jpg)
+]
+
+---
+# Treatment 5: No Social Media
+.center[
+[<img src="treatment_no_info.jpg" width="400"/>](treatment_no_info.jpg)
+]
+
+---
 # Results: Mental Health
 
 .pull-left[
