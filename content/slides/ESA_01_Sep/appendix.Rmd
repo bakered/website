@@ -67,6 +67,7 @@ library(arsenal)
 library(knitr)
 library(GGally)
 library(tufte)
+library(kableExtra)
 
 reverse_legend_labels <- function(plotly_plot) {
   n_labels <- length(plotly_plot$x$data)
@@ -354,6 +355,45 @@ testcalbadtab
 ```
 ]
 ]
+
+---
+### Interactions Candidate characterisitics
+
+```{r echo = F, results="asis"}
+interactTabAppCharac =  readRDS(file = "..\\exhibits\\interactTabAppCharac.RDS")
+interactTabAppCharac %>% kbl() %>%
+  column_spec(2, bold = ifelse(grepl("\\*", interactTabAppCharac[,1]), T, F)) %>%
+  column_spec(3, bold = ifelse(grepl("\\*", interactTabAppCharac[,2]), T, F)) %>%
+  column_spec(4, bold = ifelse(grepl("\\*", interactTabAppCharac[,3]), T, F)) %>%
+  column_spec(5, bold = ifelse(grepl("\\*", interactTabAppCharac[,4]), T, F)) %>%
+  column_spec(6, bold = ifelse(grepl("\\*", interactTabAppCharac[,5]), T, F))
+```
+
+### Interactions Evaluator Characteristics
+
+```{r echo = F, results="asis"}
+interactTabEvalCharac =  readRDS(file = "..\\exhibits\\interactTabEvalCharac.RDS")
+interactTabEvalCharac %>% kbl() %>%
+  column_spec(2, bold = ifelse(grepl("\\*", interactTabEvalCharac[,1]), T, F)) %>%
+  column_spec(3, bold = ifelse(grepl("\\*", interactTabEvalCharac[,2]), T, F)) %>%
+  column_spec(4, bold = ifelse(grepl("\\*", interactTabEvalCharac[,3]), T, F)) %>%
+  column_spec(5, bold = ifelse(grepl("\\*", interactTabEvalCharac[,4]), T, F)) %>%
+  column_spec(6, bold = ifelse(grepl("\\*", interactTabEvalCharac[,5]), T, F))
+```
+
+---
+
+### Interactions Evaluator Opinions
+
+```{r echo = F, results="asis"}
+interactTabOpinions =  readRDS(file = "..\\exhibits\\interactTabEvalOpin.RDS")
+interactTabOpinions %>% kbl() %>%
+  column_spec(2, bold = ifelse(grepl("\\*", interactTabOpinions[,1]), T, F)) %>%
+  column_spec(3, bold = ifelse(grepl("\\*", interactTabOpinions[,2]), T, F)) %>%
+  column_spec(4, bold = ifelse(grepl("\\*", interactTabOpinions[,3]), T, F)) %>%
+  column_spec(5, bold = ifelse(grepl("\\*", interactTabOpinions[,4]), T, F)) %>%
+  column_spec(6, bold = ifelse(grepl("\\*", interactTabOpinions[,5]), T, F))
+```
 
 ---
 # Results: Mental Health
@@ -701,21 +741,19 @@ corr_plot
 ---
 
 
-.reduced[
-```{r}
-tableby1 = readRDS(file = "..\\exhibits\\tableby1.RDS")
-#tableby1 %>% kable()
-```
-]
-
----
-
 ## Education and SM Treatment
 ```{r, fig.asp=0.5, fig.width=12}
 educ_tr_boxplot = readRDS(file = "..\\exhibits\\educ_tr_boxplot.RDS")
 educ_tr_boxplot
 ```
 
+---
+
+## TF-IDF
+```{r, fig.asp=0.5, fig.width=12}
+notes_text = readRDS(file = "..\\exhibits\\notes_text.RDS")
+notes_text
+```
 
 ---
 ## Some Feedback:

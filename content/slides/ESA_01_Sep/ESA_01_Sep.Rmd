@@ -67,6 +67,7 @@ library(arsenal)
 library(knitr)
 library(GGally)
 library(tufte)
+library(cowplot)
 
 reverse_legend_labels <- function(plotly_plot) {
   n_labels <- length(plotly_plot$x$data)
@@ -107,14 +108,13 @@ share_employers + theme_xaringan()
 
 .center2[
 .bullet-content[
-How do application evaluators …  
-1. react to less appealing SM content?  
+What is the effect of ... 
+1. ..social media on candidate rating?
 
-2. react to candidates with mental health issues?  
+2. ..absence of social media on candidate rating? 
 
-3. contradictory info in SM and CV?  
+3. ..contradictory info in social media and CV?  
 
-4. a lack of an online presence?  
 ]
 ]
 
@@ -207,12 +207,68 @@ linear_fitmodp_plot + theme_xaringan()
 ]
 
 ---
-# Results
 
-Add some (all?) of the coef plots from paper showing results robust across different characteristics.
-
+.pull-left[
+```{r, fig.asp=0.35, fig.width=7}
+app.charac.1A = readRDS(file = "..\\exhibits\\app.charac.1A.RDS")
+app.charac.1B = readRDS(file = "..\\exhibits\\app.charac.1B.RDS")
+app.charac.1 = cowplot::plot_grid(app.charac.1A+theme_xaringan(text_font_size=15, title_font_size=20),
+                                  app.charac.1B+ theme_xaringan(text_font_size=15, title_font_size=20), 
+                                  nrow=1, rel_widths = c(4.5,3.5))
+app.charac.1
+app.charac.2A = readRDS(file = "..\\exhibits\\app.charac.2A.RDS")
+app.charac.2B = readRDS(file = "..\\exhibits\\app.charac.2B.RDS")
+app.charac.2 = cowplot::plot_grid(app.charac.2A+theme_xaringan(text_font_size=15, title_font_size=20),
+                                  app.charac.2B+ theme_xaringan(text_font_size=15, title_font_size=20), 
+                                  nrow=1, rel_widths = c(4.5,3.5))
+app.charac.2
+```
+]
+.pull-right[
+```{r, fig.asp=0.35, fig.width=7}
+eval.charac.1A = readRDS(file = "..\\exhibits\\eval.charac.1A.RDS")
+eval.charac.1B = readRDS(file = "..\\exhibits\\eval.charac.1B.RDS")
+eval.charac.1 = cowplot::plot_grid(eval.charac.1A+theme_xaringan(text_font_size=15, title_font_size=20), 
+                                   eval.charac.1B+ theme_xaringan(text_font_size=15, title_font_size=20), 
+                                   nrow=1, rel_widths = c(4.5,3.5))
+eval.charac.1
+eval.charac.2A = readRDS(file = "..\\exhibits\\eval.charac.2A.RDS")
+eval.charac.2B = readRDS(file = "..\\exhibits\\eval.charac.2B.RDS")
+eval.charac.2 = cowplot::plot_grid(eval.charac.2A+theme_xaringan(text_font_size=15, title_font_size=20), 
+                                   eval.charac.2B+ theme_xaringan(text_font_size=15, title_font_size=20), 
+                                   nrow=1, rel_widths = c(4.5,3.5))
+eval.charac.2
+eval.charac.3A = readRDS(file = "..\\exhibits\\eval.charac.3A.RDS")
+eval.charac.3B = readRDS(file = "..\\exhibits\\eval.charac.3B.RDS")
+eval.charac.3 = cowplot::plot_grid(eval.charac.3A+theme_xaringan(text_font_size=15, title_font_size=20),
+                                   eval.charac.3B+theme_xaringan(text_font_size=15, title_font_size=20), 
+                                   nrow=1, rel_widths = c(4.5,3.5))
+eval.charac.3
+```
+]
 ---
 
+
+```{r, fig.asp=0.35, fig.width=7}
+eval.opin.1A = readRDS(file = "..\\exhibits\\eval.opin.1A.RDS")
+eval.opin.1B = readRDS(file = "..\\exhibits\\eval.opin.1B.RDS")
+eval.opin.1 = cowplot::plot_grid(eval.opin.1A+theme_xaringan(text_font_size=15, title_font_size=20), 
+                                 eval.opin.1B+ theme_xaringan(text_font_size=15, title_font_size=15), 
+                                 nrow=1, rel_widths = c(4.5,3.5))
+eval.opin.1
+eval.opin.2A = readRDS(file = "..\\exhibits\\eval.opin.2A.RDS")
+eval.opin.2B = readRDS(file = "..\\exhibits\\eval.opin.2B.RDS")
+eval.opin.2 = cowplot::plot_grid(eval.opin.2A+theme_xaringan(text_font_size=15, title_font_size=20), 
+                                 eval.opin.2B+ theme_xaringan(text_font_size=15, title_font_size=20), 
+                                 nrow=1, rel_widths = c(4.5,3.5))
+eval.opin.2
+eval.opin.3A = readRDS(file = "..\\exhibits\\eval.opin.3A.RDS")
+eval.opin.3 = cowplot::plot_grid(eval.opin.3A+theme_xaringan(text_font_size=15, title_font_size=20), 
+                                 nrow=1, rel_widths = c(4.5,3.5))
+eval.opin.3
+```
+
+---
 
 class: center, middle
 
