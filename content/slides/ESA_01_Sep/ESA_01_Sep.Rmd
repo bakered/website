@@ -275,6 +275,9 @@ eval.opin.2 = cowplot::plot_grid(eval.opin.2A+theme_xaringan(text_font_size=15, 
                                  eval.opin.2B+ theme_xaringan(text_font_size=15, title_font_size=20), 
                                  nrow=1, rel_widths = c(4.5,3.5))
 eval.opin.2
+```
+
+```{r, fig.asp=0.7, fig.width=3.5}
 eval.opin.3A = readRDS(file = "..\\exhibits\\eval.opin.3A.RDS")
 eval.opin.3 = cowplot::plot_grid(eval.opin.3A+theme_xaringan(text_font_size=15, title_font_size=20), 
                                  nrow=1, rel_widths = c(4.5,3.5))
