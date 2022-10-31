@@ -2,7 +2,7 @@
 title: 2022-10-26-Economist Graphs
 author: ''
 date: '2022-10-26'
-publishDate: '2022-10-28'
+publishDate: '2022-10-31'
 slug: 2022-10-26
 categories: []
 tags: []
