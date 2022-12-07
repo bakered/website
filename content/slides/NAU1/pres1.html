@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Is the Endowment Effect a rational response to the Winner’s Curse?</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Ed Baker" />
+    <script src="libs/header-attrs/header-attrs.js"></script>
+    <link href="libs/remark-css/default.css" rel="stylesheet" />
+    <link href="libs/pagedtable/css/pagedtable.css" rel="stylesheet" />
+    <script src="libs/pagedtable/js/pagedtable.js"></script>
+    <link href="libs/panelset/panelset.css" rel="stylesheet" />
+    <script src="libs/panelset/panelset.js"></script>
+    <link href="libs/tile-view/tile-view.css" rel="stylesheet" />
+    <script src="libs/tile-view/tile-view.js"></script>
+    <link rel="stylesheet" href="my.pres.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+.title[
+# Is the Endowment Effect a rational response to the Winner’s Curse?
+]
+.author[
+### Ed Baker
+]
+
+---
+
+
+
+
+
+
+
+
+## Puzzle
+
+.bullet-content[
+- In Behavioural Economics there is a WTP-WTA gap attributed to bias.
+- In Financial Market Modeling there is the bid-ask spread attributed to a rational response to asymmetric information.
+]
+
+--
+
+&lt;img src="pres1_files/figure-html/unnamed-chunk-1-1.png" style="display: block; margin: auto;" /&gt;
+
+---
+
+## Information not Important
+.bullet-content[
+`\begin{align*}
+ WTP(x) &amp;= \mathbb{E}(x) \\
+ WTA(x) &amp;= \mathbb{E}(x) \\
+ WTP(x) &amp;= WTA(x)
+\end{align*}`
+]
+
+--
+
+## Information Important
+.bullet-content[
+`\begin{align*}
+ WTP(x) &amp;= \mathbb{E}(x|\textrm{ someone wants to sell }x) \\
+ WTA(x) &amp;= \mathbb{E}(x|\textrm{ someone wants to buy }x) \\
+ WTP(x) &amp;\leq WTA(x)
+\end{align*}`
+]
+
+---
+
+## Claim
+
+.bullet-content[
+if..
+1. Agents do not know the value of `\(x\)`.
+2. Agents values of `\(x\)` are correlated
+
+then  
+$$ WTP(x) &lt; WTA(x) $$
+]
+
+---
+
+## Agents do not know the value of x.
+
+.bullet-content[
+- The easy case:
+    - Goods with Resale value
+    - New Unknown Goods (books, films)
+- But also consider the mug:
+    - I am not a mug expert
+    - I want to own mugs other people find attractive
+    - I cannot perfectly predict how I will feel about the mug in the future
+    - I do not know what else is available
+    - To know the dollar value of a mug is to know the EU of the mug and the EU of a dollar
+    - If there is any information that could cause me to change my valuation, then there is uncertainty
+
+]
+
+---
+
+## Similar to ...
+
+.bullet-content[
+- Winners Curse  
+- No trade Theorem: Aumann (1976) 
+- Market for Lemons, Asymmetric Information: Akerlof (1978) 
+- Herding: Banerjee (1992)
+- Social Learning Models 
+- Frenkel et al. (2018)
+- Dupont and Lee (2002)
+- Bruner, Calegari and Handfield (2020)
+]
+
+---
+
+## Model
+.pull-left[
+
+**GAME**
+
+Players:  
+`\(i \in \{B, S\}\)`, one Buyer and one Seller.  
+Strategies:  
+`\(s_S = WTA \in \mathbb{R}\)`  
+`\(s_B = WTP \in \mathbb{R}\)`  
+Payoffs:  
+`\(u_S = p - v_S\)` if transaction else `\(0\)`  
+`\(u_B = v_B - p\)` if transaction else `\(0\)`  
+
+**ORDER**
+
+1. Nature chooses `\(v_i\)` and `\(s_i\)` 
+2. `\(i\)` observes `\(s_i\)`   
+3. Buyer chooses WTP, Seller chooses WTA  
+4. Nature chooses `\(p\)` randomly (BDM), transaction if `\(WTA &lt; p &lt; WTP\)`
+]
+
+.pull-right[
+**VARIABLES**
+
+`\(v_i\)` : &amp;nbsp; Value of object to Person `\(i\)`.  
+`\(\qquad\)` `\(\mathbb{E}(V) = \mu\)`  
+`\(\qquad\)` `\(\mathbb{V}(V) = \sigma_d^2\)`  
+`\(s_i\)` : &amp;nbsp; Noisy unbiased signal of `\(v_i\)` observed by `\(i\)`.  
+`\(\qquad\)` `\(\mathbb{E}(S_i) = v_i\)`  
+`\(\qquad\)` `\(\mathbb{V}(S_i) = \sigma_i^2\)`  
+`\(p\)` : &amp;nbsp; transaction price  
+`\(\qquad\)` `\(p \in \mathbb{R}\)`
+]
+---
+
+## Model (Normal)
+.pull-left[
+
+**GAME**
+
+Players:  
+`\(i \in \{B, S\}\)`, one Buyer and one Seller.  
+Strategies:  
+`\(s_S = WTA \in \mathbb{R}\)`  
+`\(s_B = WTP \in \mathbb{R}\)`  
+Payoffs:  
+`\(u_S = p - v_S\)` if transaction else `\(0\)`  
+`\(u_B = v_B - p\)` if transaction else `\(0\)`  
+
+**ORDER**
+
+1. Nature chooses `\(v_i\)` and `\(s_i\)` 
+2. `\(i\)` observes `\(s_i\)`   
+3. Buyer chooses WTP, Seller chooses WTA  
+4. Nature chooses `\(p\)` randomly (BDM), transaction if `\(WTA &lt; p &lt; WTP\)`
+]
+
+.pull-right[
+**VARIABLES**
+
+`\(v_i\)` : &amp;nbsp; Value of object to Person `\(i\)`.  
+`\(\qquad\)` `\(\sim N(\mu, \sigma_d^2)\)`  
+`\(s_i\)` : &amp;nbsp; Noisy unbiased signal of `\(v_i\)` observed by `\(i\)`.  
+`\(\qquad\)` `\(\sim N(v_i, \sigma_i^2)\)`  
+`\(p\)` : &amp;nbsp; transaction price  
+`\(\qquad\)` `\(p \in \mathbb{R}\)`  
+]
+---
+
+
+## Predictions
+
+.bullet-content[
+
+- `\(GAP_i(\sigma_i, \sigma_d)\)` is increasing in `\(\sigma_i\)` and decreasing in `\(\sigma_d\)`
+- The greater the uncertainty of value, the greater the gap
+- The greater the similarity, the greater the gap 
+]
+
+---
+
+## Info Based Approach Explains
+
+.bullet-content[
+- Experienced traders do not have Endowment Effect (List, 2003)
+- Smaller Endowment Effect when items are similar (Chapman, 1998)
+- Bigger WTP-WTA gaps for non-market goods (Tunçel &amp; Hammitt, 2014)
+- Endowment Effect sometimes vanishes (Plott &amp; Zeiler, 2007)
+
+]
+
+--
+
+### and more vaguely and generally (?)
+
+.bullet-content[
+Herding, Fads and Fashions, Booms and Busts, Imitation, Conformity, Social Proof, Preferences correlated across cultures, Advertising Techniques, Status Quo Bias, preference reversal.
+]
+
+---
+
+## Experiment 1: The Model Itself
+
+.bullet-content[
+- Explain RV drawn from distribution (or with balls from urns).  
+- Elicit WTP/WTA  
+- Vary (dis)similarity
+- Vary uncertainty
+- Could be unnatural?
+]
+ 
+---
+
+## Experiment 2: Vernon Smith Style
+
+.bullet-content[
+- Elicit WTA/WTP for lotteries for tokens.  
+- Vary the (dis)similarity via
+  - tokens worth different amounts for different participants.
+]
+
+---
+
+## Experiment 3: Lotteries for Money
+
+.bullet-content[
+- Elicit WTA/WTP for lotteries.  
+- Vary 'uncertainty' via 
+  1. Complexity of lotteries
+  2. Number of practice draws
+  3. Decision time  
+  4. Maths test score
+- Vary (dis)similarity via 
+  1. Risk aversion score visible to both `\(i\)` and `\(j\)`
+
+  
+]
+
+---
+
+## Experiment 4: Goods
+
+.bullet-content[
+- Elicit WTP/WTA for goods
+- Vary 'uncertainty' via:
+  1. Decision time 
+  2. Giving more information about the goods
+  3. Ask questions that force participants to think about value
+- Vary (dis)similarity via
+  1. with Genderised vs non-genderised goods + reveal gender?
+  2. goods with high variation i.e. some people use them a lot, other people rarely.
+  e.g. shoes + Shoe size?
+  
+]
+
+---
+
+## Experiment 5: Teams
+
+.bullet-content[
+- Elicit WTP/WTA for goods or lotteries
+- Decisions made  alone vs in teams of two (with chat)
+- They must agree, but then each receive or pay full p
+- Could increase effort or model as two independent signals
+- Teams should have smaller gaps than individuals.
+]
+
+---
+
+## Experiment 6: Exchange with whom?
+
+.bullet-content[
+- Elicit WTP/WTA for goods.
+- Vary dis(similarity):  
+  - exchange with experimenter vs  
+  - exchange with fellow student vs
+  - exchange with fellow student who already owns a lot of said good
+- repeat with different goods, swapping buying and selling roles, one being chosen at the end
+]
+
+---
+
+## Experiment 7: Similar Goods
+
+.bullet-content[
+- Ask willing to Exchange
+- Vary 'uncertainty' via:
+ - changing the goods: (similar goods, smaller gap)
+- Already done (Chapman, 1998)
+]
+
+---
+
+## Experiment 8: Extra Info
+
+.bullet-content[
+- Ask willing to Exchange 
+- Give info: either  
+  1. Another person was not willing to exchange, vs
+  2. Another person was willing to exchange
+- Could be unnatural?  
+]
+
+---
+
+## Experiment 9: Find an Object
+
+.bullet-content[
+- Ask willing to Exchange 
+- Frame with a story: either  
+  1. You meet another individual, would you trade with them?
+  2. You find object, but you only have space for one in your bag
+- Could seem artificial?  
+]
+
+---
+
+# Thanks for listening
+
+
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"countIncrementalSlides": false,
+"ratio": "16:9"
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+// add `data-at-shortcutkeys` attribute to <body> to resolve conflicts with JAWS
+// screen reader (see PR #262)
+(function(d) {
+  let res = {};
+  d.querySelectorAll('.remark-help-content table tr').forEach(tr => {
+    const t = tr.querySelector('td:nth-child(2)').innerText;
+    tr.querySelectorAll('td:first-child .key').forEach(key => {
+      const k = key.innerText;
+      if (/^[a-z]$/.test(k)) res[k] = t;  // must be a single letter (key)
+    });
+  });
+  d.body.setAttribute('data-at-shortcutkeys', JSON.stringify(res));
+})(document);
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

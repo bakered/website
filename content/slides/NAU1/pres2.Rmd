@@ -1,0 +1,161 @@
+---
+title: "Untitled"
+author: "Edmund Baker"
+date: "10 2 2021"
+output: ioslides_presentation
+runtime: shiny
+---
+
+```{r setup, include=FALSE, echo=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+library(ggplot2)
+library(shiny)
+library(tidyr)
+library(dplyr)
+## do we need?
+library(ggfortify)
+cbp1 = c("#999999", "#E69F00", "#56B4E9", "#009E73",
+         "#F0E442", "#0072B2", "#D55E00", "#CC79A7")
+```
+
+## Model
+
+```{r , echo = FALSE}
+a = 1
+b = 1
+sigma.c = sqrt(a^2 + b^2)
+t= 1
+adjustment = 1-pnorm(t, mean = 0, sd=sqrt((1+sigma.c^2))) #(1-p(i.j.signal.dist)(p))
+
+(1 / (sigma.c * sqrt(1 + (1/sigma.c)^2))) * dnorm(-t / (sigma.c * sqrt(1 + (1/sigma.c)^2))) / adjustment
+  
+(1 / (sigma.c * sqrt(1 + (1/sigma.c)^2))) * dnorm(-t / (sigma.c * sqrt(1 + (1/sigma.c)^2))) / adjustment
+
+
+### set up fluidpage
+ui <- fluidPage(
+  titlePanel("Model"),
+  
+  sidebarLayout(
+    
+    sidebarPanel(
+      checkboxGroupInput("plot.what", "Show Function:", choices = c("Prior Value" = "prior.value",
+                                                                    "Signal j" = "signal.j",
+                                                                    "Posterior" = "posterior")),
+      checkboxGroupInput("options", "Options:", choices = c("Threshold" = "threshold",
+                                                            "i is Buyer" = "buyer")),
+      sliderInput("t", "Define Threshold:", min = -10, max = 10, value = 1, step = 0.01),
+      sliderInput("sigma.i", "Define sd of i's signal:", min = 0, max = 10, value = 1, step = 0.01),
+      sliderInput("sigma.s", "Define sd of similarity:", min = 0, max = 10, value = 0, step = 0.01),
+      sliderInput("sigma.j", "Define sd of j's signal:", min = 0, max = 10, value = sqrt(2), step = 0.01),
+      sliderInput("signal.i", "Define signal i receives:", min = -10, max = 10, value = 0, step = 0.01),
+      numericInput("min.x", "from-x-axis:",value = -10),
+      numericInput("max.x", "to-x-axis:", value = 10),
+      numericInput("sensitivity", "Define sensitivity:", value = 200, step = 10)
+    ),
+    
+    mainPanel(
+      plotOutput("pdfPlot")
+    )
+  )
+)
+
+
+server <- function(input, output) {
+  output$pdfPlot <- renderPlot({
+    ## define 'error function'
+    erf <- function(x) 2 * pnorm(x * sqrt(2)) - 1
+    ## (see Abramowitz and Stegun 29.2.29)
+    
+    ## function f(x.) is pdf of posterior value of item.
+    posterior.pdf = function(x., t., signal.i., sigma.i., sigma.c., scaler.=1){
+      numerator = (0.5 - 0.5*erf((t.-x.) / (sigma.c.*sqrt(2)))) *
+        ((1 / sqrt(2*pi*sigma.i.^2))* exp(-(x. - signal.i.)^2 / (2*sigma.i.^2))) 
+      return(numerator/scaler.)
+    }
+    
+    sigma.c = sqrt(input$sigma.s^2 + input$sigma.j^2)
+    do.posterior = "posterior" %in% input$plot.what
+    do.prior = "prior.value" %in% input$plot.what
+    do.signal.j = "signal.j" %in% input$plot.what
+    do.threshold = "threshold" %in% input$options
+    do.buyer = "buyer" %in% input$options
+    
+    #min.val and max.val for which values of x to calculate
+    min.val = qnorm(0.00001, mean = input$signal.i, sd=(sqrt(input$sigma.i^2 + sigma.c^2)))
+    max.val = qnorm(0.99999, mean = input$signal.i, sd=(sqrt(input$sigma.i^2 + sigma.c^2)))
+    distr.table = data.frame(x.d = seq(from = min.val, to = max.val, length.out = input$sensitivity))
+    
+    #reflect in y axis if buyer
+    if(do.buyer){distr.table$x.d = input$signal.i - distr.table$x.d}
+    #plot the prior distribution
+    if(do.prior){
+      distr.table$prior.value = sapply(distr.table$x.d, FUN = function(x){dnorm(x, mean = input$signal.i, sd=input$sigma.i)})
+    }
+    #plot the posterior distribution
+    if(do.buyer){t = -input$t} else {t = input$t}
+    if(do.posterior){
+      if(do.threshold){
+        distr.table$raw.pdf = sapply(distr.table$x.d, FUN = function(x.){posterior.pdf(x = x., t.= t, signal.i.=input$signal.i, sigma.i.=input$sigma.i, sigma.c.=sigma.c)})
+        scaler = (distr.table$x.d[input$sensitivity] - distr.table$x.d[1]) * sum(distr.table$raw.pdf) / input$sensitivity
+        # scaler = integrate(f = posterior.pdf,  
+        #                    lower = input$min.x, #-Inf,
+        #                    upper = input$max.x, #Inf,
+        #                    t.=input$t, signal.i.=input$signal.i, sigma.i.=input$sigma.i, sigma.c.=sigma.c, scaler.=1)$value
+        distr.table$posterior = distr.table$raw.pdf / scaler
+      } else {
+        distr.table$posterior = distr.table$prior.value
+      }
+      E.posterior = sum(distr.table$x.d * distr.table$posterior / sum(distr.table$posterior))
+    }
+    print(E.posterior)
+    
+    #signal j pdf
+    if(do.signal.j){
+      distr.table$signal.j = sapply(distr.table$x.d, FUN = function(x){dnorm(x, mean = input$signal.i, sd=sqrt(input$sigma.i^2 + sigma.c^2))})
+        if(do.threshold){
+          distr.table$signal.j[distr.table$x.d < t] = 0
+          scaler.signal.j = (distr.table$x.d[input$sensitivity] - distr.table$x.d[1]) * sum(distr.table$signal.j) / input$sensitivity
+          distr.table$signal.j = distr.table$signal.j / scaler.signal.j
+        }
+    }
+    #reflect back for plotting
+    if(do.buyer){
+      distr.table$x.d = input$signal.i - distr.table$x.d 
+      E.posterior = input$signal.i - E.posterior
+    }
+    
+    #data for ggplot
+    col.select = which(colnames(distr.table) %in% input$plot.what)
+    LD = distr.table %>% gather(key = distributions, value = density, col.select)
+    
+    
+    
+    plot = ggplot(data=LD, aes(x=x.d, y= density)) + 
+      geom_area(alpha=0.2, position = "identity", aes(fill=distributions)) +
+      geom_line(aes(colour=distributions)) +
+      lims(x=c(input$min.x, input$max.x))+
+      scale_colour_manual(name = NULL,
+                          breaks=c("posterior", "signal.j", "prior.value"),
+                          values = c("posterior" = cbp1[2], 
+                                     "signal.j" = cbp1[3], 
+                                     "prior.value" = cbp1[4]),
+                          labels = c("Posterior", "j Signal", "Prior Value")) +
+      scale_fill_manual(name = NULL,
+                        breaks=c("posterior", "signal.j", "prior.value"),
+                        values = c("posterior" = cbp1[2], 
+                                   "signal.j" = cbp1[3], 
+                                   "prior.value" = cbp1[4]),
+                        labels = c("Posterior", "j Signal", "Prior Value")) +
+      theme_classic() + 
+      labs(title=NULL, x="Value", y="Density")
+    if(do.posterior){plot = plot + geom_vline(aes(xintercept = E.posterior), colour = cbp1[2], show.legend = T, linetype = "dashed")} 
+    if(do.threshold){plot = plot + geom_vline(aes(xintercept = input$t), show.legend = F)}
+    plot
+  })
+}
+shinyApp(ui, server)
+
+
+
+```

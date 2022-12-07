@@ -1,0 +1,336 @@
+---
+title: "Is the Endowment Effect a rational response to the Winner's Curse?"
+author: "Ed Baker"
+output:
+  xaringan::moon_reader:
+    df_print: paged
+    lib_dir: libs
+    nature:
+      highlightStyle: github
+      countIncrementalSlides: false
+      ratio: 16:9
+    css: [my.pres.css, default]
+  slidy_presentation: default
+---
+
+```{r xaringan-panelset, echo=FALSE, warning=FALSE}
+xaringanExtra::use_panelset()
+```
+
+```{r xaringan-tile-view, echo=FALSE, warning=FALSE}
+xaringanExtra::use_tile_view()
+```
+
+```{r setup, include=FALSE, warning=FALSE}
+options(htmltools.dir.version = FALSE)
+```
+
+## Puzzle
+
+.bullet-content[
+- In Behavioural Economics there is a WTP-WTA gap attributed to bias.
+- In Financial Market Modeling there is the bid-ask spread attributed to a rational response to asymmetric information.
+]
+
+--
+
+```{r echo = FALSE, fig.width=4,fig.height=4, fig.align='center'}
+library(ggplot2)
+print(ggplot() +
+  lims(x=c(0, 1),
+       y= c(0, 1)) +
+  theme_classic() + 
+  labs(title="Types of Goods", y="Value Uncertainty", x="Correlation of Value"))
+```
+
+---
+
+## Information not Important
+.bullet-content[
+\begin{align*}
+ WTP(x) &= \mathbb{E}(x) \\
+ WTA(x) &= \mathbb{E}(x) \\
+ WTP(x) &= WTA(x)
+\end{align*}
+]
+
+--
+
+## Information Important
+.bullet-content[
+\begin{align*}
+ WTP(x) &= \mathbb{E}(x|\textrm{ someone wants to sell }x) \\
+ WTA(x) &= \mathbb{E}(x|\textrm{ someone wants to buy }x) \\
+ WTP(x) &\leq WTA(x)
+\end{align*}
+]
+
+---
+
+## Claim
+
+.bullet-content[
+if..
+1. Agents do not know the value of $x$.
+2. Agents values of $x$ are correlated
+
+then  
+$$ WTP(x) < WTA(x) $$
+]
+
+---
+
+## Agents do not know the value of x.
+
+.bullet-content[
+- The easy case:
+    - Goods with Resale value
+    - New Unknown Goods (books, films)
+- But also consider the mug:
+    - I am not a mug expert
+    - I want to own mugs other people find attractive
+    - I cannot perfectly predict how I will feel about the mug in the future
+    - I do not know what else is available
+    - To know the dollar value of a mug is to know the EU of the mug and the EU of a dollar
+    - If there is any information that could cause me to change my valuation, then there is uncertainty
+
+]
+
+---
+
+## Similar to ...
+
+.bullet-content[
+- Winners Curse  
+- No trade Theorem: Aumann (1976) 
+- Market for Lemons, Asymmetric Information: Akerlof (1978) 
+- Herding: Banerjee (1992)
+- Social Learning Models 
+- Frenkel et al. (2018)
+- Dupont and Lee (2002)
+- Bruner, Calegari and Handfield (2020)
+]
+
+---
+
+## Model
+.pull-left[
+
+**GAME**
+
+Players:  
+$i \in \{B, S\}$, one Buyer and one Seller.  
+Strategies:  
+$s_S = WTA \in \mathbb{R}$  
+$s_B = WTP \in \mathbb{R}$  
+Payoffs:  
+$u_S = p - v_S$ if transaction else $0$  
+$u_B = v_B - p$ if transaction else $0$  
+
+**ORDER**
+
+1. Nature chooses $v_i$ and $s_i$ 
+2. $i$ observes $s_i$   
+3. Buyer chooses WTP, Seller chooses WTA  
+4. Nature chooses $p$ randomly (BDM), transaction if $WTA < p < WTP$
+]
+
+.pull-right[
+**VARIABLES**
+
+$v_i$ : &nbsp; Value of object to Person $i$.  
+$\qquad$ $\mathbb{E}(V) = \mu$  
+$\qquad$ $\mathbb{V}(V) = \sigma_d^2$  
+$s_i$ : &nbsp; Noisy unbiased signal of $v_i$ observed by $i$.  
+$\qquad$ $\mathbb{E}(S_i) = v_i$  
+$\qquad$ $\mathbb{V}(S_i) = \sigma_i^2$  
+$p$ : &nbsp; transaction price  
+$\qquad$ $p \in \mathbb{R}$
+]
+---
+
+## Model (Normal)
+.pull-left[
+
+**GAME**
+
+Players:  
+$i \in \{B, S\}$, one Buyer and one Seller.  
+Strategies:  
+$s_S = WTA \in \mathbb{R}$  
+$s_B = WTP \in \mathbb{R}$  
+Payoffs:  
+$u_S = p - v_S$ if transaction else $0$  
+$u_B = v_B - p$ if transaction else $0$  
+
+**ORDER**
+
+1. Nature chooses $v_i$ and $s_i$ 
+2. $i$ observes $s_i$   
+3. Buyer chooses WTP, Seller chooses WTA  
+4. Nature chooses $p$ randomly (BDM), transaction if $WTA < p < WTP$
+]
+
+.pull-right[
+**VARIABLES**
+
+$v_i$ : &nbsp; Value of object to Person $i$.  
+$\qquad$ $\sim N(\mu, \sigma_d^2)$  
+$s_i$ : &nbsp; Noisy unbiased signal of $v_i$ observed by $i$.  
+$\qquad$ $\sim N(v_i, \sigma_i^2)$  
+$p$ : &nbsp; transaction price  
+$\qquad$ $p \in \mathbb{R}$  
+]
+---
+
+
+## Predictions
+
+.bullet-content[
+
+- $GAP_i(\sigma_i, \sigma_d)$ is increasing in $\sigma_i$ and decreasing in $\sigma_d$
+- The greater the uncertainty of value, the greater the gap
+- The greater the similarity, the greater the gap 
+]
+
+---
+
+## Info Based Approach Explains
+
+.bullet-content[
+- Experienced traders do not have Endowment Effect (List, 2003)
+- Smaller Endowment Effect when items are similar (Chapman, 1998)
+- Bigger WTP-WTA gaps for non-market goods (Tunçel & Hammitt, 2014)
+- Endowment Effect sometimes vanishes (Plott & Zeiler, 2007)
+
+]
+
+--
+
+### and more vaguely and generally (?)
+
+.bullet-content[
+Herding, Fads and Fashions, Booms and Busts, Imitation, Conformity, Social Proof, Preferences correlated across cultures, Advertising Techniques, Status Quo Bias, preference reversal.
+]
+
+---
+
+## Experiment 1: The Model Itself
+
+.bullet-content[
+- Explain RV drawn from distribution (or with balls from urns).  
+- Elicit WTP/WTA  
+- Vary (dis)similarity
+- Vary uncertainty
+- Could be unnatural?
+]
+ 
+---
+
+## Experiment 2: Vernon Smith Style
+
+.bullet-content[
+- Elicit WTA/WTP for lotteries for tokens.  
+- Vary the (dis)similarity via
+  - tokens worth different amounts for different participants.
+]
+
+---
+
+## Experiment 3: Lotteries for Money
+
+.bullet-content[
+- Elicit WTA/WTP for lotteries.  
+- Vary 'uncertainty' via 
+  1. Complexity of lotteries
+  2. Number of practice draws
+  3. Decision time  
+  4. Maths test score
+- Vary (dis)similarity via 
+  1. Risk aversion score visible to both $i$ and $j$
+
+  
+]
+
+---
+
+## Experiment 4: Goods
+
+.bullet-content[
+- Elicit WTP/WTA for goods
+- Vary 'uncertainty' via:
+  1. Decision time 
+  2. Giving more information about the goods
+  3. Ask questions that force participants to think about value
+- Vary (dis)similarity via
+  1. with Genderised vs non-genderised goods + reveal gender?
+  2. goods with high variation i.e. some people use them a lot, other people rarely.
+  e.g. shoes + Shoe size?
+  
+]
+
+---
+
+## Experiment 5: Teams
+
+.bullet-content[
+- Elicit WTP/WTA for goods or lotteries
+- Decisions made  alone vs in teams of two (with chat)
+- They must agree, but then each receive or pay full p
+- Could increase effort or model as two independent signals
+- Teams should have smaller gaps than individuals.
+]
+
+---
+
+## Experiment 6: Exchange with whom?
+
+.bullet-content[
+- Elicit WTP/WTA for goods.
+- Vary dis(similarity):  
+  - exchange with experimenter vs  
+  - exchange with fellow student vs
+  - exchange with fellow student who already owns a lot of said good
+- repeat with different goods, swapping buying and selling roles, one being chosen at the end
+]
+
+---
+
+## Experiment 7: Similar Goods
+
+.bullet-content[
+- Ask willing to Exchange
+- Vary 'uncertainty' via:
+ - changing the goods: (similar goods, smaller gap)
+- Already done (Chapman, 1998)
+]
+
+---
+
+## Experiment 8: Extra Info
+
+.bullet-content[
+- Ask willing to Exchange 
+- Give info: either  
+  1. Another person was not willing to exchange, vs
+  2. Another person was willing to exchange
+- Could be unnatural?  
+]
+
+---
+
+## Experiment 9: Find an Object
+
+.bullet-content[
+- Ask willing to Exchange 
+- Frame with a story: either  
+  1. You meet another individual, would you trade with them?
+  2. You find object, but you only have space for one in your bag
+- Could seem artificial?  
+]
+
+---
+
+# Thanks for listening
+
+
