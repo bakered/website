@@ -1,0 +1,1551 @@
+---
+title: "Does social learning cause endowment effects?"
+#subtitle: "Noisy Affiliated Utility"
+author: "Ed Baker <br> (Advisor: Prof. Dr. Grimm)"
+always_allow_html: true
+output:
+  xaringan::moon_reader:
+    df_print: paged
+    lib_dir: libs
+    nature:
+      highlightStyle: github
+      countIncrementalSlides: false
+      ratio: 16:9
+      beforeInit: "https://platform.twitter.com/widgets.js"
+    css: [my.pres2.css, xaringan-themer.css]
+  slidy_presentation: default
+---
+
+```{r xaringan-themer, include=FALSE, warning=FALSE}
+library(xaringanthemer)
+style_mono_accent(
+  base_color =  "#8CA88E", #"#1c5253", "#C8102E"
+  header_font_google = google_font("Josefin Sans"),
+  text_font_google   = google_font("Montserrat", "300", "300i"),
+  code_font_google   = google_font("Fira Mono"),
+  text_bold_color = "#000000", 
+  text_color = "#000000"
+)
+```
+
+```{r xaringan-panelset, echo=FALSE, include=FALSE, warning=FALSE}
+#xaringanExtra::use_panelset()
+```
+```{r xaringan-tile-view, echo=FALSE, include=FALSE, warning=FALSE}
+xaringanExtra::use_tile_view()
+```
+
+```{r global options, include=FALSE, warning=FALSE}
+knitr::opts_chunk$set(#fig.path='Figs/', 
+                      fig.width=12, fig.height=8, 
+                      echo=FALSE, warning=FALSE, message=FALSE,
+                      out.extra = 'style="display:block; margin:auto;"')
+library(dplyr)
+library(tidyverse)
+require(ggplot2)
+require(reshape2)
+library(ggpubr)
+library(lfe)
+library(gtools)
+library(data.table)
+library(tibble)
+
+colours = c("#32648EFF", "#8CA88E")
+colours2 = c('#440154FF',  '#29AF7FFF', "#32648EFF", '#DCE318FF')
+symnum.args = list(cutpoints = c(0, 0.01, 0.05, 0.1, Inf), symbols = c("***", "**", "*", "ns"))
+df = readRDS(file = "..\\long_data.RDS")
+select_cols = c("Mug1", 
+                "Mug",  
+                "Tablet", "Hat", 
+                "Shelf", "Mat", 
+                "Choc", "Clips", 
+                "Bowl", "Eraser", 
+                "BottleOpener", "Highlighter", "CameraCover", 
+                "Ruler", "Frame", 
+                "L0", "LA", "LA2", "LA3", "LAplus", "LA2plus", "LA3plus", "LB", "LB2", 
+                "LB3", "LBplus", "LB2plus", "LB3plus", "LC", "LC2", "LC3")
+for(var in select_cols){
+  plotdf = df %>% subset(good==var)
+ formula =  as.formula('raw ~  treatment  | 0 | 0 | 0 ')
+ fitmod = felm(keepX=TRUE, formula = formula, data = plotdf)
+ sumFM = summary(fitmod, robust=T)
+plotdf = plotdf %>% 
+  group_by(treatment2, Seller) %>%
+  summarise_at('raw', list(valuation = function(x){mean(x, na.rm = T)},
+                             se = function(x){sd(x, na.rm=T)/sqrt(n())})) 
+plotdf$se = sumFM$coefficients[,2]
+plot = plotdf %>%
+  ggplot(aes(x=treatment2, y=valuation, fill=Seller)) + 
+  geom_bar(stat='identity', position = position_dodge(width=0.9))+
+  geom_errorbar(aes(ymin=valuation-se, ymax=valuation+se), width=.1, position=position_dodge(width=0.9)) +
+  labs(fill="", x="Treatment", y="Value (€)", title=paste(var, "Mean")) +
+  theme_classic() +
+  scale_fill_manual(values = colours) +
+  theme_xaringan() +
+  theme(legend.position="top")
+ggsave(path = "figs/", filename = paste(var, "_plot.png", sep=""), plot = plot, device = "png")
+}
+
+```
+
+layout: true
+count: false
+
+---
+
+# How do people value goods?
+
+.pull-left[
+<figure>
+<img src="https://i.ibb.co/CnS6vm8/mug-photo2.png" alt="mug-photo2" border="0">
+<figcaption>  </figcaption>
+</figure>
+]
+.pull-right[
+.center2[
+.ginormous[
+~ € ?
+]
+]
+]
+---
+
+# The Endowment Effect
+
+```{r, echo=FALSE, include=TRUE, warning=FALSE, }
+library(ggplot2)
+ggplot(data = data.frame('object' = c("WTP", "WTP"), 'value' = c(0,1), 'labels' = c("WTP", "WTA")), aes(x=value, y=object, label=labels)) +
+  xlim(c(-0.1, 1.1)) +
+  geom_text(hjust=0.5, vjust=3, size=9) +
+  geom_errorbar(aes(xmin=0, xmax=1), width=0.05, size=2) +
+  theme_void()
+
+```
+
+---
+
+# An illustrative example
+
+.bullet-content[
+If high value for seller, then more likely a high value also for buyer. 
+<br>  
+<br>  
+  
+]
+<br>
+<br>
+.center2[
+.pull-left[
+.bullet-content[
+<table class='simpletable'>
+<caption>Probability Table</caption>
+    <tr>
+        <td></td>
+        <td>u<sub>b</sub> = 0</td>
+        <td>u<sub>b</sub> = 100</td>
+    </tr>
+    <tr style="background-color: transparent;">
+        <td>u<sub>s</sub> = 0</td>
+        <td style="text-align: center;"> &#8531; </td>
+        <td style="text-align: center;"> &#8537; </td>
+    </tr>
+    <tr>
+        <td>u<sub>s</sub> = 100</td>
+        <td cstyle="text-align: center;"> &#8537; </td>
+        <td style="text-align: center;"> &#8531; </td>
+    </tr>
+</table>
+]
+]
+]
+--
+.pull-right[
+.center2[
+.bullet-content[
+$\mathbb{E}$[good] = 50
+]
+]
+]
+---
+
+# An illustrative example
+
+.bullet-content[
+Each trader receives a signal with a <span class="fractop">2</span>&frasl;<span class="fracbot">3</span> of being correct.
+]
+
+---
+
+# An illustrative example
+
+.bullet-content[
+If the seller receives a low signal.
+]
+
+
+.center2[
+.pull-left[
+.bullet-content[
+<table class='simpletable'>
+<caption>Probability Table</caption>
+    <tr>
+        <td></td>
+        <td></td>
+        <td>u<sub>b</sub> = 0</td>
+        <td>u<sub>b</sub> = 100</td>
+    </tr>
+    <tr>
+        <td>&#8594;</td>
+        <td>u<sub>s</sub> = 0</td>
+        <td> <span class="fractop">4</span>&frasl;<span class="fracbot">9</span></td>
+        <td> <span class="fractop">2</span>&frasl;<span class="fracbot">9</span></td>
+    </tr>
+    <tr>
+        <td></td>
+        <td>u<sub>s</sub> = 100</td>
+        <td> <span class="fractop">1</span>&frasl;<span class="fracbot">9</span></td>
+        <td> <span class="fractop">2</span>&frasl;<span class="fracbot">9</span></td>
+    </tr>
+</table>
+]
+]
+]
+--
+.pull-right[
+.center2[
+.bullet-content[
+$\mathbb{E}$[good|x<sub>s</sub>=0] = 33
+]
+]
+]
+---
+
+# An illustrative example
+
+
+.center2[
+.pull-left[
+.bullet-content[
+<table class='simpletable'>
+<caption>Probability Table</caption>
+    <tr>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td style="background-color: #E8EDE8;">&#8595;</td>
+    </tr>
+    <tr style="background-color: transparent;">
+        <td></td>
+        <td></td>
+        <td>u<sub>b</sub> = 0</td>
+        <td style="background-color: #E8EDE8;">u<sub>b</sub> = 100</td>
+    </tr>
+    <tr style="background-color: #E8EDE8;">
+        <td>&#8594;</td>
+        <td>u<sub>s</sub> = 0</td>
+        <td> <span class="fractop">4</span>&frasl;<span class="fracbot">13</span></td>
+        <td style="background-color: #8CA88E;"> <span class="fractop">4</span>&frasl;<span class="fracbot">13</span></td>
+    </tr>
+    <tr style="background-color: transparent;">
+        <td></td>
+        <td>u<sub>s</sub> = 100</td>
+        <td> <span class="fractop">1</span>&frasl;<span class="fracbot">13</span></td>
+        <td style="background-color: #E8EDE8;"> <span class="fractop">4</span>&frasl;<span class="fracbot">13</span></td>
+    </tr>
+</table>
+]
+]
+]
+
+--
+
+.pull-right[
+.center2[
+.bullet-content[
+$\mathbb{E}$[good|x<sub>s</sub>=0, x<sub>b</sub>=100] = 38
+]
+]
+]
+
+
+
+---
+
+# An illustrative example
+
+.bullet-content[
+WTA(g) = $\mathbb{E}$(g) &#10060;   
+WTA(g) = $\mathbb{E}$(g| someone wants to buy g) &#9989;
+]
+
+--
+
+## Compare with the winner's curse 
+
+.bullet-content[
+b(g) = $\mathbb{E}$(g) &#10060;  
+b(g) = $\mathbb{E}$(g|b is the winning bid) &#9989;  
+]
+
+---
+
+# Model
+
+
+.pull-left[
+| Variable    | Description |
+| ----------- | ----------- |
+| $v_s$ | Unobserved value to seller, $s$ |
+| $v_b$ | Unobserved value to buyer, $b$ |
+| $F_v$ | Joint Distribution of $v_s$ & $v_b$ |
+| $x_s$ | Observed signal of $v_s$ <br> $= v_s + \epsilon_s$ |
+| $x_b$ | Observed signal of $v_b$ <br> $= v_b + \epsilon_b$ |
+| $F_\epsilon$ | Distribution of $\epsilon_i$ <br> $\mathbb{E}(epsilon) = 0$ |
+]
+
+.pull-right[
+.bullet.content[
+**Order**
+1. Nature chooses $v_s$, $v_b$, $x_s$, $x_b$
+2. $s$ observes $v_s$, $x_s$, $b$ observes $v_b$, $x_s$   
+3. Buyer chooses WTP, Seller chooses WTA  
+4. Nature chooses random $p$, trade occurs if $WTA < p < WTP$
+]
+]
+
+---
+
+# Affiliated Utility
+
+.center[
+.center2[
+[<img src="affiliated.png" width="1000"/>](affiliated.png)
+]
+]
+
+---
+
+# Noisy Utility
+
+
+.center[
+.center2[
+[<img src="uncertainty.png" width="1000"/>](uncertainty.png)
+]
+]
+
+
+---
+
+# A gap between WTP and WTA Emerges
+
+.center[
+.center2[
+[<img src="gap_emerges.png" width="1000"/>](gap_emerges.png)
+]
+]
+
+---
+
+# Takeaway
+
+.bullet-content[
+- More affiliated utility (more correlated) &#8594; bigger WTP-WTA gap
+<br>
+- More uncertainty &#8594; bigger WTP-WTA gap
+]
+
+---
+
+# Where does the model apply?
+
+--
+
+## Financial Markets
+Milgrom and Stokey, 1982  
+Copeland and Galai, 1983  
+Glosten and Milgrom, 1985  
+
+--
+
+## Asymmetric Information Literature
+Akerlof, 1970
+
+---
+
+# Relationship to social learning
+
+.bullet-content[
+<ol>
+<li> .. we are not sure which strategy is the best 
+</ol>
+<br/>
+]
+--
+.bullet-content[
+<ol start=2>
+<li>.. AND some person has a similar utility function to us
+</ol>
+<br/>
+]
+
+---
+count: false
+
+# Relationship to social learning
+
+.bullet-content[
+<ol>
+<li> .. we are not sure which strategy is the best 
+</ol>
+<b>uncertainty</b>
+]
+.bullet-content[
+<ol start="2">
+<li>.. AND some person has a similar utility function to us
+</ol>
+<b>affiliated</b> utility
+]
+
+--
+.bullet-content[
+Then imitating can make sense
+]
+--
+.bullet-content[
+Imitation, Herding, Conformity, Social Proof, Booms and Busts, Fads and Fashions, Advertising Techniques, Status Quo Bias, Preference Reversal
+]
+
+---
+
+
+# Relationship to loss aversion and prospect theory
+
+.bullet-content[
+- If loss aversion is normative, then this model is a alternative to loss aversion.
+- If loss aversion is descriptive, then this model is a explanation for loss aversion.
+]
+
+---
+
+layout: false
+class: center, inverse, middle
+count: false
+
+# Experimental Design
+
+---
+# Experimental Design
+
+<div style="display: flex; justify-content: space-between;">
+  <p style="flex-basis: 18%;" id="rcorners1">Trade a Mug</p>
+  <p style="flex-basis: 3%;" id="arrowbox"> &#8594; </p>
+  <p style="flex-basis: 18%;" id="rcorners1">Quick Fire: trade 16 lotteries</p>
+  <p style="flex-basis: 3%;" id="arrowbox"> &#8594; </p>
+  <p style="flex-basis: 18%;" id="rcorners1">Quick Fire: trade 14 goods</p>
+  <p style="flex-basis: 3%;" id="arrowbox"> &#8594; </p>
+  <p style="flex-basis: 18%;" id="rcorners1">Survey</p>
+  <!-- 49.5% + 49.5% = 99%, remaining 1% is distributed according to justify-content -->
+</div>
+
+--
+
+.pull-left[
+.bullet-contentsmall[
+### Control:  
+- WTA(g) = $\mathbb{E}$(g| someone wants to buy g)  
+- Participants are trading with another participant
+  - Stress other participant has to agree
+  - Stress what happens if you do not buy/sell
+]
+]
+--
+
+.pull-left[
+.bullet-contentsmall[
+### Treatment:  
+- WTA(g) = $\mathbb{E}$(g| ~~someone wants to buy g~~)  
+- Participants are trading with the experimenter
+  - Stress decision is their's alone
+  - Stress the experimenter is automatic, has no choice
+  - Stress what happens if you do not buy/sell
+]
+]
+
+---
+
+<div style="display: flex; justify-content: space-between;">
+  <p style="flex-basis: 18%; background:#8CA88E;" id="rcorners1">Trade a Mug</p>
+  <p style="flex-basis: 3%;" id="arrowbox"> &#8594; </p>
+  <p style="flex-basis: 18%;" id="rcorners1">Quick Fire: trade 16 lotteries</p>
+  <p style="flex-basis: 3%;" id="arrowbox"> &#8594; </p>
+  <p style="flex-basis: 18%;" id="rcorners1">Quick Fire: trade 14 goods</p>
+  <p style="flex-basis: 3%;" id="arrowbox"> &#8594; </p>
+  <p style="flex-basis: 18%;" id="rcorners1">Survey</p>
+  <!-- 49.5% + 49.5% = 99%, remaining 1% is distributed according to justify-content -->
+</div>
+
+<!-- participant seller -->
+<iframe height="500" width="100%" frameborder="yes" src="	https://cet-research.herokuapp.com/InitializeParticipant/vu44zwy6"> </iframe>
+
+
+---
+count: false
+
+<div style="display: flex; justify-content: space-between;">
+  <p style="flex-basis: 18%; background:#8CA88E;" id="rcorners1">Trade a Mug</p>
+  <p style="flex-basis: 3%;" id="arrowbox"> &#8594; </p>
+  <p style="flex-basis: 18%;" id="rcorners1">Quick Fire: trade 16 lotteries</p>
+  <p style="flex-basis: 3%;" id="arrowbox"> &#8594; </p>
+  <p style="flex-basis: 18%;" id="rcorners1">Quick Fire: trade 14 goods</p>
+  <p style="flex-basis: 3%;" id="arrowbox"> &#8594; </p>
+  <p style="flex-basis: 18%;" id="rcorners1">Survey</p>
+  <!-- 49.5% + 49.5% = 99%, remaining 1% is distributed according to justify-content -->
+</div>
+
+ <!-- experimenter seller -->
+<iframe height="500" width="100%" frameborder="yes" src="	https://cet-research.herokuapp.com/InitializeParticipant/vu44zwy6"> </iframe>
+
+
+---
+
+<div style="display: flex; justify-content: space-between;">
+  <p style="flex-basis: 18%;" id="rcorners1">Trade a Mug</p>
+  <p style="flex-basis: 3%;" id="arrowbox"> &#8594; </p>
+  <p style="flex-basis: 18%; background:#8CA88E;" id="rcorners1">Quick Fire: trade 16 lotteries</p>
+  <p style="flex-basis: 3%;" id="arrowbox"> &#8594; </p>
+  <p style="flex-basis: 18%;" id="rcorners1">Quick Fire: trade 14 goods</p>
+  <p style="flex-basis: 3%;" id="arrowbox"> &#8594; </p>
+  <p style="flex-basis: 18%;" id="rcorners1">Survey</p>
+  <!-- 49.5% + 49.5% = 99%, remaining 1% is distributed according to justify-content -->
+</div>
+
+<iframe height="500" width="100%" frameborder="yes" src="	https://cet-research.herokuapp.com/InitializeParticipant/g7jo3rae"> </iframe>
+
+---
+
+<div style="display: flex; justify-content: space-between;">
+  <p style="flex-basis: 18%;" id="rcorners1">Trade a Mug</p>
+  <p style="flex-basis: 3%;" id="arrowbox"> &#8594; </p>
+  <p style="flex-basis: 18%; background:#8CA88E;" id="rcorners1">Quick Fire: trade 16 lotteries</p>
+  <p style="flex-basis: 3%;" id="arrowbox"> &#8594; </p>
+  <p style="flex-basis: 18%;" id="rcorners1">Quick Fire: trade 14 goods</p>
+  <p style="flex-basis: 3%;" id="arrowbox"> &#8594; </p>
+  <p style="flex-basis: 18%;" id="rcorners1">Survey</p>
+  <!-- 49.5% + 49.5% = 99%, remaining 1% is distributed according to justify-content -->
+</div>
+
+<div class="galleryholder">
+<div class="gallery2">
+
+</div>
+
+<div class="gallery2">
+<div class="desc2">LA</div>
+  <a target="_blank" href="https://i.ibb.co/0hg3P3K/LA.png">
+    <img src="https://i.ibb.co/0hg3P3K/LA.png" alt="" height="400">
+  </a>
+  
+</div>
+
+<div class="gallery2">
+<div class="desc2">LA2</div>
+  <a target="_blank" href="https://i.ibb.co/6nKjy8S/LA2.png">
+    <img src="https://i.ibb.co/6nKjy8S/LA2.png" alt="" height="800">
+  </a>
+</div>
+
+<div class="gallery2">
+<div class="desc2">LA3</div>
+  <a target="_blank" href="https://i.ibb.co/vknvnCw/LA3.png">
+    <img src="https://i.ibb.co/vknvnCw/LA3.png" alt="" width="600" height="400">
+  </a>
+</div>
+
+<div class="gallery2">
+<div class="desc2">L0</div>
+  <a target="_blank" href="https://i.ibb.co/VtQmH5S/L0.png">
+    <img src="https://i.ibb.co/VtQmH5S/L0.png" alt="" height="400">
+  </a>
+  
+</div>
+
+<div class="gallery2">
+<div class="desc2">LA+</div>
+  <a target="_blank" href="https://i.ibb.co/HBw4d0j/LA.png">
+    <img src="https://i.ibb.co/HBw4d0j/LA.png" alt="" width="600" height="400">
+  </a>
+  
+</div>
+
+<div class="gallery2">
+<div class="desc2">LA2+</div>
+  <a target="_blank" href="https://i.ibb.co/Db2gtjv/LA2.png">
+    <img src="https://i.ibb.co/Db2gtjv/LA2.png" alt="" width="600" height="400">
+  </a>
+</div>
+
+<div class="gallery2">
+<div class="desc2">LA3+</div>
+  <a target="_blank" href="https://i.ibb.co/BwQVC0q/LA3.png">
+    <img src="https://i.ibb.co/BwQVC0q/LA3.png" alt="" width="600" height="400">
+  </a>
+</div>
+
+
+<div class="gallery2">
+
+</div>
+
+<div class="gallery2">
+<div class="desc2">LB</div>
+  <a target="_blank" href="https://i.ibb.co/F6RrTPT/LB.png">
+    <img src="https://i.ibb.co/F6RrTPT/LB.png" alt="" width="600" height="400">
+  </a>
+</div>
+
+<div class="gallery2">
+<div class="desc2">LB2</div>
+  <a target="_blank" href="https://i.ibb.co/27MPfbq/LB2.png">
+    <img src="https://i.ibb.co/27MPfbq/LB2.png" alt="" width="600" height="400">
+  </a>
+</div>
+
+<div class="gallery2">
+<div class="desc2">LB3</div>
+  <a target="_blank" href="https://i.ibb.co/ZXSfJWr/LB3.png">
+    <img src="https://i.ibb.co/ZXSfJWr/LB3.png" alt="" width="600" height="400">
+  </a>
+</div>
+
+
+
+<div class="gallery2">
+ 
+</div>
+
+<div class="gallery2">
+<div class="desc2">LB+</div>
+  <a target="_blank" href="https://i.ibb.co/Vgm6j3M/LB.png">
+    <img src="https://i.ibb.co/Vgm6j3M/LB.png" alt="" width="600" height="400">
+  </a>
+</div>
+
+<div class="gallery2">
+<div class="desc2">LB2+</div>
+  <a target="_blank" href="https://i.ibb.co/Mk4GWHp/LB2.png">
+    <img src="https://i.ibb.co/Mk4GWHp/LB2.png" alt="" width="600" height="400">
+  </a>
+</div>
+
+<div class="gallery2">
+<div class="desc2">LB3+</div>
+  <a target="_blank" href="https://i.ibb.co/60LqdNn/LB3.png">
+    <img src="https://i.ibb.co/60LqdNn/LB3.png" alt="" width="600" height="400">
+  </a>
+</div>
+
+<div class="gallery2">
+  
+</div>
+
+<div class="gallery2">
+<div class="desc2">LC</div>
+  <a target="_blank" href="https://i.ibb.co/xzBBXDY/LC.png">
+    <img src="https://i.ibb.co/xzBBXDY/LC.png" alt="" width="600" height="400">
+  </a>
+</div>
+
+<div class="gallery2">
+<div class="desc2">LC2</div>
+  <a target="_blank" href="https://i.ibb.co/fXyb6D0/LC2.png">
+    <img src="https://i.ibb.co/fXyb6D0/LC2.png" alt="" width="600" height="400">
+  </a>
+</div>
+
+<div class="gallery2">
+<div class="desc2">LC3</div>
+  <a target="_blank" href="https://i.ibb.co/Yh16NxN/LC3.png">
+    <img src="https://i.ibb.co/Yh16NxN/LC3.png" alt="" width="600" height="400">
+  </a>
+</div>
+</div>
+
+---
+
+<div style="display: flex; justify-content: space-between;">
+  <p style="flex-basis: 18%;" id="rcorners1">Trade a Mug</p>
+  <p style="flex-basis: 3%;" id="arrowbox"> &#8594; </p>
+  <p style="flex-basis: 18%;" id="rcorners1">Quick Fire: trade 16 lotteries</p>
+  <p style="flex-basis: 3%;" id="arrowbox"> &#8594; </p>
+  <p style="flex-basis: 18%; background:#8CA88E;" id="rcorners1">Quick Fire: trade 14 goods</p>
+  <p style="flex-basis: 3%;" id="arrowbox"> &#8594; </p>
+  <p style="flex-basis: 18%;" id="rcorners1">Survey</p>
+  <!-- 49.5% + 49.5% = 99%, remaining 1% is distributed according to justify-content -->
+</div>
+
+
+<iframe height="500" width="100%" frameborder="yes" src="https://cet-research.herokuapp.com/InitializeParticipant/b42ao5uv"> </iframe>
+
+---
+
+<div style="display: flex; justify-content: space-between;">
+  <p style="flex-basis: 18%;" id="rcorners1">Trade a Mug</p>
+  <p style="flex-basis: 3%;" id="arrowbox"> &#8594; </p>
+  <p style="flex-basis: 18%;" id="rcorners1">Quick Fire: trade 16 lotteries</p>
+  <p style="flex-basis: 3%;" id="arrowbox"> &#8594; </p>
+  <p style="flex-basis: 18%; background:#8CA88E;" id="rcorners1">Quick Fire: trade 14 goods</p>
+  <p style="flex-basis: 3%;" id="arrowbox"> &#8594; </p>
+  <p style="flex-basis: 18%;" id="rcorners1">Survey</p>
+  <!-- 49.5% + 49.5% = 99%, remaining 1% is distributed according to justify-content -->
+</div>
+<div class="gallery">
+
+  <a target="_blank" href="https://i.ibb.co/CnS6vm8/mug-photo2.png">
+    <img src="https://i.ibb.co/CnS6vm8/mug-photo2.png" alt="" height="400">
+  </a>
+  <div class="desc">Mug</div>
+</div>
+
+<div class="gallery">
+  <a target="_blank" href="https://i.ibb.co/8MHHGq3/tablet-photo.png">
+    <img src="https://i.ibb.co/8MHHGq3/tablet-photo.png" alt="" height="800">
+  </a>
+  <div class="desc">Tablet</div>
+</div>
+
+<div class="gallery">
+  <a target="_blank" href="https://i.ibb.co/R4MhmGg/bowl-photo.png">
+    <img src="https://i.ibb.co/R4MhmGg/bowl-photo.png" alt="" width="600" height="400">
+  </a>
+  <div class="desc">Bowl</div>
+</div>
+
+<div class="gallery">
+  <a target="_blank" href="https://i.ibb.co/5MNTG8N/hat-photo2.png">
+    <img src="https://i.ibb.co/5MNTG8N/hat-photo2.png" alt="" width="600" height="400">
+  </a>
+  <div class="desc">Hat</div>
+</div>
+
+<div class="gallery">
+  <a target="_blank" href="https://i.ibb.co/yhMhB4H/shelf-photo.png">
+    <img src="https://i.ibb.co/yhMhB4H/shelf-photo.png" alt="" width="600" height="400">
+  </a>
+  <div class="desc">Shelf Insert</div>
+</div>
+
+<div class="gallery">
+  <a target="_blank" href="https://i.ibb.co/10bVbFh/mat-photo.png">
+    <img src="https://i.ibb.co/10bVbFh/mat-photo.png" alt="" width="600" height="400">
+  </a>
+  <div class="desc">Bath Mat</div>
+</div>
+
+<div class="gallery">
+  <a target="_blank" href="https://i.ibb.co/k8zNq6r/choc-photo.png">
+    <img src="https://i.ibb.co/k8zNq6r/choc-photo.png" alt="" width="600" height="400">
+  </a>
+  <div class="desc">Chocolate</div>
+</div>
+
+<div class="gallery">
+  <a target="_blank" href="https://i.ibb.co/QbtXSsZ/clips-photo.png">
+    <img src="https://i.ibb.co/QbtXSsZ/clips-photo.png" alt="" width="600" height="400">
+  </a>
+  <div class="desc">Clips</div>
+</div>
+
+<div class="gallery">
+  <a target="_blank" href="https://i.ibb.co/tJrxZbw/highlighter-photo.png">
+    <img src="https://i.ibb.co/tJrxZbw/highlighter-photo.png" alt="" height="400">
+  </a>
+  <div class="desc">Highlighter </div>
+</div>
+
+<div class="gallery">
+  <a target="_blank" href="https://i.ibb.co/C2yNJKR/eraser-photo.png">
+    <img src="https://i.ibb.co/C2yNJKR/eraser-photo.png" alt="" width="600" height="400">
+  </a>
+  <div class="desc">Eraser</div>
+</div>
+
+<div class="gallery">
+  <a target="_blank" href="https://i.ibb.co/TtWJbSs/camera-Cover-photo.png">
+    <img src="https://i.ibb.co/TtWJbSs/camera-Cover-photo.png" alt="" width="600" height="400">
+  </a>
+  <div class="desc">Camera Cover</div>
+</div>
+
+<div class="gallery">
+  <a target="_blank" href="https://i.ibb.co/zGMjdqw/bottle-Opener-photo.png">
+    <img src="https://i.ibb.co/zGMjdqw/bottle-Opener-photo.png" alt="" width="600" height="400">
+  </a>
+  <div class="desc">Bottle Opener</div>
+</div>
+
+<div class="gallery">
+  <a target="_blank" href="https://i.ibb.co/Kx93hK9/ruler-photo.png">
+    <img src="https://i.ibb.co/Kx93hK9/ruler-photo.png" alt="" width="600" height="400">
+  </a>
+  <div class="desc">Ruler</div>
+</div>
+
+<div class="gallery">
+  <a target="_blank" href="https://i.ibb.co/thQdFd1/frame-photo2.png">
+    <img src="https://i.ibb.co/thQdFd1/frame-photo2.png" alt="" width="600" height="400">
+  </a>
+  <div class="desc">Frame</div>
+</div>
+---
+
+<div style="display: flex; justify-content: space-between;">
+  <p style="flex-basis: 18%;" id="rcorners1">Trade a Mug</p>
+  <p style="flex-basis: 3%;" id="arrowbox"> &#8594; </p>
+  <p style="flex-basis: 18%;" id="rcorners1">Quick Fire: trade 16 lotteries</p>
+  <p style="flex-basis: 3%;" id="arrowbox"> &#8594; </p>
+  <p style="flex-basis: 18%;" id="rcorners1">Quick Fire: trade 14 goods</p>
+  <p style="flex-basis: 3%;" id="arrowbox"> &#8594; </p>
+  <p style="flex-basis: 18%; background:#8CA88E;" id="rcorners1">Survey</p>
+  <!-- 49.5% + 49.5% = 99%, remaining 1% is distributed according to justify-content -->
+</div>
+
+
+<iframe height="500" width="100%" frameborder="yes" src="https://cet-research.herokuapp.com/InitializeParticipant/hnblfuf1"> </iframe>
+
+---
+
+layout: false
+class: center, inverse, middle
+count: false
+
+# Results
+
+---
+
+```{r, echo=FALSE, results=TRUE}
+#graph 1
+df = readRDS(file = "..\\long_data.RDS")
+data = readRDS(file = "..\\wide_data.RDS")
+df %>% subset(good=="Mug1") %>% 
+  group_by(treatment2, Seller, type) %>%
+  summarise_at('raw', list(valuation = function(x){median(x, na.rm = T)},
+                           se = function(x){sd(x, na.rm=T)/sqrt(n())})) %>% 
+  mutate(valuation = replace(valuation, treatment2 == "Experimenter", 0)) %>% 
+  ggplot(aes(x=treatment2, y=valuation)) + 
+  geom_bar(aes(fill=Seller), stat='identity', position = position_dodge(width=0.9))+
+  lims(y=c(0,5)) +
+  scale_fill_manual(values = colours) +
+  geom_signif(stat="identity",
+              data=data.frame(x=c(1, 2), xend=c(1, 2),
+                              y=c(4, 4), annotation=c("***", "")),
+              aes(x=x,xend=xend, y=y, yend=y, annotation=annotation, textsize=7)) +
+  labs(fill="", x="Treatment", y="Median Value (€)", title = "Median Value") +
+  theme_classic() +
+  theme_xaringan() +
+  theme(legend.position="top") 
+```
+
+---
+count: false
+
+```{r, echo=FALSE, results=TRUE}
+#graph 1b
+df = readRDS(file = "..\\long_data.RDS")
+df %>% subset(good=="Mug1") %>% 
+  group_by(treatment2, Seller, type) %>%
+  summarise_at('raw', list(valuation = function(x){median(x, na.rm = T)},
+                           se = function(x){sd(x, na.rm=T)/sqrt(n())})) %>% 
+  ggplot(aes(x=treatment2, y=valuation)) + 
+  geom_bar(aes(fill=Seller), stat='identity', position = position_dodge(width=0.9))+
+  lims(y=c(0,5)) +
+  scale_fill_manual(values = colours) +
+  geom_signif(textsize=7,
+              stat="identity",
+              data=data.frame(x=c(1, 2), xend=c(1, 2),
+                              y=c(4, 4), annotation=c("***", "")),
+              aes(x=x,xend=xend, y=y, yend=y, annotation=annotation, textsize=7)) +
+  labs(fill="", x="Treatment", y="Median Value (€)", title = "Median Value") +
+  theme_classic() +
+  theme_xaringan() +
+  theme(legend.position="top") 
+```
+
+---
+
+```{r, echo=FALSE, results=TRUE}
+#boxplot
+df %>% subset(good=="Mug1") %>% # subset(raw<1000) %>% 
+ggboxplot(., x = "treatment2", 
+          y = "raw",
+          color = "Seller", 
+          palette = colours,
+          #add = "jitter",
+          ylim = c(0, 10)
+          ) +
+  theme_xaringan() +
+  stat_compare_means(aes(group = Seller), label = "p.signif",  symnum.args=symnum.args, label.y = 9, size=7) +
+  labs(color="", x="Treatment", y="Value (€)")
+```
+
+---
+
+count: false
+
+```{r, echo=FALSE, results=TRUE}
+#boxplot with jitter
+df %>% subset(good=="Mug1") %>% # subset(raw<1000) %>% 
+ggboxplot(., x = "treatment2", 
+          y = "raw",
+          color = "Seller", 
+          palette = colours,
+          add = "jitter",
+          ylim = c(0, 10)
+          ) +
+  theme_xaringan() +
+  stat_compare_means(aes(group = Seller), label = "p.signif",  symnum.args=symnum.args, label.y = 9, size=7) +
+  labs(color="", x="Treatment", y="Value (€)")
+```
+
+
+---
+# Mean Values Quick Fire Round
+
+<div class="gallery">
+  <a target="_blank" href="figs/mug1_plot.png">
+    <img src="figs/mug1_plot.png" alt="" height="400">
+  </a>
+  <div class="desc">Mug1</div>
+</div>
+
+<div class="gallery">
+  <a target="_blank" href="figs/mug_plot.png">
+    <img src="figs/mug_plot.png" alt="" height="400">
+  </a>
+  <div class="desc">Mug</div>
+</div>
+
+<div class="gallery">
+  <a target="_blank" href="figs/tablet_plot.png">
+    <img src="figs/tablet_plot.png" alt="" height="800">
+  </a>
+  <div class="desc">Tablet</div>
+</div>
+
+<div class="gallery">
+  <a target="_blank" href="figs/bowl_plot.png">
+    <img src="figs/bowl_plot.png" alt="" width="600" height="400">
+  </a>
+  <div class="desc">Bowl</div>
+</div>
+
+<div class="gallery">
+  <a target="_blank" href="figs/hat_plot.png">
+    <img src="figs/hat_plot.png" alt="" width="600" height="400">
+  </a>
+  <div class="desc">Hat</div>
+</div>
+
+<div class="gallery">
+  <a target="_blank" href="figs/shelf_plot.png">
+    <img src="figs/shelf_plot.png" alt="" width="600" height="400">
+  </a>
+  <div class="desc">Shelf Insert</div>
+</div>
+
+<div class="gallery">
+  <a target="_blank" href="figs/mat_plot.png">
+    <img src="figs/mat_plot.png" alt="" width="600" height="400">
+  </a>
+  <div class="desc">Bath Mat</div>
+</div>
+
+<div class="gallery">
+  <a target="_blank" href="figs/choc_plot.png">
+    <img src="figs/choc_plot.png" alt="" width="600" height="400">
+  </a>
+  <div class="desc">Chocolate</div>
+</div>
+
+<div class="gallery">
+  <a target="_blank" href="figs/clips_plot.png">
+    <img src="figs/clips_plot.png" alt="" width="600" height="400">
+  </a>
+  <div class="desc">Clips</div>
+</div>
+
+<div class="gallery">
+  <a target="_blank" href="figs/highlighter_plot.png">
+    <img src="figs/highlighter_plot.png" alt="" height="400">
+  </a>
+  <div class="desc">Highlighter </div>
+</div>
+
+<div class="gallery">
+  <a target="_blank" href="figs/eraser_plot.png">
+    <img src="figs/eraser_plot.png" alt="" width="600" height="400">
+  </a>
+  <div class="desc">Eraser</div>
+</div>
+
+<div class="gallery">
+  <a target="_blank" href="figs/cameracover_plot.png">
+    <img src="figs/cameracover_plot.png" alt="" width="600" height="400">
+  </a>
+  <div class="desc">Camera Cover</div>
+</div>
+
+<div class="gallery">
+  <a target="_blank" href="figs/bottleopener_plot.png">
+    <img src="figs/bottleopener_plot.png" alt="" width="600" height="400">
+  </a>
+  <div class="desc">Bottle Opener</div>
+</div>
+
+<div class="gallery">
+  <a target="_blank" href="figs/ruler_plot.png">
+    <img src="figs/ruler_plot.png" alt="" width="600" height="400">
+  </a>
+  <div class="desc">Ruler</div>
+</div>
+
+<div class="gallery">
+  <a target="_blank" href="figs/frame_plot.png">
+    <img src="figs/frame_plot.png" alt="" width="600" height="400">
+  </a>
+  <div class="desc">Frame</div>
+</div>
+---
+
+# Mean values of Lotteries
+<div class="galleryholder">
+<div class="gallery2">
+
+</div>
+
+<div class="gallery2">
+<div class="desc2">LA</div>
+  <a target="_blank" href="figs/LA_plot.png">
+    <img src="figs/LA_plot.png" alt="" height="400">
+  </a>
+  
+</div>
+
+<div class="gallery2">
+<div class="desc2">LA2</div>
+  <a target="_blank" href="figs/LA2_plot.png">
+    <img src="figs/LA2_plot.png" alt="" height="800">
+  </a>
+</div>
+
+<div class="gallery2">
+<div class="desc2">LA3</div>
+  <a target="_blank" href="figs/LA3_plot.png">
+    <img src="figs/LA3_plot.png" alt="" width="600" height="400">
+  </a>
+</div>
+
+<div class="gallery2">
+<div class="desc2">L0</div>
+  <a target="_blank" href="figs/L0_plot.png">
+    <img src="figs/L0_plot.png" alt="" height="400">
+  </a>
+  
+</div>
+
+<div class="gallery2">
+<div class="desc2">LA+</div>
+  <a target="_blank" href="figs/LAplus_plot.png">
+    <img src="figs/LAplus_plot.png" alt="" width="600" height="400">
+  </a>
+  
+</div>
+
+<div class="gallery2">
+<div class="desc2">LA2+</div>
+  <a target="_blank" href="figs/LA2plus_plot.png">
+    <img src="figs/LA2plus_plot.png" alt="" width="600" height="400">
+  </a>
+</div>
+
+<div class="gallery2">
+<div class="desc2">LA3+</div>
+  <a target="_blank" href="figs/LA3plus_plot.png">
+    <img src="figs/LA3plus_plot.png" alt="" width="600" height="400">
+  </a>
+</div>
+
+
+<div class="gallery2">
+
+</div>
+
+<div class="gallery2">
+<div class="desc2">LB</div>
+  <a target="_blank" href="figs/LB_plot.png">
+    <img src="figs/LB_plot.png" alt="" width="600" height="400">
+  </a>
+</div>
+
+<div class="gallery2">
+<div class="desc2">LB2</div>
+  <a target="_blank" href="figs/LB2_plot.png">
+    <img src="figs/LB2_plot.png" alt="" width="600" height="400">
+  </a>
+</div>
+
+<div class="gallery2">
+<div class="desc2">LB3</div>
+  <a target="_blank" href="figs/LB3_plot.png">
+    <img src="figs/LB3_plot.png" alt="" width="600" height="400">
+  </a>
+</div>
+
+
+
+<div class="gallery2">
+ 
+</div>
+
+<div class="gallery2">
+<div class="desc2">LB+</div>
+  <a target="_blank" href="figs/LBplus_plot.png">
+    <img src="figs/LBplus_plot.png" alt="" width="600" height="400">
+  </a>
+</div>
+
+<div class="gallery2">
+<div class="desc2">LB2+</div>
+  <a target="_blank" href="figs/LB2plus_plot.png">
+    <img src="figs/LB2plus_plot.png" alt="" width="600" height="400">
+  </a>
+</div>
+
+<div class="gallery2">
+<div class="desc2">LB3+</div>
+  <a target="_blank" href="figs/LB3plus_plot.png">
+    <img src="figs/LB3plus_plot.png" alt="" width="600" height="400">
+  </a>
+</div>
+
+<div class="gallery2">
+  
+</div>
+
+<div class="gallery2">
+<div class="desc2">LC</div>
+  <a target="_blank" href="figs/LC_plot.png">
+    <img src="figs/LC_plot.png" alt="" width="600" height="400">
+  </a>
+</div>
+
+<div class="gallery2">
+<div class="desc2">LC2</div>
+  <a target="_blank" href="figs/LC2_plot.png">
+    <img src="figs/LC2_plot.png" alt="" width="600" height="400">
+  </a>
+</div>
+
+<div class="gallery2">
+<div class="desc2">LC3</div>
+  <a target="_blank" href="figs/LC3_plot.png">
+    <img src="figs/LC3_plot.png" alt="" width="600" height="400">
+  </a>
+</div>
+</div>
+
+---
+
+```{r, echo=FALSE, results=TRUE, fig.retina = 2}
+#lotteries uncertainty
+labels = c('0'="<img src = 'https://i.ibb.co/VtQmH5S/L0.png' width = '100' />", 
+           '1'="<img src = 'https://i.ibb.co/HBw4d0j/LA.png' width = '100' />", 
+           '2'="<img src = 'https://i.ibb.co/Db2gtjv/LA2.png' width = '100' />", 
+           '3'="<img src = 'https://i.ibb.co/BwQVC0q/LA3.png' width = '100' />")
+plotdf = df %>% subset(type=="Lottery")
+plotdf$value.price[c(plotdf$raw>30&!is.na(plotdf$raw))] = 3
+formula =  as.formula('value ~  Seller*lotteryType  | 0 | 0 | participant.code ')
+fitmod = felm(keepX=TRUE, formula = formula, data = plotdf)
+sumFM = summary(fitmod, robust=T)
+plotdf = plotdf %>% 
+  group_by(lotteryType, Seller) %>%
+  summarise_at('value', list(valuation = function(x){#x[x>20]=NA;
+    mean(x, na.rm = T)},
+    se = function(x){x[x>20]=NA;
+    sd(x, na.rm=T)/sqrt(n())})) 
+plotdf$se = sumFM$coefficients[c(1,2,3,6,4,7,5,8),2]
+plotdf %>% 
+  ggplot(aes(x=lotteryType, y=valuation, fill=Seller)) + 
+  geom_bar(stat='identity', position = position_dodge(width=0.9))+
+  geom_errorbar(aes(ymin=valuation-se, ymax=valuation+se), width=.1, position=position_dodge(width=0.9)) +
+  labs(fill="", x="Lottery Complication", y="Value (sd)", title ="Gaps by Lottery Uncertainty") +
+  theme_classic() +
+  scale_fill_manual(values = colours) +
+  scale_x_discrete(labels=labels) +
+  theme_xaringan() +
+  theme(legend.position="top", 
+        axis.text.x = ggtext::element_markdown())
+```
+
+---
+
+
+```{r, echo=FALSE, results=TRUE}
+plotdf = df %>% subset(good %in% c("Mug", "Mug1"))
+plotdf$uncertainty = plotdf$higher_scaled - plotdf$lower_scaled
+formula =  as.formula('value ~  uncertainty*Seller | 0 | 0 | participant.code ')
+fitmod = felm(keepX=TRUE, formula = formula, data = plotdf)
+#summary(fitmod, robust=T)
+plot = subset(plotdf, uncertainty<5) %>% 
+ggplot(aes(x=uncertainty, y=value, colour=Seller)) + 
+  #geom_point(alpha=0.5) + 
+  geom_smooth(method=loess) +
+  labs(colour="", x="Uncertainty", y="Value", title ="Gaps by Uncertainty: Mug") +
+  theme_classic() +
+  scale_colour_manual(values = colours) +
+  theme_xaringan() +
+  theme(legend.position="top")
+print(plot)
+
+```
+
+---
+
+```{r, echo=FALSE, results=TRUE}
+plotdf = df %>% subset(type=="Good")
+plotdf$uncertainty = plotdf$higher_scaled - plotdf$lower_scaled
+formula =  as.formula('value ~  uncertainty*Seller | 0 | 0 | participant.code ')
+fitmod = felm(keepX=TRUE, formula = formula, data = plotdf)
+#summary(fitmod, robust=T)
+plot = subset(plotdf, uncertainty<5) %>% 
+ggplot(aes(x=uncertainty, y=value, colour=Seller)) + 
+  #geom_point(alpha=0.5) + 
+  geom_smooth(method=loess) +
+  labs(colour="", x="Uncertainty", y="Value", title ="Gaps by Uncertainty") +
+  theme_classic() +
+  scale_colour_manual(values = colours) +
+  theme_xaringan() +
+  theme(legend.position="top")
+print(plot)
+
+```
+---
+
+
+```{r, echo=FALSE, results=TRUE}
+#uncertainty of each good
+plot_uncertainty = df %>% subset(good != "Tablet" & type=="Good") %>% 
+   group_by(good, treatment, Seller, treatment2) %>%
+  summarise_at('raw', list(
+    valuation = function(x){
+      x[x==1000] =NA; 
+      mean(x, na.rm = T)},
+    se = function(x){x[x==1000] =NA; 
+    sd(x, na.rm=T)/sqrt(n())})) 
+temp = df %>% subset(good != "Tablet" & type=="Good")  %>%
+  group_by(good, treatment) %>%
+  summarise_at(c('higher', 'lower'), list(
+    mean = function(x){ 
+      mean(x, na.rm = T)})) 
+plot_uncertainty$higher = temp$higher_mean
+plot_uncertainty$lower = temp$lower_mean
+plot_uncertainty %>% 
+ggplot(aes_string(x='valuation', y="good", colour="treatment")) + 
+  geom_point(position=position_dodge(width=0.9)) + 
+  geom_errorbar(aes_string(xmin='lower', xmax='higher'), position=position_dodge(width=0.9)) + # + lims(x=c(-5,5)) +
+  #geom_errorbar(aes(xmin=valuation-se, xmax=valuation+se, colour=treatment), position=position_dodge(width=0.9))
+  #scale_y_discrete(limits = data_s2$participant.code) +
+  labs(colour="", x="Valuation", y="Good", title ="Average Uncertainty") +
+  theme_classic() +
+  scale_colour_manual(values = colours2) +
+  theme_xaringan() +
+  theme(legend.position="top")
+
+```
+
+---
+
+```{r, echo=FALSE, results=TRUE}
+#uncertainty of each good
+plot_uncertainty = df %>% subset( type=="Good") %>% 
+   group_by(good, treatment, Seller, treatment2) %>%
+  summarise_at('value', list(
+    valuation = function(x){
+      x[x==1000] =NA; 
+      mean(x, na.rm = T)},
+    se = function(x){x[x==1000] =NA; 
+    sd(x, na.rm=T)/sqrt(n())})) 
+temp = df %>% subset(type=="Good")  %>%
+  group_by(good, treatment) %>%
+  summarise_at(c('higher_scaled', 'lower_scaled'), list(
+    mean = function(x){ 
+      mean(x, na.rm = T)})) 
+plot_uncertainty$higher = temp$higher_scaled_mean
+plot_uncertainty$lower = temp$lower_scaled_mean
+plot_uncertainty %>% 
+ggplot(aes_string(x='valuation', y="good", colour="treatment")) + 
+  geom_point(position=position_dodge(width=0.9)) + 
+  geom_errorbar(aes_string(xmin='lower', xmax='higher'), position=position_dodge(width=0.9)) + # + lims(x=c(-5,5)) +
+  #geom_errorbar(aes(xmin=valuation-se, xmax=valuation+se, colour=treatment), position=position_dodge(width=0.9))
+  #scale_y_discrete(limits = data_s2$participant.code) +
+  labs(colour="", x="Valuation", y="Good", title ="Average Uncertainty") +
+  theme_classic() +
+  scale_colour_manual(values = colours2) +
+  theme_xaringan() +
+  theme(legend.position="top")
+
+```
+
+---
+
+```{r, echo=FALSE, results=TRUE}
+# agrergated uncertainty
+plot_uncertainty %>% 
+  group_by(Seller, treatment2) %>%
+  summarise_all(list(
+    valuation = function(x){mean(x, na.rm = T)})) %>% 
+  ggplot(aes_string(x='valuation_valuation', y='treatment2', colour="Seller")) + 
+  geom_point(position=position_dodge(width=0.9), size=5) + 
+  geom_errorbar(aes_string(xmin='lower_valuation', xmax='higher_valuation'), position=position_dodge(width=0.9), size=1.5) +
+  labs(colour="", x="Valuation (sd)", y="Treatment", title ="Agregated Uncertainty") +
+  theme_classic() +
+  scale_colour_manual(values = colours) +
+  theme_xaringan() +
+  theme(legend.position="top")
+
+```
+---
+
+```{r, echo=FALSE, results=TRUE}
+#uncertainty of mugs for buyers: Mug vs Mug1
+plot_uncertainty = df %>% subset(good %in% c('Mug', 'Mug1') & Seller=="Buyer") %>%
+  group_by(good, treatment, Seller, treatment2) %>%
+  summarise_at('raw', list(
+    valuation = function(x){
+      x[x==1000] =NA; 
+      mean(x, na.rm = T)},
+    se = function(x){x[x==1000] =NA; 
+    sd(x, na.rm=T)/sqrt(n())})) 
+temp = df %>% subset(good %in% c('Mug', 'Mug1') & Seller=="Buyer")  %>%
+  group_by(good, treatment) %>%
+  summarise_at(c('higher', 'lower'), list(
+    mean = function(x){ 
+      mean(x, na.rm = T)})) 
+plot_uncertainty$higher = temp$higher_mean
+plot_uncertainty$lower = temp$lower_mean
+plot_uncertainty %>% 
+  ggplot(aes_string(x='valuation', y="good", colour="treatment")) + 
+  geom_point(position=position_dodge(width=0.9), size=5) + 
+  geom_errorbar(aes_string(xmin='lower', xmax='higher'), position=position_dodge(width=0.9), size=1.5) + # + lims(x=c(-5,5)) +
+  #geom_errorbar(aes(xmin=valuation-se, xmax=valuation+se, colour=treatment), position=position_dodge(width=0.9))
+  #scale_y_discrete(limits = data_s2$participant.code) +
+  scale_y_discrete(limits=rev) +
+  labs(colour="", x="Valuation", y="Good", title ="Average Uncertainty") +
+  theme_classic() +
+  scale_colour_manual(values = c(colours2[2], colours2[4])) +
+  theme_xaringan() +
+  theme(legend.position="top")
+```
+
+---
+
+# Conclusion
+
+.bullet-content[
+1. Evidence that gaps respond to affiliation of trading partner (Does it matter who I am trading with?): Minor
+  - Sellers reduce their WTA in the strategy method when trading with the experimenter
+
+<br>
+
+2. Evidence that gaps respond to uncertainty of valuation: Some
+  - Sellers who are more uncertain about the value of a good increase their WTA
+]
+
+---
+
+layout: false
+class: center, inverse, middle
+count: false
+
+# Thank you
+
+---
+count: false
+
+# Ellsberg Paradox
+
+.center[
+[<img src="ellsberg.png" width="400"/>](ellsberg.png)
+]
+
+---
+
+count: false
+
+# Loss Aversion 
+#### Losses loom larger than gains
+
+
+.bullet-content[
+Claim:
+For any instance that can be explained by loss aversion  
+If.. 
+1. .. one person's loss is another person's gain,
+2. .. and the transaction is voluntary  
+
+.. then it can also be explained by 'bilateral imitation' or noisy affiliated utility.
+]
+
+
+---
+
+count: false
+
+```{r, echo=FALSE, results=TRUE}
+#boxplot mug quick fire
+df %>% subset(good=="Mug") %>% # subset(raw<1000) %>% 
+ggboxplot(., x = "treatment2", 
+          y = "raw",
+          color = "Seller", 
+          palette = colours,
+          #add = "jitter",
+          ylim = c(0, 10)
+          ) +
+  theme_xaringan() +
+  stat_compare_means(aes(group = Seller), label = "p.signif",  symnum.args=symnum.args, label.y = 9, size=7) +
+  labs(color="", x="Treatment", y="Value (€)")
+```
+
+---
+count: false
+
+```{r, echo=FALSE, results=TRUE}
+# mean lotteries #  make this clustered errors
+plotdf = df %>% subset(type=="Lottery") 
+formula =  as.formula('value ~  treatment  | 0 | 0 | participant.code ')
+fitmod = felm(keepX=TRUE, formula = formula, data = plotdf)
+sumFM = summary(fitmod, robust=T)
+plotdf = plotdf %>% 
+  group_by(treatment2, Seller) %>%
+  summarise_at('value', list(valuation = function(x){mean(x, na.rm = T)},
+                             se = function(x){sd(x, na.rm=T)/sqrt(n()/30)})) 
+plotdf$se = sumFM$coefficients[,2]
+plotdf %>%
+  ggplot(aes(x=treatment2, y=valuation, fill=Seller)) + 
+  geom_bar(stat='identity', position = position_dodge(width=0.9))+
+  geom_errorbar(aes(ymin=valuation-se, ymax=valuation+se), width=.1, position=position_dodge(width=0.9)) +
+  labs(fill="", x="Treatment", y="Value (sd)", title="Lotteries") +
+  theme_classic() +
+  scale_fill_manual(values = colours) +
+  theme_xaringan() +
+  theme(legend.position="top")
+```
+
+---
+count: false
+
+```{r, echo=FALSE, results=TRUE}
+# mean goods # see above
+plotdf = df %>% subset(type=="Good")
+formula =  as.formula('value ~  treatment  | 0 | 0 | participant.code ')
+fitmod = felm(keepX=TRUE, formula = formula, data = plotdf)
+sumFM = summary(fitmod, robust=T)
+plotdf = plotdf %>% 
+  group_by(treatment2, Seller) %>%
+  summarise_at('value', list(valuation = function(x){mean(x, na.rm = T)},
+                             se = function(x){sd(x, na.rm=T)/sqrt(n()/30)})) 
+plotdf$se = sumFM$coefficients[,2]
+plotdf %>%
+  ggplot(aes(x=treatment2, y=valuation, fill=Seller)) + 
+  geom_bar(stat='identity', position = position_dodge(width=0.9))+
+  geom_errorbar(aes(ymin=valuation-se, ymax=valuation+se), width=.1, position=position_dodge(width=0.9)) +
+  labs(fill="", x="Treatment", y="Value (sd)", title="Goods") +
+  theme_classic() +
+  scale_fill_manual(values = colours) +
+  theme_xaringan() +
+  theme(legend.position="top")
+```
+
+---
+count: false
+
+```{r, echo=FALSE, results=TRUE}
+# number of no sells goods
+df %>% subset(type=="Good") %>% 
+  group_by(treatment2, Seller) %>%
+  summarise_at('raw', list(valuation = function(x){
+    mean(x==1000, na.rm = T)},
+                             se = function(x){sd(x==1000, na.rm=T)/sqrt(n())})) %>% 
+  ggplot(aes(x=treatment2, y=valuation, fill=Seller)) + 
+  geom_bar(stat='identity', position = position_dodge(width=0.9))+
+  geom_errorbar(aes(ymin=valuation-se, ymax=valuation+se), width=.1, position=position_dodge(width=0.9)) +
+  labs(fill="", x="Treatment", y="Value (sd)", title="Share who don't want to sell (Goods)") +
+  theme_classic() +
+  scale_fill_manual(values = colours) +
+  theme_xaringan() +
+  theme(legend.position="top")
+```
+
+---
+count: false
+```{r, echo=FALSE, results=TRUE}
+# number of no sells lottery
+df %>% subset(type=="Lottery") %>% 
+  group_by(treatment2, Seller) %>%
+  summarise_at('raw', list(valuation = function(x){
+    mean(x==1000, na.rm = T)},
+                             se = function(x){sd(x==1000, na.rm=T)/sqrt(n())})) %>% 
+  ggplot(aes(x=treatment2, y=valuation, fill=Seller)) + 
+  geom_bar(stat='identity', position = position_dodge(width=0.9))+
+  geom_errorbar(aes(ymin=valuation-se, ymax=valuation+se), width=.1, position=position_dodge(width=0.9)) +
+  labs(fill="", x="Treatment", y="Value (sd)", title ="Share who don't want to sell (Lotteries)") +
+  theme_classic() +
+  scale_fill_manual(values = colours) +
+  theme_xaringan() +
+  theme(legend.position="top")
+
+```
+
+---
+count: false
+
+```{r, echo=FALSE, results=TRUE}
+#mug gaps by uncertainty
+plotdf= data
+var='Mug'
+plotdf$uncertainty = plotdf[[paste(var, '_95', sep="")]] - plotdf[[paste(var, '_05', sep="")]]
+plotdf[[var]][plotdf[[var]] ==1000] = NA
+formula =  as.formula(paste(var, '~  uncertainty*Seller*treatment2  | 0 | 0 | participant.code ', sep=""))
+fitmod = felm(keepX=TRUE, formula = formula, data = plotdf)
+#summary(fitmod, robust=T)
+bins = quantile(plotdf$uncertainty, probs=c(.25, 0.5, .75), na.rm = T)
+plotdf$goodType = 0
+plotdf$goodType[plotdf$uncertainty>bins[1]] = 1
+plotdf$goodType[plotdf$uncertainty>bins[2]] = 2
+plotdf$goodType[plotdf$uncertainty>bins[3]] = 3
+#plotdf$goodType %>%  table
+plotdf$goodType = plotdf$goodType %>%  as.factor()
+formula =  as.formula(paste(var, '~  Seller*goodType  | 0 | 0 | participant.code ', sep=""))
+fitmod = felm(keepX=TRUE, formula = formula, data = plotdf)
+sumFM = summary(fitmod, robust=T)
+plotdf = plotdf %>% 
+  group_by(goodType, Seller) %>%
+  summarise_at(var, list(valuation = function(x){#x[x>20]=NA;
+    mean(x, na.rm = T)},
+    se = function(x){x[x>20]=NA;
+    sd(x, na.rm=T)/sqrt(n())})) 
+plotdf$se = sumFM$coefficients[c(1,2,3,6,4,7,5,8),2]
+plot = plotdf %>% 
+  ggplot(aes(x=goodType, y=valuation, fill=Seller)) + 
+  geom_bar(stat='identity', position = position_dodge(width=0.9))+
+  geom_errorbar(aes(ymin=valuation-se, ymax=valuation+se), width=.1, position=position_dodge(width=0.9)) +
+  labs(fill="", x="Uncertainty", y="Value (sd)", title ="Uncertainty of Mug") +
+  theme_classic() +
+  scale_fill_manual(values = colours) +
+  theme_xaringan() +
+  theme(legend.position="top")
+print(plot)
+
+```
+
+---
