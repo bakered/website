@@ -29,14 +29,23 @@ social:
     header: true
   icon: twitter
   icon_pack: fab
-  label: Follow me on Twitter
+  label: Follow me on Bluesky
   link: https://bsky.app/profile/edbaker3.bsky.social
-- icon: github
+- display:
+    header: true
+  icon: github
   icon_pack: fab
   link: https://github.com/bakered
-- icon: linkedin
+- display:
+    header: true
+  icon: linkedin
   icon_pack: fab
   link: https://linkedin.com/in/edmund-baker-88a4b11ba
+- display:
+    header: true
+  icon: goodreads
+  icon_pack: fas
+  link: https://www.goodreads.com/user/show/168989226-e
 superuser: true
 title: Edmund Baker
 ---
