@@ -44,7 +44,7 @@ social:
 - display:
     header: true
   icon: goodreads
-  icon_pack: fas
+  icon_pack: fab
   link: https://www.goodreads.com/user/show/168989226-e
 superuser: true
 title: Edmund Baker
