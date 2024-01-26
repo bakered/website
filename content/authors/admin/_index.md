@@ -30,7 +30,7 @@ social:
   icon: twitter
   icon_pack: fab
   label: Follow me on Twitter
-  link: https://twitter.com/EdBaker3
+  link: https://bsky.app/profile/edbaker3.bsky.social
 - icon: github
   icon_pack: fab
   link: https://github.com/bakered
