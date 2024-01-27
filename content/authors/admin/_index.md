@@ -27,7 +27,7 @@ social:
   link: /#contact
 - display:
     header: true
-  icon: bluesky
+  icon: twitter
   icon_pack: fab
   label: Follow me on Bluesky
   link: https://bsky.app/profile/edbaker3.bsky.social
