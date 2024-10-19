@@ -1,7 +1,7 @@
 
 ---
-summary: Fatty graph 3.0
-title: fatty_graph
+summary: Tracker 2.0
+title: Tracker 2.0
 url_code: ""
 url_pdf: ""
 url_slides: ""
