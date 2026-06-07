@@ -2,3 +2,8 @@
 .Rhistory
 .RData
 .Ruserdata
+*.Rproj
+index.Rmd
+R/
+.DS_Store
+claude_notes.html

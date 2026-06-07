@@ -4,12 +4,10 @@
 #   The weight parameter defines the order that the links will appear in.
 
 main:
-  - name: NAU
-    url: '#about'
-    weight: 10
   - name: Graphs
     url: '#graphs'
-    weight: 20
+    weight: 10
   - name: 'Fatty Graph'
     url: '#fatty_graph'
+    weight: 20
 
