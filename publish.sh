@@ -55,11 +55,9 @@ date: $(date +%Y-%m-%d)
 show_date: false
 ---
 
-<iframe src="/blog/$PROJECT/$FILENAME"
-        width="100%"
-        height="100%"
-        style="min-height:90vh; border:none;">
-</iframe>
+<meta http-equiv="refresh" content="0; url=/blog/$PROJECT/$FILENAME">
+
+[Click here if not redirected automatically](/blog/$PROJECT/$FILENAME)
 HUGO
 
     URL="https://$DOMAIN/blog/$PROJECT/$FILENAME"
