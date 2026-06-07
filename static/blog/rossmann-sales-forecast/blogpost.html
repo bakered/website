@@ -262,12 +262,12 @@
   </div>
 
   <figure>
-    <img src="outputs/rmspe_comparison.png" alt="RMSPE comparison chart across all model families" />
+    <img src="rmspe_comparison.png" alt="RMSPE comparison chart across all model families" />
     <figcaption>RMSPE league table — all models, both scopes (lower is better).</figcaption>
   </figure>
 
   <figure>
-    <img src="outputs/actual_vs_pred_store70.png" alt="Actual vs LightGBM predicted sales for store 70" />
+    <img src="actual_vs_pred_store70.png" alt="Actual vs LightGBM predicted sales for store 70" />
     <figcaption>Store 70 — actual daily sales vs LightGBM forecast over the full validation period (May–Jul 2015).</figcaption>
   </figure>
 
@@ -325,14 +325,14 @@
 
   <h3>LightGBM feature importance (SHAP)</h3>
   <figure>
-    <img src="outputs/shap_importance.png" alt="LightGBM SHAP feature importance" />
+    <img src="shap_importance.png" alt="LightGBM SHAP feature importance" />
     <figcaption>Mean |SHAP| values for the global LightGBM model — lag features dominate,
     followed by seasonal calendar features. Competition and promotion features contribute
     measurably but are secondary to the store's own recent history.</figcaption>
   </figure>
 
   <figure>
-    <img src="outputs/error_distribution.png" alt="Prediction error distributions" />
+    <img src="error_distribution.png" alt="Prediction error distributions" />
     <figcaption>% prediction error distribution — violin plots for seasonal naive, OLS predictive,
     and LightGBM. LightGBM has a substantially tighter and more symmetric error distribution.</figcaption>
   </figure>
@@ -361,13 +361,13 @@
   </div>
 
   <figure>
-    <img src="outputs/comp_event_study.png" alt="Event study around competitor opening" />
+    <img src="comp_event_study.png" alt="Event study around competitor opening" />
     <figcaption>Monthly average (residualised) log sales around the competitor opening date.
     The drop at t = 0 is visible and persistent for the first few months.</figcaption>
   </figure>
 
   <figure>
-    <img src="outputs/comp_rdit.png" alt="RDiT scatter with fitted trend lines" />
+    <img src="comp_rdit.png" alt="RDiT scatter with fitted trend lines" />
     <figcaption>RDiT: weekly-binned log sales vs days to opening. Blue trend = pre-opening,
     coral trend = post-opening. The level shift at t = 0 (red dashed) is the β estimate.</figcaption>
   </figure>
@@ -382,7 +382,7 @@
   <div class="eq">log_sales<sub>dm</sub> = β·post<sub>dm</sub> + γ·t<sub>dm</sub> + δ·(t·post)<sub>dm</sub> + <strong>λ·(post<sub>dm</sub> × dist<sub>i</sub>)</strong> + μ·Promo<sub>dm</sub></div>
 
   <figure>
-    <img src="outputs/comp_distance_moderator.png" alt="Competition effect vs distance — continuous moderator" />
+    <img src="comp_distance_moderator.png" alt="Competition effect vs distance — continuous moderator" />
     <figcaption>Causal effect of competitor opening as a function of distance.
     Shaded band = 95% CI on the continuous moderator line. Dots = binned RDiT estimates (6 quantile groups).
     Effect is effectively zero beyond ~13 km.</figcaption>
