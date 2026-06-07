@@ -1,8 +1,8 @@
 #!/bin/bash
 # Usage:
-#   publish html  <project-name> <file-path>   — static HTML output (plot, chart, etc.)
-#   publish post  <project-name> <file-path>   — blog post (appears in Posts section)
-#   publish graph <project-name> <file-path>   — economist graph (appears in Economist Graphs section)
+#   publish html             <project-name> <file-path>   — static HTML output (plot, chart, etc.)
+#   publish post             <project-name> <file-path>   — blog post (appears in Posts section)
+#   publish economist-graph  <project-name> <file-path>   — economist graph (appears in Economist Graphs section)
 
 set -e
 
@@ -14,7 +14,7 @@ PROJECT="$2"
 FILE="$3"
 
 if [ -z "$TYPE" ] || [ -z "$PROJECT" ] || [ -z "$FILE" ]; then
-  echo "Usage: publish <html|post|graph> <project-name> <file-path>"
+  echo "Usage: publish <html|post|economist-graph> <project-name> <file-path>"
   exit 1
 fi
 
@@ -105,7 +105,7 @@ HUGO
     URL="https://$DOMAIN/blog/$PROJECT/$FILENAME"
     ;;
 
-  graph)
+  economist-graph)
     TITLE=$(extract_title "$FILE" "$PROJECT")
 
     copy_html "$FILE" "$REPO/static/graphs/$PROJECT"
@@ -131,7 +131,7 @@ HUGO
     ;;
 
   *)
-    echo "Error: type must be 'html', 'post', or 'graph'"
+    echo "Error: type must be 'html', 'post', or 'economist-graph'"
     exit 1
     ;;
 esac
