@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Rossmann Sales Forecasting &amp; Causal Analysis</title>
+  <style>
+    :root {
+      --blue:      #1565c0;
+      --lightblue: #42a5f5;
+      --coral:     #e64a19;
+      --grey:      #f5f5f5;
+      --border:    #e0e0e0;
+      --text:      #212121;
+      --muted:     #616161;
+      --max-width: 860px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      color: var(--text);
+      line-height: 1.7;
+      background: #fff;
+    }
+
+    /* ── Header ── */
+    header {
+      background: var(--blue);
+      color: #fff;
+      padding: 3rem 1.5rem 2.5rem;
+      text-align: center;
+    }
+    header h1 { font-size: 2rem; font-weight: 700; margin-bottom: 0.5rem; }
+    header .subtitle { font-size: 1.05rem; opacity: 0.85; max-width: 600px; margin: 0 auto 1.2rem; }
+    header .github-link a {
+      display: inline-block;
+      background: rgba(255,255,255,0.15);
+      border: 1px solid rgba(255,255,255,0.4);
+      color: #fff;
+      text-decoration: none;
+      padding: 0.45rem 1.1rem;
+      border-radius: 4px;
+      font-size: 0.9rem;
+      transition: background 0.15s;
+    }
+    header .github-link a:hover { background: rgba(255,255,255,0.25); }
+    header .github-link a svg { vertical-align: middle; margin-right: 6px; }
+
+    /* ── Layout ── */
+    main {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 2.5rem 1.5rem 4rem;
+    }
+
+    /* ── Section headings ── */
+    h2 {
+      font-size: 1.45rem;
+      font-weight: 700;
+      color: var(--blue);
+      margin: 2.8rem 0 0.8rem;
+      padding-bottom: 0.35rem;
+      border-bottom: 2px solid var(--lightblue);
+    }
+    h3 { font-size: 1.1rem; font-weight: 600; margin: 1.8rem 0 0.5rem; }
+    p  { margin-bottom: 1rem; }
+
+    /* ── Result callout boxes ── */
+    .callout {
+      background: var(--grey);
+      border-left: 4px solid var(--blue);
+      border-radius: 0 6px 6px 0;
+      padding: 1rem 1.2rem;
+      margin: 1.2rem 0;
+    }
+    .callout.coral { border-left-color: var(--coral); }
+    .callout strong { display: block; font-size: 0.8rem; text-transform: uppercase;
+                      letter-spacing: 0.05em; color: var(--muted); margin-bottom: 0.25rem; }
+
+    /* ── Tables ── */
+    .table-wrap { overflow-x: auto; margin: 1rem 0 1.5rem; }
+    table { border-collapse: collapse; width: 100%; font-size: 0.92rem; }
+    th {
+      background: var(--blue);
+      color: #fff;
+      padding: 0.55rem 0.9rem;
+      text-align: left;
+      font-weight: 600;
+    }
+    td { padding: 0.5rem 0.9rem; border-bottom: 1px solid var(--border); }
+    tr:nth-child(even) td { background: var(--grey); }
+    tr.best td { font-weight: 700; background: #e3f2fd; }
+    td.num { text-align: right; font-variant-numeric: tabular-nums; }
+
+    /* ── Images ── */
+    figure {
+      margin: 1.8rem 0;
+      text-align: center;
+    }
+    figure img {
+      max-width: 100%;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+    }
+    figcaption {
+      font-size: 0.85rem;
+      color: var(--muted);
+      margin-top: 0.5rem;
+      font-style: italic;
+    }
+
+    /* ── Code ── */
+    pre, code {
+      font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+      font-size: 0.85rem;
+      background: var(--grey);
+      border-radius: 4px;
+    }
+    code { padding: 0.15em 0.35em; }
+    pre  { padding: 1rem 1.2rem; overflow-x: auto; margin: 1rem 0; border: 1px solid var(--border); }
+    pre code { background: none; padding: 0; }
+
+    /* ── Equation block ── */
+    .eq {
+      font-family: "SFMono-Regular", Consolas, monospace;
+      background: var(--grey);
+      border-radius: 4px;
+      padding: 0.7rem 1.2rem;
+      margin: 0.8rem 0;
+      font-size: 0.9rem;
+      color: #333;
+    }
+
+    /* ── Key findings ── */
+    .findings-list {
+      counter-reset: finding;
+      list-style: none;
+      padding: 0;
+    }
+    .findings-list li {
+      counter-increment: finding;
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+    .findings-list li::before {
+      content: counter(finding);
+      flex-shrink: 0;
+      width: 2rem;
+      height: 2rem;
+      background: var(--blue);
+      color: #fff;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 0.9rem;
+      margin-top: 0.1rem;
+    }
+
+    /* ── Footer ── */
+    footer {
+      text-align: center;
+      font-size: 0.85rem;
+      color: var(--muted);
+      padding: 2rem 1rem;
+      border-top: 1px solid var(--border);
+    }
+    footer a { color: var(--blue); }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>Rossmann Sales Forecasting &amp; Causal Analysis</h1>
+  <p class="subtitle">
+    End-to-end data science on 1,115 German drugstores: model benchmarking,
+    competition causal inference, and promo heterogeneous treatment effects.
+  </p>
+  <div class="github-link">
+    <a href="https://github.com/bakered/rossmann-sales-forecast" target="_blank" rel="noopener">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true">
+        <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38
+                 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13
+                 -.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66
+                 .07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15
+                 -.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27
+                 .68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12
+                 .51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48
+                 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/>
+      </svg>
+      View on GitHub
+    </a>
+  </div>
+</header>
+
+<main>
+
+  <!-- ── Overview ── -->
+  <h2>Overview</h2>
+  <p>
+    This project applies forecasting and causal inference to the
+    <a href="https://www.kaggle.com/c/rossmann-store-sales" target="_blank">Rossmann Store Sales</a>
+    Kaggle dataset — daily sales records for 1,115 German drugstores from 2013 to 2015.
+    It has two objectives:
+  </p>
+  <ol style="padding-left:1.5rem; margin-bottom:1rem;">
+    <li style="margin-bottom:0.5rem;">
+      <strong>Forecasting</strong> — benchmark a full model matrix (OLS variants, Random Forest,
+      XGBoost, LightGBM, CatBoost, MLP, Prophet) on RMSPE, the Kaggle competition metric.
+    </li>
+    <li>
+      <strong>Causal inference</strong> — move beyond naive correlations to estimate the
+      causal effect of (a) nearby competitor openings using Regression Discontinuity in Time,
+      and (b) promotional campaigns using a Causal Forest with Double ML.
+    </li>
+  </ol>
+
+  <!-- ── Results at a glance ── -->
+  <h2>Results at a Glance</h2>
+
+  <h3>Forecasting — all-stores RMSPE (validation: May–Jul 2015)</h3>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr><th>Model</th><th class="num">RMSPE</th><th>Notes</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Seasonal naive</td><td class="num">0.1767</td><td>Same day 52 weeks prior</td></tr>
+        <tr><td>OLS structural (linear)</td><td class="num">0.2302</td><td>Calendar + promo, raw sales target</td></tr>
+        <tr><td>OLS structural (mult)</td><td class="num">0.2095</td><td>Calendar + promo, log(Sales) target</td></tr>
+        <tr><td>MLP</td><td class="num">0.1835</td><td>2-layer neural network</td></tr>
+        <tr><td>OLS predictive (linear)</td><td class="num">0.1607</td><td>Lag features replace store FE</td></tr>
+        <tr><td>OLS predictive (mult)</td><td class="num">0.1525</td><td>Log-lags + log(Sales) target</td></tr>
+        <tr><td>Random Forest</td><td class="num">0.1455</td><td>200 trees, log(Sales) target</td></tr>
+        <tr><td>CatBoost</td><td class="num">0.1375</td><td>Native categorical support</td></tr>
+        <tr class="best"><td>LightGBM ★</td><td class="num">0.1315</td><td>Best — histogram boosting, full feature set</td></tr>
+        <tr><td>Prophet <em>(20-store sample)</em></td><td class="num">~0.1498</td><td>Per-store time-series model; no lag features</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>Store 70 — single-store vs global models</h3>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr><th>Model</th><th class="num">Single-store</th><th class="num">Global (filtered)</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>OLS structural (mult)</td><td class="num">0.1270</td><td class="num">0.1235</td></tr>
+        <tr><td>OLS predictive (mult)</td><td class="num">0.1252</td><td class="num">0.1267</td></tr>
+        <tr><td>Random Forest</td><td class="num">0.1116</td><td class="num">0.1184</td></tr>
+        <tr><td>XGBoost</td><td class="num">0.1111</td><td class="num">—</td></tr>
+        <tr><td>CatBoost</td><td class="num">—</td><td class="num">0.1027</td></tr>
+        <tr class="best"><td>LightGBM ★</td><td class="num">—</td><td class="num">0.0982</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <figure>
+    <img src="outputs/rmspe_comparison.png" alt="RMSPE comparison chart across all model families" />
+    <figcaption>RMSPE league table — all models, both scopes (lower is better).</figcaption>
+  </figure>
+
+  <figure>
+    <img src="outputs/actual_vs_pred_store70.png" alt="Actual vs LightGBM predicted sales for store 70" />
+    <figcaption>Store 70 — actual daily sales vs LightGBM forecast over the full validation period (May–Jul 2015).</figcaption>
+  </figure>
+
+  <!-- ── Methodology ── -->
+  <h2>Methodology</h2>
+
+  <h3>Feature engineering</h3>
+  <p>
+    Raw date and store metadata are transformed into a rich feature set before any model sees the data.
+    Key decisions:
+  </p>
+  <ul style="padding-left:1.5rem; margin-bottom:1rem;">
+    <li style="margin-bottom:0.4rem;">
+      <strong>Same-condition lags</strong> — the previous occurrence with the same
+      day-of-week <em>and</em> Promo status (<code>sales_lag_same_cond</code>) turns out to be
+      the single strongest predictor, beating any calendar or store-metadata feature.
+    </li>
+    <li style="margin-bottom:0.4rem;">
+      <strong>Christmas/New Year dummies</strong> — one binary column per calendar date
+      (Dec 15–24, Dec 26–31, Jan 2) so the model learns each day's multiplier independently
+      rather than forcing a smooth polynomial through the holiday window.
+    </li>
+    <li style="margin-bottom:0.4rem;">
+      <strong>Competition transition features</strong> — <code>comp_opened_last_6m</code> and
+      <code>days_since_comp_opened</code> signal to ML models that lag features are unreliable
+      during the 6-month window after a nearby competitor opens (the lag still reflects
+      pre-competition actuals).
+    </li>
+    <li>
+      All lag features are computed on the full dataset sorted by date before the train/val
+      split, so test-period rows look back into training actuals without leakage.
+    </li>
+  </ul>
+
+  <h3>Model matrix — structural vs predictive</h3>
+  <p>
+    OLS models are organised along two axes:
+  </p>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th></th><th>Structural</th><th>Predictive</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Multiplicative</strong> (log target)</td><td>OLS-SM</td><td>OLS-PM</td></tr>
+        <tr><td><strong>Linear</strong> (raw target)</td><td>OLS-SL</td><td>OLS-PL</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p>
+    <strong>Structural</strong> models use calendar and promo features; store fixed effects
+    (absorbed via within-store demeaning — Frisch-Waugh theorem) leave coefficients as clean
+    seasonal multipliers. <strong>Predictive</strong> models replace store fixed effects with
+    lag/rolling features. The same-condition lag already encodes Promo status by construction,
+    so Promo is excluded as a separate predictor.
+  </p>
+
+  <h3>LightGBM feature importance (SHAP)</h3>
+  <figure>
+    <img src="outputs/shap_importance.png" alt="LightGBM SHAP feature importance" />
+    <figcaption>Mean |SHAP| values for the global LightGBM model — lag features dominate,
+    followed by seasonal calendar features. Competition and promotion features contribute
+    measurably but are secondary to the store's own recent history.</figcaption>
+  </figure>
+
+  <figure>
+    <img src="outputs/error_distribution.png" alt="Prediction error distributions" />
+    <figcaption>% prediction error distribution — violin plots for seasonal naive, OLS predictive,
+    and LightGBM. LightGBM has a substantially tighter and more symmetric error distribution.</figcaption>
+  </figure>
+
+  <!-- ── Competition ── -->
+  <h2>Causal Analysis I — Competitor Opening Effect</h2>
+
+  <h3>Identification: Regression Discontinuity in Time (RDiT)</h3>
+  <p>
+    <code>CompetitionOpenSinceYear/Month</code> records when the nearest competitor opened.
+    For each of 163 treated stores (competitor opened mid-window, with ≥60 days either side),
+    we estimate a sharp discontinuity model within a ±90 day bandwidth:
+  </p>
+  <div class="eq">log(Sales<sub>it</sub>) = α + β·POST<sub>it</sub> + γ·t + δ·POST<sub>it</sub>·t + ε<sub>it</sub></div>
+  <p>
+    β captures the immediate level shift at the opening. Store fixed effects are absorbed by
+    within-store demeaning. Standard errors are HC3-robust.
+  </p>
+
+  <div class="callout coral">
+    <strong>Key finding</strong>
+    Competitor opening reduces sales by approximately <strong>−2.9%</strong>
+    (β = −0.030, 95% CI [−0.041, −0.019]).
+    The placebo test (fake opening 6 months early) gives β = +0.004, p = 0.57 —
+    pre-trends are clean.
+  </div>
+
+  <figure>
+    <img src="outputs/comp_event_study.png" alt="Event study around competitor opening" />
+    <figcaption>Monthly average (residualised) log sales around the competitor opening date.
+    The drop at t = 0 is visible and persistent for the first few months.</figcaption>
+  </figure>
+
+  <figure>
+    <img src="outputs/comp_rdit.png" alt="RDiT scatter with fitted trend lines" />
+    <figcaption>RDiT: weekly-binned log sales vs days to opening. Blue trend = pre-opening,
+    coral trend = post-opening. The level shift at t = 0 (red dashed) is the β estimate.</figcaption>
+  </figure>
+
+  <h3>Heterogeneity by competition distance — continuous moderator</h3>
+  <p>
+    Rather than splitting into terciles, we add distance as a continuous moderator interacted
+    with POST. Since <code>CompetitionDistance</code> is constant within store,
+    (POST × dist)<sub>dm</sub> = post<sub>dm</sub> × dist<sub>i</sub>, so the specification
+    remains valid under within-store demeaning:
+  </p>
+  <div class="eq">log_sales<sub>dm</sub> = β·post<sub>dm</sub> + γ·t<sub>dm</sub> + δ·(t·post)<sub>dm</sub> + <strong>λ·(post<sub>dm</sub> × dist<sub>i</sub>)</strong> + μ·Promo<sub>dm</sub></div>
+
+  <figure>
+    <img src="outputs/comp_distance_moderator.png" alt="Competition effect vs distance — continuous moderator" />
+    <figcaption>Causal effect of competitor opening as a function of distance.
+    Shaded band = 95% CI on the continuous moderator line. Dots = binned RDiT estimates (6 quantile groups).
+    Effect is effectively zero beyond ~13 km.</figcaption>
+  </figure>
+
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Distance group</th><th>Range</th><th class="num">β</th><th class="num">% change</th></tr></thead>
+      <tbody>
+        <tr><td>Close</td><td>&lt; 1,153 m</td><td class="num">−0.045</td><td class="num">−4.4%</td></tr>
+        <tr><td>Medium</td><td>1,153 – 4,767 m</td><td class="num">−0.044</td><td class="num">−4.3%</td></tr>
+        <tr><td>Far</td><td>&gt; 4,767 m</td><td class="num">+0.001</td><td class="num">n.s.</td></tr>
+        <tr><td>Continuous slope (λ)</td><td>per km</td><td colspan="2" class="num">Effect → 0 at ~13 km</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p>
+    The pattern is a threshold rather than a smooth gradient — stores within roughly 5 km lose
+    4–4.5% of sales regardless of exact distance; beyond that the effect disappears.
+  </p>
+
+  <!-- ── Promo ── -->
+  <h2>Causal Analysis II — Promotion Heterogeneous Treatment Effects</h2>
+
+  <h3>Assignment mechanism</h3>
+  <p>
+    Before estimating the promo effect we verify the assignment mechanism empirically.
+    Promo turns out to follow a strict centralised calendar:
+  </p>
+  <ul style="padding-left:1.5rem; margin-bottom:1rem;">
+    <li style="margin-bottom:0.4rem;"><strong>Weekdays only</strong> — Sat/Sun promo rate = 0.0% exactly.</li>
+    <li style="margin-bottom:0.4rem;">
+      <strong>Perfectly synchronised</strong> — on every single day, either all open stores
+      run Promo or none do (cross-store std = 0.000). It is a binary calendar toggle set by HQ.
+    </li>
+    <li>
+      <strong>Slight size gradient</strong> — larger stores get marginally fewer promo weeks
+      (β = −0.0025 per log-€, p = 0.011, R² = 0.006). Statistically significant but tiny —
+      promo frequency varies from just 37.7% to 45.4% across all 1,115 stores.
+    </li>
+  </ul>
+  <p>
+    The endogeneity is primarily temporal: promo weeks are correlated with seasonal factors
+    that independently drive sales. DML controls for this by residualising both Y and T on
+    the same rich feature set (including lag features that capture recent trajectory) before
+    estimating the treatment effect.
+  </p>
+
+  <h3>Causal Forest with Double ML</h3>
+  <p>
+    <code>econml.CausalForestDML</code> with gradient boosting nuisance models:
+  </p>
+  <ol style="padding-left:1.5rem; margin-bottom:1rem;">
+    <li>Regress log(Sales) on controls X → residuals Ỹ</li>
+    <li>Regress Promo on controls X → residuals P̃</li>
+    <li>Fit an honest random forest on (Ỹ, P̃) to estimate τ(x) per observation</li>
+  </ol>
+  <p>
+    The naive promo lift (mean promo days vs non-promo days) is <strong>+38.8%</strong>.
+    Results from the causal forest will be added here once the model run completes.
+  </p>
+
+  <!-- ── Key findings ── -->
+  <h2>Key Findings</h2>
+  <ol class="findings-list">
+    <li>
+      <div>
+        <strong>Lag features dominate forecasting.</strong>
+        <code>sales_lag_same_cond</code> — the previous occurrence with the same weekday
+        and Promo status — is the single strongest predictor, ahead of all calendar and
+        store-metadata features. A store's own recent history is far more informative than
+        any structural feature.
+      </div>
+    </li>
+    <li>
+      <div>
+        <strong>Log target matters on RMSPE.</strong>
+        Multiplicative OLS outperforms linear OLS by 3–6 pp because RMSPE penalises
+        relative errors; a linear model's loss is dominated by large-volume stores.
+      </div>
+    </li>
+    <li>
+      <div>
+        <strong>Structural OLS underperforms globally.</strong>
+        Without access to recent sales trajectory, the structural model (RMSPE 0.21)
+        lags well behind predictive OLS (0.15) and tree models. Within a single store
+        the gap narrows considerably.
+      </div>
+    </li>
+    <li>
+      <div>
+        <strong>Gradient boosting is best in class.</strong>
+        LightGBM (0.1315) and CatBoost (0.1375) outperform all OLS and Random Forest
+        variants with the same feature set — the ensemble handles non-linearities and
+        interactions that OLS cannot.
+      </div>
+    </li>
+    <li>
+      <div>
+        <strong>Competitor opening reduces sales by ~3%.</strong>
+        The RDiT estimate is β = −0.030 (−2.9%), concentrated within ~5 km.
+        The placebo test confirms the result is not driven by pre-existing trends.
+      </div>
+    </li>
+    <li>
+      <div>
+        <strong>Competition effect is a threshold, not a gradient.</strong>
+        Stores within 5 km lose 4–4.5% regardless of exact distance;
+        beyond that the effect is statistically indistinguishable from zero.
+        The linear moderator estimates the effect reaches zero at ~13 km.
+      </div>
+    </li>
+    <li>
+      <div>
+        <strong>Promo is a centralised binary calendar.</strong>
+        Cross-store synchronisation is perfect (std = 0.000 on every day).
+        The naive +38.8% lift is confounded by seasonal scheduling;
+        the DML-adjusted estimate controls for this via residualisation.
+      </div>
+    </li>
+  </ol>
+
+  <!-- ── Reproduce ── -->
+  <h2>Reproducing Results</h2>
+  <pre><code># 1. Get the data (Kaggle CLI)
+kaggle competitions download -c rossmann-store-sales -p data/raw/
+unzip data/raw/rossmann-store-sales.zip -d data/raw/
+
+# 2. Run in Docker
+docker compose up -d
+docker exec rossmann-sales-forecast-notebook-1 python notebooks/03_feature_engineering.py
+docker exec rossmann-sales-forecast-notebook-1 python notebooks/04_models.py
+docker exec rossmann-sales-forecast-notebook-1 python notebooks/05_competition_opening.py
+docker exec rossmann-sales-forecast-notebook-1 python notebooks/06_model_comparison.py
+docker exec rossmann-sales-forecast-notebook-1 python notebooks/07_promo_causal_forest.py</code></pre>
+  <p>
+    Full code and data instructions at
+    <a href="https://github.com/bakered/rossmann-sales-forecast" target="_blank" rel="noopener">
+      github.com/bakered/rossmann-sales-forecast
+    </a>.
+  </p>
+
+</main>
+
+<footer>
+  Data: <a href="https://www.kaggle.com/c/rossmann-store-sales" target="_blank" rel="noopener">Kaggle Rossmann Store Sales</a>
+  &nbsp;·&nbsp;
+  Code: <a href="https://github.com/bakered/rossmann-sales-forecast" target="_blank" rel="noopener">GitHub</a>
+</footer>
+
+</body>
+</html>
