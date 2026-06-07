@@ -1,0 +1,5 @@
+// Hide dates on blog post cards and post pages
+.article-metadata,
+.article-date {
+  display: none !important;
+}
