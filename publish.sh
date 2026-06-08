@@ -105,8 +105,6 @@ summary: ''
 ---
 
 <meta http-equiv="refresh" content="0; url=/blog/$PROJECT/$FILENAME">
-
-[Click here if not redirected automatically](/blog/$PROJECT/$FILENAME)
 HUGO
 
     URL="https://$DOMAIN/blog/$PROJECT/$FILENAME"
@@ -131,8 +129,6 @@ show_date: false
 ---
 
 <meta http-equiv="refresh" content="0; url=/graphs/$PROJECT/$FILENAME">
-
-[Click here if not redirected automatically](/graphs/$PROJECT/$FILENAME)
 HUGO
 
     URL="https://$DOMAIN/graphs/$PROJECT/$FILENAME"

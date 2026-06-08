@@ -6,5 +6,3 @@ summary: ''
 ---
 
 <meta http-equiv="refresh" content="0; url=/blog/rossmann-sales-forecast/blogpost.html">
-
-[Click here if not redirected automatically](/blog/rossmann-sales-forecast/blogpost.html)
