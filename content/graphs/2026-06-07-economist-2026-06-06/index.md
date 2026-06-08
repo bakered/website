@@ -1,5 +1,5 @@
 ---
-title: "The Economist &mdash; 2026-06-06"
+title: "2026-06-06-Economist Graphs"
 date: '2026-06-07'
 slug: 2026-06-07-economist-2026-06-06
 categories: []
