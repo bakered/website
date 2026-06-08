@@ -1,5 +1,5 @@
 ---
-title: "Rossmann Sales Forecasting &amp; Causal Analysis"
+title: "Rossmann Sales Forecasting & Causal Analysis"
 date: 2026-06-07
 show_date: false
 summary: ''

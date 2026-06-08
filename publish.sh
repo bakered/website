@@ -26,12 +26,18 @@ fi
 FILENAME=$(basename "$FILE")
 TODAY=$(date +%Y-%m-%d)
 
-# Extract title from <title> tag, fall back to project name
+# Extract title from <title> tag, decode HTML entities, fall back to project name
 extract_title() {
   local f="$1"
   local fallback="$2"
   local t
-  t=$(grep -i '<title>' "$f" | sed 's/.*<title>\(.*\)<\/title>.*/\1/' | tr -d '\r\n' | head -1)
+  t=$(python3 -c "
+import re, html
+with open('$f') as fh:
+    content = fh.read()
+m = re.search(r'<title>(.*?)</title>', content, re.IGNORECASE | re.DOTALL)
+print(html.unescape(m.group(1).strip()) if m else '')
+")
   echo "${t:-$fallback}"
 }
 
