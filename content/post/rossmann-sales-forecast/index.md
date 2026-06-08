@@ -2,6 +2,7 @@
 title: "Rossmann Sales Forecasting &amp; Causal Analysis"
 date: 2026-06-07
 show_date: false
+summary: ''
 ---
 
 <meta http-equiv="refresh" content="0; url=/blog/rossmann-sales-forecast/blogpost.html">

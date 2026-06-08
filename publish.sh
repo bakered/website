@@ -95,6 +95,7 @@ case "$TYPE" in
 title: "$TITLE"
 date: $TODAY
 show_date: false
+summary: ''
 ---
 
 <meta http-equiv="refresh" content="0; url=/blog/$PROJECT/$FILENAME">
@@ -120,6 +121,7 @@ slug: $TODAY-$PROJECT
 categories: []
 tags: []
 summary: ''
+show_date: false
 ---
 
 <meta http-equiv="refresh" content="0; url=/graphs/$PROJECT/$FILENAME">
