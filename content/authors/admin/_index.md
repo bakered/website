@@ -42,7 +42,7 @@ social:
   icon: linkedin
   icon_pack: fab
   label: linkedin
-  link: https://linkedin.com/in/edmund-baker-88a4b11ba
+  link: https://www.linkedin.com/in/bakered91/
 - display:
     header: true
   icon: goodreads
