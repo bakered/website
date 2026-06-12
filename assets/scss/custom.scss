@@ -4,20 +4,53 @@
   display: none !important;
 }
 
-// Banner — full-width SVG via the native home-section-bg div
-#banner {
-  padding: 0 !important;
-  margin: 0 !important;
-  // height driven by aspect ratio of the SVG viewBox (1594 × 406 ≈ 25.5%)
-  min-height: calc(100vw * 406 / 1594);
+// Hero banner — inline SVG with name overlay
+.hero-banner {
+  position: relative;
+  overflow: hidden;
+  display: block;
+  line-height: 0;
 
-  .home-section-bg {
-    background-image: url('/media/dag_banner.svg');
-    background-size: 100% auto;
-    background-position: top left;
-    background-repeat: no-repeat;
+  svg {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+}
+
+.hero-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 2.5rem 4rem;
+  max-width: 38%;
+
+  h1 {
+    font-size: 2.4rem;
+    font-weight: 700;
+    color: #1C4844;
+    margin-bottom: 0.4rem;
+    line-height: 1.15;
   }
 
-  // hide the empty container Wowchemy still renders
-  .container { display: none; }
+  .hero-role {
+    font-size: 1.05rem;
+    color: #1C4844;
+    opacity: 0.75;
+    margin: 0;
+  }
+}
+
+@media (max-width: 768px) {
+  .hero-overlay {
+    padding: 1.25rem 1.5rem;
+    max-width: 55%;
+
+    h1 { font-size: 1.4rem; }
+    .hero-role { font-size: 0.85rem; }
+  }
 }

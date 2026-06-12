@@ -1,0 +1,68 @@
+{{- define "main" -}}
+
+{{/* Hero banner with inline SVG and name overlay */}}
+<div class="hero-banner">
+  <svg width="100%" viewBox="0 0 1594 406" role="img" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <defs>
+      <marker id="ag" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+        <path d="M1 1L9 5L1 9" fill="none" stroke="#1C4844" stroke-opacity="0.45" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </marker>
+      <marker id="as" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+        <path d="M1 1L9 5L1 9" fill="none" stroke="#1C4844" stroke-opacity="0.2" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </marker>
+      <mask id="imagine-text-gaps-ht8a53" maskUnits="userSpaceOnUse"><rect x="0" y="0" width="1594" height="406" fill="white"/><rect x="608.1734008789062" y="200.64657592773438" width="23.65330410003662" height="34.99527168273926" fill="black" rx="2"/><rect x="569.9568481445312" y="256.5023498535156" width="100.0864028930664" height="23.9255313873291" fill="black" rx="2"/><rect x="988.7700805664062" y="86.86052703857422" width="22.459848403930664" height="31.67435073852539" fill="black" rx="2"/><rect x="950.8475952148438" y="133.6093292236328" width="98.30486297607422" height="21.711584091186523" fill="black" rx="2"/><rect x="988.7700805664062" y="202.8605194091797" width="22.459848403930664" height="31.67435073852539" fill="black" rx="2"/><rect x="1040" y="237.6093292236328" width="80.24735260009766" height="21.711584091186523" fill="black" rx="2"/><rect x="1368.17333984375" y="200.64657592773438" width="23.65330410003662" height="34.99527168273926" fill="black" rx="2"/><rect x="1340.1876220703125" y="256.5023498535156" width="79.62467956542969" height="23.9255313873291" fill="black" rx="2"/><rect x="988.7700805664062" y="312.86053466796875" width="22.459848403930664" height="31.67435073852539" fill="black" rx="2"/><rect x="1026" y="346.6093444824219" width="80.24735260009766" height="21.711584091186523" fill="black" rx="2"/></mask>
+    </defs>
+
+    <!-- Background -->
+    <rect x="0" y="0" width="1584" height="396" fill="#BACFCF"/>
+    <path d="M0 0 L1110 0 Q1150 198 1110 396 L0 396 Z" fill="#8FA8A8"/>
+
+    <!-- C→T -->
+    <path d="M968 105 C880 105 700 140 647 193" fill="none" stroke="#1C4844" stroke-opacity="0.18" stroke-width="2" marker-end="url(#as)"/>
+    <!-- C→Y -->
+    <path d="M1032 105 C1120 105 1300 140 1353 193" fill="none" stroke="#1C4844" stroke-opacity="0.18" stroke-width="2" marker-end="url(#as)"/>
+    <!-- T→K -->
+    <path d="M647 247 C700 310 880 330 972 330" fill="none" stroke="#1C4844" stroke-opacity="0.18" stroke-width="2" marker-end="url(#as)" mask="url(#imagine-text-gaps-ht8a53)"/>
+    <!-- Y→K -->
+    <path d="M1353 247 C1300 310 1120 330 1028 330" fill="none" stroke="#1C4844" stroke-opacity="0.18" stroke-width="2" marker-end="url(#as)" mask="url(#imagine-text-gaps-ht8a53)"/>
+
+    <!-- causal path T→M→Y -->
+    <line x1="658" y1="220" x2="968" y2="220" stroke="#1C4844" stroke-opacity="0.45" stroke-width="2.5" marker-end="url(#ag)"/>
+    <line x1="1032" y1="220" x2="1342" y2="220" stroke="#1C4844" stroke-opacity="0.45" stroke-width="2.5" marker-end="url(#ag)"/>
+
+    <!-- T -->
+    <circle cx="620" cy="220" r="38" fill="#1C4844" fill-opacity="0.5"/>
+    <text x="620" y="227" text-anchor="middle" font-size="26" font-family="monospace" fill="#D4ECEB">T</text>
+    <text x="620" y="274" text-anchor="middle" font-size="17" font-family="monospace" fill="#1C4844" opacity="0.45">treatment</text>
+
+    <!-- C -->
+    <circle cx="1000" cy="105" r="32" fill="none" stroke="#1C4844" stroke-opacity="0.35" stroke-width="1.5" stroke-dasharray="6 4"/>
+    <text x="1000" y="111" text-anchor="middle" font-size="24" font-family="monospace" fill="#1C4844" opacity="0.35">C</text>
+    <text x="1000" y="150" text-anchor="middle" font-size="15" font-family="monospace" fill="#1C4844" opacity="0.28">confounder</text>
+
+    <!-- M -->
+    <circle cx="1000" cy="220" r="32" fill="none" stroke="#1C4844" stroke-opacity="0.42" stroke-width="2"/>
+    <text x="1000" y="227" text-anchor="middle" font-size="24" font-family="monospace" fill="#1C4844" opacity="0.42">M</text>
+    <text x="1044" y="254" text-anchor="start" font-size="15" font-family="monospace" fill="#1C4844" opacity="0.3">mediator</text>
+
+    <!-- Y -->
+    <circle cx="1380" cy="220" r="38" fill="#1C4844" fill-opacity="0.5"/>
+    <text x="1380" y="227" text-anchor="middle" font-size="26" font-family="monospace" fill="#D4ECEB">Y</text>
+    <text x="1380" y="274" text-anchor="middle" font-size="17" font-family="monospace" fill="#1C4844" opacity="0.45">outcome</text>
+
+    <!-- K -->
+    <circle cx="1000" cy="330" r="28" fill="none" stroke="#1C4844" stroke-opacity="0.35" stroke-width="1.5" stroke-dasharray="6 4"/>
+    <text x="1000" y="337" text-anchor="middle" font-size="24" font-family="monospace" fill="#1C4844" opacity="0.35">K</text>
+    <text x="1030" y="363" text-anchor="start" font-size="15" font-family="monospace" fill="#1C4844" opacity="0.28">collider</text>
+  </svg>
+
+  <div class="hero-overlay">
+    <h1>Edmund Baker</h1>
+    <p class="hero-role">Economist &amp; Researcher</p>
+  </div>
+</div>
+
+{{/* Render homepage widget sections */}}
+{{ partial "widget_page.html" . }}
+
+{{- end -}}

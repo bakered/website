@@ -13,7 +13,4 @@ main:
   - name: Graphs
     url: '#graphs'
     weight: 10
-  - name: 'Fatty Graph'
-    url: '#fatty_graph'
-    weight: 20
 
