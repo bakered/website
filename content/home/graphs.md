@@ -7,7 +7,8 @@ widget: pages
 headless: true
 
 # Order that this section appears on the page.
-weight: 2
+active: true
+weight: 30
 
 title: Economist Graphs
 subtitle:
