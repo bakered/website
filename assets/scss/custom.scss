@@ -4,18 +4,23 @@
   display: none !important;
 }
 
-// Banner section — remove all padding and container constraints
-#banner {
+// Banner section — strip all section padding
+#banner,
+section#banner,
+.home-section#banner {
   padding: 0 !important;
   margin: 0 !important;
+  overflow: visible !important;
 
-  .container {
+  .container,
+  .container-fluid {
     max-width: 100% !important;
+    width: 100% !important;
     padding: 0 !important;
   }
+}
 
-  img {
-    display: block;
-    width: 100%;
-  }
+// Prevent body-level overflow clipping the full-bleed banner
+body {
+  overflow-x: hidden;
 }
