@@ -4,23 +4,20 @@
   display: none !important;
 }
 
-// Banner section — strip all section padding
-#banner,
-section#banner,
-.home-section#banner {
+// Banner — full-width SVG via the native home-section-bg div
+#banner {
   padding: 0 !important;
   margin: 0 !important;
-  overflow: visible !important;
+  // height driven by aspect ratio of the SVG viewBox (1594 × 406 ≈ 25.5%)
+  min-height: calc(100vw * 406 / 1594);
 
-  .container,
-  .container-fluid {
-    max-width: 100% !important;
-    width: 100% !important;
-    padding: 0 !important;
+  .home-section-bg {
+    background-image: url('/media/dag_banner.svg');
+    background-size: 100% auto;
+    background-position: top left;
+    background-repeat: no-repeat;
   }
-}
 
-// Prevent body-level overflow clipping the full-bleed banner
-body {
-  overflow-x: hidden;
+  // hide the empty container Wowchemy still renders
+  .container { display: none; }
 }
