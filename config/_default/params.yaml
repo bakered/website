@@ -6,6 +6,7 @@
 # Appearance
 
 theme: minimal
+i_am_a_sponsor: true
 day_night: true
 font: ''
 font_size: L
