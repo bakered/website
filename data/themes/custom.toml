@@ -1,0 +1,19 @@
+name = "Custom"
+light = true
+
+# Palette: #1b4843, #8fa8a8, #bad0cf, #80a2c3, #a7754d
+# To revert to minimal defaults, swap each value for the commented original
+
+primary = "#80a2c3"        # minimal: "#1565c0"
+
+menu_primary = "#1b4843"   # minimal: "#fff"
+menu_text = "#bad0cf"      # minimal: "#34495e"
+menu_text_active = "#ffffff"  # minimal: "#2962ff"
+menu_title = "#ffffff"     # minimal: "#2b2b2b"
+
+home_section_odd = "rgb(255, 255, 255)"    # minimal: same
+home_section_even = "rgb(244, 248, 248)"   # minimal: "rgb(247, 247, 247)"
+
+[dark]
+  link = "#bad0cf"    # minimal: "#bbdefb"
+  link_hover = "#ffffff"  # minimal: "#bbdefb"

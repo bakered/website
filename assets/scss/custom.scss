@@ -51,3 +51,15 @@
     max-width: 55%;
   }
 }
+
+// Terracotta accent on link hover
+// To revert: remove this block (minimal default inherits from primary color)
+a:hover {
+  color: #a7754d !important;
+}
+
+// Subtle bottom border separates dark navbar from content
+// To revert: remove this block (minimal default has no border)
+.navbar {
+  border-bottom: 1px solid rgba(27, 72, 67, 0.15);
+}
