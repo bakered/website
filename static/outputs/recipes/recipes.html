@@ -1,0 +1,1110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Top Recipes</title>
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #faf8f5;
+            color: #2d2d2d;
+            line-height: 1.6;
+        }
+
+        header {
+            background: #1c1c1c;
+            color: white;
+            padding: 18px 20px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.3);
+        }
+
+        h1 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            letter-spacing: -0.3px;
+            padding-bottom: 14px;
+        }
+
+        .tab-nav {
+            display: flex;
+            overflow-x: auto;
+            scrollbar-width: none;
+        }
+        .tab-nav::-webkit-scrollbar { display: none; }
+
+        .tab-btn {
+            flex: 1;
+            min-width: max-content;
+            background: none;
+            border: none;
+            color: rgba(255,255,255,0.45);
+            padding: 11px 14px;
+            font-size: 0.78rem;
+            font-weight: 700;
+            letter-spacing: 0.4px;
+            text-transform: uppercase;
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
+            transition: color 0.2s, border-color 0.2s;
+        }
+
+        .tab-btn.active {
+            color: white;
+            border-bottom-color: #d4813a;
+        }
+
+        .tab-pane {
+            display: none;
+            padding: 16px 14px;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .tab-pane.active { display: block; }
+
+        .recipe {
+            background: white;
+            border-radius: 14px;
+            margin-bottom: 12px;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.07);
+            overflow: hidden;
+        }
+
+        .recipe-name {
+            font-size: 1.1rem;
+            font-weight: 700;
+            padding: 16px 16px 0;
+            color: #1c1c1c;
+        }
+
+        .quick {
+            margin: 12px 16px;
+            background: #fef7ee;
+            border-radius: 8px;
+            padding: 11px 14px;
+            border-left: 3px solid #d4813a;
+        }
+
+        .quick-label {
+            font-size: 0.62rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #d4813a;
+            margin-bottom: 7px;
+        }
+
+        .step-chip {
+            font-size: 0.83rem;
+            color: #555;
+        }
+
+        .step-chip:not(:last-child)::after {
+            content: " ·";
+            color: #d4813a;
+            font-weight: 700;
+        }
+
+        .full-recipe {
+            padding: 0 16px 16px;
+        }
+
+        .full-label {
+            font-size: 0.62rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #aaa;
+            margin-bottom: 10px;
+            padding-top: 12px;
+            border-top: 1px solid #f0ede8;
+        }
+
+        .full-recipe ol {
+            padding-left: 20px;
+        }
+
+        .full-recipe ol li {
+            font-size: 0.9rem;
+            color: #444;
+            line-height: 1.65;
+            margin-bottom: 7px;
+        }
+
+        @media (min-width: 580px) {
+            h1 { font-size: 1.8rem; }
+            .tab-btn { font-size: 0.85rem; padding: 14px 8px; }
+            .tab-pane { padding: 24px 20px; }
+            .recipe-name { font-size: 1.2rem; padding: 18px 20px 0; }
+            .quick { margin: 13px 20px; }
+            .full-recipe { padding: 0 20px 20px; }
+            .step-chip { font-size: 0.88rem; }
+            .full-recipe ol li { font-size: 0.95rem; }
+        }
+
+        /* CARD — clickable */
+        .recipe {
+            cursor: pointer;
+            transition: transform 0.15s, box-shadow 0.15s;
+        }
+        .recipe:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 18px rgba(0,0,0,0.11);
+        }
+        .recipe-arrow {
+            float: right;
+            color: #ccc;
+            font-size: 1rem;
+            padding: 16px 16px 0;
+            line-height: 1;
+        }
+
+        /* DETAIL HEADER (hidden in list mode) */
+        #list-header-content { display: block; }
+        #detail-header-content {
+            display: none;
+            align-items: center;
+            gap: 12px;
+            padding-bottom: 16px;
+        }
+        #detail-header-content.active { display: flex; }
+        #list-header-content.hidden { display: none; }
+
+        .back-btn {
+            background: rgba(255,255,255,0.12);
+            border: none;
+            color: white;
+            padding: 8px 14px;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            white-space: nowrap;
+            flex-shrink: 0;
+            transition: background 0.15s;
+        }
+        .back-btn:hover { background: rgba(255,255,255,0.22); }
+
+        #detail-title {
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: white;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        /* DETAIL VIEW */
+        #list-view { display: block; }
+        #list-view.hidden { display: none; }
+
+        #detail-view {
+            display: none;
+            max-width: 700px;
+            margin: 0 auto;
+            padding: 20px 16px 40px;
+        }
+        #detail-view.active { display: block; }
+
+        .detail-recipe-name {
+            font-size: 1.7rem;
+            font-weight: 700;
+            color: #1c1c1c;
+            margin-bottom: 18px;
+            line-height: 1.2;
+        }
+
+        /* stodge filter bar */
+        .stodge-filter {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            padding: 0 0 14px;
+        }
+        .filter-btn {
+            background: white;
+            border: 1.5px solid #e0dbd4;
+            color: #888;
+            padding: 5px 14px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 0.3px;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all 0.15s;
+        }
+        .filter-btn.active {
+            background: #d4813a;
+            border-color: #d4813a;
+            color: white;
+        }
+        .filter-btn:hover:not(.active) {
+            border-color: #d4813a;
+            color: #d4813a;
+        }
+
+        /* stodge badge on card */
+        .stodge-badge {
+            display: inline-block;
+            font-size: 0.62rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.6px;
+            padding: 2px 9px;
+            border-radius: 10px;
+            margin: 6px 16px 0;
+            cursor: pointer;
+        }
+        .stodge-badge[data-stodge="pasta"]   { background: #fde8d8; color: #b8601c; }
+        .stodge-badge[data-stodge="rice"]    { background: #e6f4ea; color: #2e7d42; }
+        .stodge-badge[data-stodge="potato"]  { background: #e8eef8; color: #3060a0; }
+        .stodge-badge[data-stodge="fancy"]   { background: #f0e8f8; color: #7040a0; }
+
+        .recipe.filtered-out { display: none; }
+
+        /* veg timing table */
+        .veg-times {
+            margin: 0 16px 12px;
+        }
+        .veg-times table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.82rem;
+        }
+        .veg-times th {
+            text-align: left;
+            font-size: 0.62rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            color: #aaa;
+            padding: 4px 0 6px;
+            border-bottom: 1px solid #f0ede8;
+        }
+        .veg-times th:last-child { text-align: right; }
+        .veg-times td {
+            padding: 5px 0;
+            color: #444;
+            border-bottom: 1px solid #f7f5f2;
+        }
+        .veg-times td:last-child {
+            text-align: right;
+            color: #d4813a;
+            font-weight: 600;
+        }
+        .veg-times tr:last-child td { border-bottom: none; }
+
+        /* hide label and full recipe on the list cards */
+        .quick-label { display: none; }
+        #list-view .full-recipe { display: none; }
+        #list-view .veg-times { display: none; }
+
+        /* detail body inherits .quick and .full-recipe styles as-is */
+        #detail-body .quick { margin: 0 0 10px; }
+        #detail-body .full-recipe { padding: 0; }
+        /* show label again inside detail view */
+        #detail-body .quick-label { display: block; }
+
+        @media (min-width: 580px) {
+            #detail-title { font-size: 1.2rem; }
+            .detail-recipe-name { font-size: 2.1rem; margin-bottom: 22px; }
+            #detail-view { padding: 28px 20px 60px; }
+            #detail-body .quick { margin: 0 0 12px; }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <div id="list-header-content">
+        <h1>Top Recipes</h1>
+        <nav class="tab-nav">
+            <button class="tab-btn active" data-tab="meals">Proper Meals</button>
+            <button class="tab-btn" data-tab="soups">Soups</button>
+            <button class="tab-btn" data-tab="salads">Salads</button>
+            <button class="tab-btn" data-tab="puddings">Puddings</button>
+        </nav>
+    </div>
+    <div id="detail-header-content">
+        <button class="back-btn" id="back-btn">&#8592; Back</button>
+        <h2 id="detail-title"></h2>
+    </div>
+</header>
+
+<div id="list-view">
+
+<!-- ═══════════════ PROPER MEALS ═══════════════ -->
+<div id="meals" class="tab-pane active">
+
+    <div class="stodge-filter" id="stodge-filter">
+        <button class="filter-btn active" data-filter="all">All</button>
+        <button class="filter-btn" data-filter="pasta">Pasta</button>
+        <button class="filter-btn" data-filter="rice">Rice</button>
+        <button class="filter-btn" data-filter="potato">Potato</button>
+        <button class="filter-btn" data-filter="fancy">Fancy</button>
+    </div>
+
+    <article class="recipe">
+        <h2 class="recipe-name">Lasagne</h2>
+        <div class="quick">
+            <div class="quick-label">Bolognaise</div>
+            <span class="step-chip">fry mince in oil</span>
+            <span class="step-chip">add onion + garlic</span>
+            <span class="step-chip">add salt, pepper, herbs de Provence, sugar</span>
+            <span class="step-chip">add tinned toms</span>
+        </div>
+        <div class="quick" style="margin-top: 8px;">
+            <div class="quick-label">White Sauce</div>
+            <span class="step-chip">melt butter</span>
+            <span class="step-chip">whisk in flour → paste</span>
+            <span class="step-chip">stir in milk</span>
+            <span class="step-chip">nutmeg + salt</span>
+        </div>
+        <div class="quick" style="margin-top: 8px;">
+            <div class="quick-label">Layers</div>
+            <span class="step-chip">pasta sheets</span>
+            <span class="step-chip">bolognaise</span>
+            <span class="step-chip">white sauce</span>
+            <span class="step-chip">mozzarella slices</span>
+            <span class="step-chip">→ repeat</span>
+            <span class="step-chip">top grated cheddar</span>
+            <span class="step-chip">bake 180°C ~30min</span>
+        </div>
+        <div class="full-recipe">
+            <div class="full-label">Full Recipe · Serves 6</div>
+            <ol>
+                <li><strong>Bolognaise:</strong> fry 500g mince in 2 tbsp olive oil. Add 3 diced onions and 3 minced garlic cloves. Add 1 tsp each of salt, pepper, herbs de Provence, and sugar. Add 1 can chopped tomatoes. Simmer until reduced.</li>
+                <li><strong>White Sauce:</strong> melt 70g butter in a pan. Add 3–4 tbsp flour and whisk into a paste. Gradually stir in 750ml milk, a little at a time, stirring constantly until smooth and thick. Season with a pinch of nutmeg and salt.</li>
+                <li><strong>Layer up:</strong>
+                    <ol style="margin-top:6px; list-style-type: decimal;">
+                        <li>Lasagne sheets</li>
+                        <li>Bolognaise</li>
+                        <li>White sauce</li>
+                        <li>Mozzarella slices</li>
+                        <li>Repeat until dish is full</li>
+                        <li>Finish with grated cheddar on top</li>
+                    </ol>
+                </li>
+                <li>Bake at 180°C for approximately 30 minutes until golden and bubbling.</li>
+            </ol>
+        </div>
+    </article>
+
+    <article class="recipe">
+        <h2 class="recipe-name">Risotto</h2>
+        <div class="quick">
+            <div class="quick-label">Memory Jog</div>
+            <span class="step-chip">sauté onion garlic</span>
+            <span class="step-chip">toast arborio</span>
+            <span class="step-chip">add white wine</span>
+            <span class="step-chip">ladle warm stock → stir</span>
+            <span class="step-chip">18–20min</span>
+            <span class="step-chip">finish cold butter + parmesan</span>
+        </div>
+        <div class="full-recipe">
+            <div class="full-label">Full Recipe · Serves 4</div>
+            <ol>
+                <li>Keep 1–1.2L chicken or vegetable stock warm in a pot on low heat.</li>
+                <li>Sauté 1 finely diced onion in 2 tbsp olive oil until soft and translucent, about 5min. Add 2 garlic cloves, 1min more.</li>
+                <li>Add 300g arborio rice, stir to coat in oil. Toast for 2min.</li>
+                <li>Pour in a large glass of dry white wine. Stir until absorbed.</li>
+                <li>Add stock one ladle at a time, stirring constantly and waiting for each ladle to absorb before adding the next. Continue 18–20min until rice is al dente.</li>
+                <li>Remove from heat. Stir in 60g cold diced butter and 80g grated parmesan. Season generously. Rest 2min before serving.</li>
+                <li><em>Works as a base — add sautéed mushrooms, peas + pancetta, or roasted squash + sage.</em></li>
+            </ol>
+        </div>
+    </article>
+
+    <article class="recipe">
+        <h2 class="recipe-name">Carbonara</h2>
+        <div class="quick">
+            <div class="quick-label">Memory Jog</div>
+            <span class="step-chip">fry guanciale</span>
+            <span class="step-chip">whisk egg yolks + pecorino + pepper</span>
+            <span class="step-chip">cook pasta al dente</span>
+            <span class="step-chip">reserve pasta water</span>
+            <span class="step-chip">combine off heat</span>
+            <span class="step-chip">toss + loosen with water</span>
+        </div>
+        <div class="full-recipe">
+            <div class="full-label">Full Recipe · Serves 4 · No cream</div>
+            <ol>
+                <li>Dice 150g guanciale (or pancetta). Cook in a dry pan over medium heat until crisp and fat has rendered. Keep fat in the pan, take off heat.</li>
+                <li>Whisk together 4 egg yolks + 1 whole egg, 80g finely grated pecorino romano, generous black pepper.</li>
+                <li>Cook 400g spaghetti or rigatoni in well-salted water until al dente. Reserve a large mug of pasta water before draining.</li>
+                <li>Add drained pasta to the pan with guanciale (off heat). Toss to coat in the fat.</li>
+                <li>Add the egg and cheese mixture, tossing quickly. Add pasta water a splash at a time — the residual heat creates a creamy sauce. Don't put it back on the flame or it scrambles.</li>
+                <li>Serve immediately with more pecorino and cracked black pepper.</li>
+            </ol>
+        </div>
+    </article>
+
+    <article class="recipe">
+        <h2 class="recipe-name">Dahl</h2>
+        <div class="quick">
+            <div class="quick-label">Memory Jog</div>
+            <span class="step-chip">fry onion garlic ginger</span>
+            <span class="step-chip">add spices</span>
+            <span class="step-chip">add red lentils</span>
+            <span class="step-chip">add tinned toms + coconut milk + stock</span>
+            <span class="step-chip">simmer 25min</span>
+            <span class="step-chip">lemon + coriander</span>
+        </div>
+        <div class="full-recipe">
+            <div class="full-label">Full Recipe · Serves 4</div>
+            <ol>
+                <li>Sauté 1 large diced onion in oil until golden, about 8–10min. Add 3 garlic cloves and 1 tbsp grated ginger, cook 2min.</li>
+                <li>Add 1 tsp cumin, 1 tsp turmeric, 1 tsp garam masala, ½ tsp chilli flakes. Stir and fry 1min.</li>
+                <li>Add 250g rinsed red lentils, 1 × 400g tin chopped tomatoes, 400ml coconut milk, 300ml vegetable stock.</li>
+                <li>Bring to a boil, then simmer uncovered 20–25min, stirring occasionally, until lentils are completely soft and thick.</li>
+                <li>Season with salt and a squeeze of lemon juice. Adjust spice to taste.</li>
+                <li>Serve with fresh coriander, a dollop of yoghurt, and rice or flatbread.</li>
+            </ol>
+        </div>
+    </article>
+
+    <article class="recipe">
+        <h2 class="recipe-name">Rosiecurry</h2>
+        <div class="quick">
+            <div class="quick-label">Memory Jog</div>
+            <span class="step-chip">fry onion garlic ginger</span>
+            <span class="step-chip">add curry paste</span>
+            <span class="step-chip">add chicken</span>
+            <span class="step-chip">add coconut cream + stock</span>
+            <span class="step-chip">simmer 20min</span>
+            <span class="step-chip">fish sauce + lime</span>
+        </div>
+        <div class="full-recipe">
+            <div class="full-label">Full Recipe · Serves 4</div>
+            <ol>
+                <li>Sauté 1 diced onion, 3 garlic cloves, and 1 tbsp grated ginger in oil over medium heat until soft.</li>
+                <li>Add 2–3 tbsp red (or green) curry paste. Stir and fry 2min until fragrant.</li>
+                <li>Add 500g diced chicken thighs. Stir to coat and cook 3–4min until sealed.</li>
+                <li>Pour in 400ml coconut cream and 200ml chicken stock. Add 2 kaffir lime leaves and 1 bruised lemongrass stalk.</li>
+                <li>Simmer 20min. Add peppers or green beans in the last 5min.</li>
+                <li>Season with fish sauce, squeeze of lime, and a pinch of sugar. Serve with jasmine rice and fresh coriander.</li>
+            </ol>
+        </div>
+    </article>
+
+    <article class="recipe">
+        <h2 class="recipe-name">Hash</h2>
+        <div class="quick">
+            <div class="quick-label">Memory Jog</div>
+            <span class="step-chip">parboil potato</span>
+            <span class="step-chip">fry onion + pepper</span>
+            <span class="step-chip">add chorizo</span>
+            <span class="step-chip">add potato → crisp</span>
+            <span class="step-chip">make wells → crack eggs</span>
+            <span class="step-chip">cover → cook until set</span>
+        </div>
+        <div class="full-recipe">
+            <div class="full-label">Full Recipe · Serves 2–3</div>
+            <ol>
+                <li>Parboil 400g diced potato (2cm cubes) for 5min until just tender. Drain well.</li>
+                <li>Heat oil in a large oven-safe frying pan. Sauté 1 diced onion and 1 diced red pepper until soft, about 6min.</li>
+                <li>Add 100g sliced chorizo or diced sausage. Fry until crisp.</li>
+                <li>Add parboiled potato. Press down, don't stir — let it crisp 3–4min. Flip sections and crisp the other side. Season well.</li>
+                <li>Make 3 wells in the hash. Crack an egg into each.</li>
+                <li>Cover with a lid and cook on low heat 4–6min until whites are set but yolks still runny. Or finish in a 200°C oven for 5min.</li>
+                <li>Top with parsley, hot sauce, or sour cream.</li>
+            </ol>
+        </div>
+    </article>
+
+    <article class="recipe">
+        <h2 class="recipe-name">Oven Gemüse</h2>
+        <div class="quick">
+            <div class="quick-label">Memory Jog</div>
+            <span class="step-chip">chop veg into chunks</span>
+            <span class="step-chip">toss oil + salt + herbs</span>
+            <span class="step-chip">spread single layer</span>
+            <span class="step-chip">roast 200°C</span>
+            <span class="step-chip">turn halfway</span>
+        </div>
+        <div class="veg-times">
+            <table>
+                <thead><tr><th>Vegetable</th><th>Time at 200°C</th></tr></thead>
+                <tbody>
+                    <tr><td>Potato</td><td>40–45 min</td></tr>
+                    <tr><td>Beetroot</td><td>40–45 min</td></tr>
+                    <tr><td>Sweet potato</td><td>30–35 min</td></tr>
+                    <tr><td>Carrot</td><td>30–35 min</td></tr>
+                    <tr><td>Parsnip</td><td>30–35 min</td></tr>
+                    <tr><td>Red onion</td><td>25–30 min</td></tr>
+                    <tr><td>Fennel</td><td>25–30 min</td></tr>
+                    <tr><td>Eggplant</td><td>25–30 min</td></tr>
+                    <tr><td>Pepper</td><td>25–30 min</td></tr>
+                    <tr><td>Broccoli</td><td>20–25 min</td></tr>
+                    <tr><td>Zucchini</td><td>20–25 min</td></tr>
+                    <tr><td>Cherry tomatoes</td><td>15–20 min</td></tr>
+                    <tr><td>Asparagus</td><td>12–15 min</td></tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="full-recipe">
+            <div class="full-label">Full Recipe · Serves 3–4</div>
+            <ol>
+                <li>Preheat oven to 200°C. Chop into similar-sized chunks: peppers, zucchini, eggplant, red onion, cherry tomatoes. Anything goes.</li>
+                <li>Spread on a large baking tray — don't crowd, use two trays if needed.</li>
+                <li>Drizzle generously with olive oil. Season with salt, pepper, and dried herbs (oregano, thyme). Add whole unpeeled garlic cloves.</li>
+                <li>Toss to coat everything. Spread back into a single layer.</li>
+                <li>Roast 35–40min, turning once halfway, until soft and caramelised at the edges.</li>
+                <li>Finish with a squeeze of lemon or balsamic drizzle. Serve with grains, feta, or as a side.</li>
+            </ol>
+        </div>
+    </article>
+
+    <article class="recipe">
+        <h2 class="recipe-name">Wraps</h2>
+        <div class="quick">
+            <div class="quick-label">Memory Jog</div>
+            <span class="step-chip">season + cook chicken</span>
+            <span class="step-chip">rest + slice</span>
+            <span class="step-chip">prep fillings</span>
+            <span class="step-chip">warm tortillas</span>
+            <span class="step-chip">fill + roll</span>
+        </div>
+        <div class="full-recipe">
+            <div class="full-label">Full Recipe · Serves 4</div>
+            <ol>
+                <li>Season 4 chicken thighs with cumin, smoked paprika, garlic powder, salt, and chilli.</li>
+                <li>Cook in a hot pan with oil, 5–6min each side until golden and cooked through. Rest 5min, then slice.</li>
+                <li>Prep fillings: shredded lettuce, diced tomato, sliced avocado, sour cream, grated cheddar, jalapeños.</li>
+                <li>Warm large flour tortillas briefly in a dry pan or microwave.</li>
+                <li>Layer fillings down the centre, add chicken, fold in the sides, roll tight from the bottom.</li>
+                <li>Serve with a squeeze of lime.</li>
+            </ol>
+        </div>
+    </article>
+
+    <article class="recipe">
+        <h2 class="recipe-name">Moussaka</h2>
+        <div class="quick">
+            <div class="quick-label">Memory Jog</div>
+            <span class="step-chip">salt + drain eggplant</span>
+            <span class="step-chip">fry eggplant</span>
+            <span class="step-chip">brown lamb + onion garlic</span>
+            <span class="step-chip">add cinnamon + allspice + tomato paste + tinned toms</span>
+            <span class="step-chip">layer eggplant → meat → repeat</span>
+            <span class="step-chip">make béchamel + egg + parmesan</span>
+            <span class="step-chip">pour over top</span>
+            <span class="step-chip">bake 180°C ~45min</span>
+        </div>
+        <div class="full-recipe">
+            <div class="full-label">Full Recipe · Serves 4–6</div>
+            <ol>
+                <li>Slice 2 large eggplants into rounds. Salt generously, leave 20–30min, then pat dry. Fry in olive oil in batches until golden on both sides. Set aside.</li>
+                <li>Brown 450g ground lamb (or beef) in a pan. Add 1 finely chopped onion and 2 minced garlic cloves, cook until soft.</li>
+                <li>Stir in 1 tbsp tomato paste, 1 tsp cinnamon, 1 tsp allspice, salt and pepper. Add 1 × 400g tin diced tomatoes. Simmer 15min until reduced.</li>
+                <li><strong>Béchamel:</strong> melt 2 tbsp butter, stir in 2 tbsp flour, cook 1min. Gradually whisk in 500ml milk until smooth and thick. Remove from heat, stir in ¼ cup grated parmesan, 1 beaten egg, and a pinch of nutmeg.</li>
+                <li>Layer in a baking dish: eggplant → meat sauce → eggplant → meat sauce. Pour the béchamel over the top and spread evenly.</li>
+                <li>Bake at 180°C for ~45min until the top is set and golden. Rest 10min before serving.</li>
+            </ol>
+        </div>
+    </article>
+
+    <article class="recipe">
+        <h2 class="recipe-name">Barley Risotto</h2>
+        <div class="quick">
+            <div class="quick-label">Memory Jog</div>
+            <span class="step-chip">warm beef broth</span>
+            <span class="step-chip">sauté shallot + garlic in butter</span>
+            <span class="step-chip">fry mushrooms + thyme</span>
+            <span class="step-chip">add barley → toast 1min</span>
+            <span class="step-chip">add wine → absorb</span>
+            <span class="step-chip">ladle broth → stir until absorbed → repeat</span>
+            <span class="step-chip">finish parmesan</span>
+        </div>
+        <div class="full-recipe">
+            <div class="full-label">Full Recipe · Serves 6 · seasonsandsuppers.ca</div>
+            <ol>
+                <li>Heat 4 cups beef broth (low sodium) in a saucepan and keep warm on low.</li>
+                <li>In a large deep skillet, melt 2 tbsp butter over medium heat. Add 1 minced shallot and 2 sliced garlic cloves, cook until softened.</li>
+                <li>Add ½ lb (225g) fresh mushrooms and ¼ tsp fresh thyme. Season with salt and pepper. Cook 5–6min until mushrooms are golden.</li>
+                <li>Add 1 cup pearl barley and 1 tbsp butter. Stir for 1min. Pour in ½ cup dry white wine, cook until absorbed (3–4min).</li>
+                <li>Add broth one ladle at a time, stirring and waiting for each ladle to absorb before adding the next. Continue until barley is al dente — about 30–35min total. Add hot water if you run out of broth.</li>
+                <li>Stir in ¼ cup grated parmesan. Season to taste. Serve garnished with fresh thyme and extra parmesan.</li>
+            </ol>
+        </div>
+    </article>
+
+    <article class="recipe">
+        <h2 class="recipe-name">Spaghetti Bolognaise</h2>
+        <div class="quick">
+            <div class="quick-label">Memory Jog</div>
+            <span class="step-chip">fry mince in oil</span>
+            <span class="step-chip">add onion + garlic</span>
+            <span class="step-chip">add salt, pepper, herbs de Provence, sugar</span>
+            <span class="step-chip">add tinned toms → simmer 20min</span>
+            <span class="step-chip">cook spaghetti</span>
+            <span class="step-chip">toss together + parmesan</span>
+        </div>
+        <div class="full-recipe">
+            <div class="full-label">Full Recipe · Serves 4</div>
+            <ol>
+                <li>Fry 500g beef mince in 2 tbsp olive oil over high heat until browned. Season well.</li>
+                <li>Add 3 diced onions and 3 minced garlic cloves. Cook until soft, about 5min.</li>
+                <li>Add 1 tsp each of salt, pepper, herbs de Provence, and sugar. Stir through.</li>
+                <li>Add 1 can chopped tomatoes. Stir, bring to a simmer, and cook uncovered for 20min until reduced and rich.</li>
+                <li>Cook spaghetti in well-salted boiling water until al dente. Reserve a cup of pasta water before draining.</li>
+                <li>Toss spaghetti through the sauce, loosening with a splash of pasta water if needed. Serve with grated parmesan.</li>
+            </ol>
+        </div>
+    </article>
+
+    <article class="recipe">
+        <h2 class="recipe-name">Chilli Con Carne</h2>
+        <div class="quick">
+            <div class="quick-label">Memory Jog</div>
+            <span class="step-chip">brown mince</span>
+            <span class="step-chip">fry onion garlic</span>
+            <span class="step-chip">add cumin, smoked paprika, chilli, oregano</span>
+            <span class="step-chip">add tomato paste</span>
+            <span class="step-chip">add tinned toms + kidney beans + stock</span>
+            <span class="step-chip">simmer 30min</span>
+            <span class="step-chip">dark chocolate + season</span>
+        </div>
+        <div class="full-recipe">
+            <div class="full-label">Full Recipe · Serves 4</div>
+            <ol>
+                <li>Brown 500g beef mince in a hot pan with a little oil. Season, then remove and set aside.</li>
+                <li>In the same pan, sauté 1 large diced onion until soft. Add 3 minced garlic cloves, cook 1min.</li>
+                <li>Add 1 tsp cumin, 1 tsp smoked paprika, 1–2 tsp chilli powder (to taste), 1 tsp dried oregano. Stir and fry 1min.</li>
+                <li>Add 1 tbsp tomato paste, cook 1min. Return the mince.</li>
+                <li>Pour in 1 × 400g tin chopped tomatoes, 1 × 400g tin kidney beans (drained), and 200ml beef stock. Stir well.</li>
+                <li>Simmer uncovered on low heat for 30–40min, stirring occasionally, until thick and rich.</li>
+                <li>Stir in a small square of dark chocolate and a pinch of cinnamon. Season well with salt and pepper.</li>
+                <li>Serve with rice, sour cream, grated cheddar, and jalapeños.</li>
+            </ol>
+        </div>
+    </article>
+
+    <article class="recipe">
+        <h2 class="recipe-name">Tom-Feta Pasta</h2>
+        <div class="quick">
+            <div class="quick-label">Memory Jog</div>
+            <span class="step-chip">place feta + cherry toms in dish</span>
+            <span class="step-chip">oil + garlic + herbs</span>
+            <span class="step-chip">bake 200°C 30min</span>
+            <span class="step-chip">cook pasta</span>
+            <span class="step-chip">smash feta + toms</span>
+            <span class="step-chip">toss pasta through</span>
+        </div>
+        <div class="full-recipe">
+            <div class="full-label">Full Recipe · Serves 4</div>
+            <ol>
+                <li>Preheat oven to 200°C.</li>
+                <li>Place a 200g block of feta in the centre of a deep baking dish. Surround with 500g cherry tomatoes.</li>
+                <li>Add 4 whole garlic cloves, a few sprigs of thyme or basil, chilli flakes. Drizzle everything generously with olive oil, season with black pepper.</li>
+                <li>Bake 30–35min until tomatoes are burst and jammy and feta is soft and golden on top.</li>
+                <li>Cook 400g pasta (penne or rigatoni) in well-salted water until al dente. Reserve a cup of pasta water.</li>
+                <li>Smash the feta and tomatoes together in the dish. Toss through the drained pasta, adding pasta water to loosen if needed. Taste and season.</li>
+                <li>Finish with fresh basil and more olive oil.</li>
+            </ol>
+        </div>
+    </article>
+
+</div>
+
+<!-- ═══════════════ SOUPS ═══════════════ -->
+<div id="soups" class="tab-pane">
+
+    <article class="recipe">
+        <h2 class="recipe-name">Finnische Lachssuppe</h2>
+        <div class="quick">
+            <div class="quick-label">Memory Jog</div>
+            <span class="step-chip">sauté leek + carrot in butter</span>
+            <span class="step-chip">add potato + fish stock</span>
+            <span class="step-chip">simmer 15min</span>
+            <span class="step-chip">add salmon + cream</span>
+            <span class="step-chip">cook 3–5min + rest 5min</span>
+            <span class="step-chip">dill + lemon</span>
+        </div>
+        <div class="full-recipe">
+            <div class="full-label">Full Recipe · Serves 4 · lacuisinedegeraldine.fr</div>
+            <ol>
+                <li>Slice 3 leeks thinly and rinse well. Peel and slice 3 carrots. Dice 400g waxy potatoes. Cut 500g salmon fillet into large chunks.</li>
+                <li>In a large pot, sauté the leeks and carrots in butter or olive oil over medium heat until the leeks have reduced by half.</li>
+                <li>Add the potatoes and 1.2L fish stock. Season with salt and pepper. Simmer 15min until potatoes are tender.</li>
+                <li>Add the salmon and 200ml cream. Cook gently 3–5min at medium heat until salmon is just cooked through. Cover and rest a further 5min.</li>
+                <li>Stir in a generous bunch of fresh dill (finely chopped). Ladle into bowls, squeeze over lemon juice, and top with extra dill and black pepper.</li>
+            </ol>
+        </div>
+    </article>
+
+    <article class="recipe">
+        <h2 class="recipe-name">Carrot, Zucchini & Parmy</h2>
+        <div class="quick">
+            <div class="quick-label">Memory Jog</div>
+            <span class="step-chip">sauté onion garlic</span>
+            <span class="step-chip">add carrot + zucchini</span>
+            <span class="step-chip">add stock</span>
+            <span class="step-chip">simmer 20min</span>
+            <span class="step-chip">blend smooth</span>
+            <span class="step-chip">top parmesan + oil</span>
+        </div>
+        <div class="full-recipe">
+            <div class="full-label">Full Recipe · Serves 4</div>
+            <ol>
+                <li>Sauté 1 diced onion and 2 garlic cloves in olive oil over medium heat until soft.</li>
+                <li>Add 4 large carrots (peeled and chopped) and 2 large zucchini (chopped). Stir together.</li>
+                <li>Add 800ml vegetable or chicken stock. Season. Bring to a boil, simmer 20min until veg is completely soft.</li>
+                <li>Blend until smooth with a stick blender. Adjust consistency with more stock or water if needed.</li>
+                <li>Taste and season — a pinch of nutmeg works well.</li>
+                <li>Serve topped with shaved or grated parmesan, a drizzle of olive oil, and cracked pepper.</li>
+            </ol>
+        </div>
+    </article>
+
+    <article class="recipe">
+        <h2 class="recipe-name">Fennel & Salcicia</h2>
+        <div class="quick">
+            <div class="quick-label">Memory Jog</div>
+            <span class="step-chip">brown sausage</span>
+            <span class="step-chip">sauté fennel + onion + fennel seeds</span>
+            <span class="step-chip">add white wine</span>
+            <span class="step-chip">add tinned toms + stock</span>
+            <span class="step-chip">return sausage → simmer 25min</span>
+        </div>
+        <div class="full-recipe">
+            <div class="full-label">Full Recipe · Serves 4</div>
+            <ol>
+                <li>Brown 400g Italian sausage (salcicia) in a large pot — in links or removed from casing in chunks. Set aside.</li>
+                <li>In the same pot, sauté 1 large diced onion and 1 large fennel bulb (sliced) in olive oil until soft, about 8min. Add 3 garlic cloves and 1 tsp fennel seeds.</li>
+                <li>Add a glass of white wine, scrape up any bits from the bottom. Reduce by half.</li>
+                <li>Add 1 × 400g tin chopped tomatoes and 600ml stock. Return the sausage.</li>
+                <li>Simmer 25–30min until rich and slightly thickened. Season generously.</li>
+                <li>Serve with crusty bread. Top with fennel fronds if you have them.</li>
+            </ol>
+        </div>
+    </article>
+
+    <article class="recipe">
+        <h2 class="recipe-name">Linsen Eintopf mit Wiener</h2>
+        <div class="quick">
+            <div class="quick-label">Memory Jog</div>
+            <span class="step-chip">sauté onion carrot celery</span>
+            <span class="step-chip">add tomato paste</span>
+            <span class="step-chip">add lentils + bay + marjoram + stock</span>
+            <span class="step-chip">simmer 30min</span>
+            <span class="step-chip">slice in Wiener</span>
+            <span class="step-chip">red wine vinegar to finish</span>
+        </div>
+        <div class="full-recipe">
+            <div class="full-label">Full Recipe · Serves 4</div>
+            <ol>
+                <li>Dice 1 onion, 2 carrots, and 2 celery sticks. Sauté in oil over medium heat 6–8min until soft.</li>
+                <li>Add 2 garlic cloves and 1 tbsp tomato paste. Cook 1min.</li>
+                <li>Add 200g brown or green lentils (rinsed), 2 bay leaves, 1 tsp dried marjoram, and 1L vegetable or meat stock.</li>
+                <li>Bring to a boil, then simmer 30min until lentils are soft.</li>
+                <li>Slice 4 Wiener (frankfurter) sausages into rounds. Add to the pot, simmer 5min more.</li>
+                <li>Season with salt, pepper, and a good splash of red wine vinegar — it brightens the whole thing. Serve with bread.</li>
+            </ol>
+        </div>
+    </article>
+
+</div>
+
+<!-- ═══════════════ SALADS ═══════════════ -->
+<div id="salads" class="tab-pane">
+
+    <article class="recipe">
+        <h2 class="recipe-name">Linsen Salat</h2>
+        <div class="quick">
+            <div class="quick-label">Memory Jog</div>
+            <span class="step-chip">cook lentils</span>
+            <span class="step-chip">dress warm with mustard vinaigrette</span>
+            <span class="step-chip">add red onion + toms</span>
+            <span class="step-chip">top parsley</span>
+        </div>
+        <div class="full-recipe">
+            <div class="full-label">Full Recipe · Serves 4</div>
+            <ol>
+                <li>Cook 250g puy or green lentils in unsalted water until just tender, about 20–25min. Drain.</li>
+                <li>While still warm, toss with vinaigrette: 3 tbsp olive oil, 1½ tbsp red wine vinegar, 1 tsp Dijon mustard, salt, pepper. Lentils absorb the dressing better warm.</li>
+                <li>Add ½ finely diced red onion, a handful of halved cherry tomatoes, and fresh flat-leaf parsley.</li>
+                <li>Taste and adjust — more vinegar if needed. Great with crumbled feta, a soft-boiled egg, or roasted peppers added in.</li>
+            </ol>
+        </div>
+    </article>
+
+    <article class="recipe">
+        <h2 class="recipe-name">Carrot & Feta</h2>
+        <div class="quick">
+            <div class="quick-label">Memory Jog</div>
+            <span class="step-chip">grate carrot</span>
+            <span class="step-chip">crumble feta</span>
+            <span class="step-chip">add mint + parsley</span>
+            <span class="step-chip">dress lemon + oil + honey + cumin</span>
+        </div>
+        <div class="full-recipe">
+            <div class="full-label">Full Recipe · Serves 4</div>
+            <ol>
+                <li>Grate 4 large carrots on the coarse side of a box grater.</li>
+                <li>Add 150g crumbled feta, a big handful each of fresh mint and parsley (roughly chopped).</li>
+                <li>Dressing: whisk 3 tbsp olive oil, juice of 1 lemon, 1 tsp honey, ½ tsp cumin, salt and pepper.</li>
+                <li>Toss everything together. Taste and adjust. Optional: toasted pine nuts or pomegranate seeds for texture.</li>
+            </ol>
+        </div>
+    </article>
+
+    <article class="recipe">
+        <h2 class="recipe-name">Tom-Moz</h2>
+        <div class="quick">
+            <div class="quick-label">Memory Jog</div>
+            <span class="step-chip">slice toms + moz</span>
+            <span class="step-chip">alternate on plate</span>
+            <span class="step-chip">tuck basil</span>
+            <span class="step-chip">olive oil + flaky salt</span>
+        </div>
+        <div class="full-recipe">
+            <div class="full-label">Full Recipe · Serves 4</div>
+            <ol>
+                <li>Use the best tomatoes you can find — mix of varieties is great. Slice into thick rounds. Slice 250g fresh mozzarella.</li>
+                <li>Alternate slices of tomato and mozzarella on a platter.</li>
+                <li>Tuck fresh basil leaves between the slices.</li>
+                <li>Drizzle with the best olive oil you have. Season with flaky sea salt and cracked black pepper. A little balsamic glaze is optional.</li>
+                <li>Serve immediately — don't refrigerate tomatoes or mozzarella before serving.</li>
+            </ol>
+        </div>
+    </article>
+
+    <article class="recipe">
+        <h2 class="recipe-name">Celery & Burrata</h2>
+        <div class="quick">
+            <div class="quick-label">Memory Jog</div>
+            <span class="step-chip">thinly slice celery</span>
+            <span class="step-chip">plate burrata</span>
+            <span class="step-chip">pile celery on top</span>
+            <span class="step-chip">lemon + oil + flaky salt</span>
+            <span class="step-chip">optional walnuts + chilli</span>
+        </div>
+        <div class="full-recipe">
+            <div class="full-label">Full Recipe · Serves 2–4</div>
+            <ol>
+                <li>Thinly slice 4–5 celery stalks on the diagonal. Keep any pale inner leaves.</li>
+                <li>Place 2 burrata balls onto a serving plate. Break open slightly so the cream runs out.</li>
+                <li>Pile the celery on top and around the burrata.</li>
+                <li>Dress with lemon juice, good olive oil, and flaky salt. Add chilli flakes if you like heat.</li>
+                <li>Optional: toasted walnuts or hazelnuts add great crunch. Fresh tarragon also works well.</li>
+            </ol>
+        </div>
+    </article>
+
+    <article class="recipe">
+        <h2 class="recipe-name">Bulgur + Tom + Gurke + Feta</h2>
+        <div class="quick">
+            <div class="quick-label">Memory Jog</div>
+            <span class="step-chip">soak bulgur in boiling water 20min</span>
+            <span class="step-chip">dice toms + cucumber + red onion</span>
+            <span class="step-chip">crumble feta</span>
+            <span class="step-chip">add mint + parsley</span>
+            <span class="step-chip">dress lemon + oil</span>
+        </div>
+        <div class="full-recipe">
+            <div class="full-label">Full Recipe · Serves 4</div>
+            <ol>
+                <li>Put 200g bulgur wheat in a bowl. Pour over 300ml boiling water (or stock), cover with a plate and leave 20min. Fluff with a fork.</li>
+                <li>Dice 3 tomatoes and ½ cucumber (deseed if very watery). Finely dice ½ red onion.</li>
+                <li>Add to bulgur along with 150g crumbled feta, a big handful of fresh mint and flat-leaf parsley.</li>
+                <li>Dress with juice of 1–2 lemons and 3–4 tbsp olive oil. Season well.</li>
+                <li>Rest 15min before serving so flavours meld. Good at room temperature.</li>
+            </ol>
+        </div>
+    </article>
+
+    <article class="recipe">
+        <h2 class="recipe-name">Peas & Moz</h2>
+        <div class="quick">
+            <div class="quick-label">Memory Jog</div>
+            <span class="step-chip">blanch peas</span>
+            <span class="step-chip">tear mozzarella onto plate</span>
+            <span class="step-chip">scatter peas</span>
+            <span class="step-chip">mint + lemon zest</span>
+            <span class="step-chip">oil + flaky salt</span>
+        </div>
+        <div class="full-recipe">
+            <div class="full-label">Full Recipe · Serves 4</div>
+            <ol>
+                <li>Blanch 300g peas (fresh or frozen) in boiling salted water for 1–2min. Drain and refresh in cold water. Pat dry.</li>
+                <li>Tear 250g fresh mozzarella into pieces on a platter.</li>
+                <li>Scatter the peas over and around the mozzarella.</li>
+                <li>Add fresh mint leaves and lemon zest. Dress with olive oil, lemon juice, flaky salt and pepper.</li>
+                <li>Optional: prosciutto draped over works well if not keeping it vegetarian.</li>
+            </ol>
+        </div>
+    </article>
+
+    <article class="recipe">
+        <h2 class="recipe-name">Beans & Parmy</h2>
+        <div class="quick">
+            <div class="quick-label">Memory Jog</div>
+            <span class="step-chip">drain + rinse beans</span>
+            <span class="step-chip">toss lemon + oil + garlic</span>
+            <span class="step-chip">add herbs</span>
+            <span class="step-chip">shave parmesan on top</span>
+            <span class="step-chip">flaky salt + more oil</span>
+        </div>
+        <div class="full-recipe">
+            <div class="full-label">Full Recipe · Serves 4</div>
+            <ol>
+                <li>Drain and rinse 2 × 400g tins of cannellini or butter beans. Pat dry.</li>
+                <li>Toss with 4 tbsp good olive oil, juice of 1 lemon, 2 very finely grated garlic cloves, salt, and black pepper.</li>
+                <li>Add fresh herbs: flat-leaf parsley, and optionally sage leaves fried in butter until crisp.</li>
+                <li>Transfer to a plate. Use a peeler to shave generous ribbons of parmesan over the top.</li>
+                <li>Finish with extra olive oil and flaky salt. Great alongside roasted veg or grilled meat.</li>
+            </ol>
+        </div>
+    </article>
+
+</div>
+
+<!-- ═══════════════ PUDDINGS ═══════════════ -->
+<div id="puddings" class="tab-pane">
+
+    <article class="recipe">
+        <h2 class="recipe-name">White Choc Cheesecake</h2>
+        <div class="quick">
+            <div class="quick-label">Memory Jog</div>
+            <span class="step-chip">crush biscuits + melt butter → press into tin</span>
+            <span class="step-chip">melt white choc</span>
+            <span class="step-chip">mix cream cheese + crème double + mascarpone</span>
+            <span class="step-chip">stir in chocolate</span>
+            <span class="step-chip">fold in blueberries</span>
+            <span class="step-chip">spread over base</span>
+            <span class="step-chip">chill 3hrs+</span>
+        </div>
+        <div class="full-recipe">
+            <div class="full-label">Full Recipe · 20cm springform tin · zuckerzimtundliebe.de</div>
+            <ol>
+                <li>Crush 200g whole grain biscuits (e.g. Landkekse/digestives) into fine crumbs. Mix with 100g melted butter. Press firmly into the base of a 20cm springform tin. Refrigerate.</li>
+                <li>Melt 400g good-quality white chocolate in a bowl over a pot of barely simmering water — bowl must not touch the water and no steam or water must get in. Melt slowly on low heat. Set aside to cool slightly.</li>
+                <li>Beat together 250g cream cheese, 250ml crème double, and 250g mascarpone with a wooden spoon until smooth.</li>
+                <li>Stir the melted chocolate into the cream cheese mixture quickly. It may look like it won't come together at first — keep stirring and it will.</li>
+                <li>Fold in most of the 250g blueberries, reserving a handful for the top.</li>
+                <li>Spread the filling over the biscuit base and smooth the surface. Refrigerate for at least 3 hours (overnight is better).</li>
+                <li>Remove from the tin, top with the reserved blueberries, and serve promptly.</li>
+            </ol>
+        </div>
+    </article>
+
+</div>
+
+</div><!-- end #list-view -->
+
+<div id="detail-view">
+    <h2 class="detail-recipe-name" id="detail-recipe-name"></h2>
+    <div id="detail-body"></div>
+</div>
+
+<script>
+    let activeTab = 'meals';
+
+    // Tab switching
+    document.querySelectorAll('.tab-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            activeTab = btn.dataset.tab;
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
+            btn.classList.add('active');
+            document.getElementById(activeTab).classList.add('active');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+    });
+
+    // Make cards clickable
+    document.querySelectorAll('.recipe').forEach(card => {
+        // Add arrow indicator
+        const name = card.querySelector('.recipe-name');
+        const arrow = document.createElement('span');
+        arrow.className = 'recipe-arrow';
+        arrow.textContent = '›';
+        name.parentNode.insertBefore(arrow, name);
+
+        card.addEventListener('click', () => openRecipe(card));
+    });
+
+    function openRecipe(card) {
+        const name = card.querySelector('.recipe-name').textContent;
+        document.getElementById('detail-recipe-name').textContent = name;
+        document.getElementById('detail-title').textContent = name;
+
+        const body = document.getElementById('detail-body');
+        body.innerHTML = '';
+        card.querySelectorAll('.quick').forEach(q => body.appendChild(q.cloneNode(true)));
+        const full = card.querySelector('.full-recipe');
+        if (full) body.appendChild(full.cloneNode(true));
+
+        document.getElementById('list-header-content').classList.add('hidden');
+        document.getElementById('detail-header-content').classList.add('active');
+        document.getElementById('list-view').classList.add('hidden');
+        document.getElementById('detail-view').classList.add('active');
+
+        history.pushState({ view: 'detail', tab: activeTab }, '', '#' + encodeURIComponent(name.toLowerCase().replace(/\s+/g, '-')));
+        window.scrollTo(0, 0);
+    }
+
+    function showListView() {
+        document.getElementById('list-header-content').classList.remove('hidden');
+        document.getElementById('detail-header-content').classList.remove('active');
+        document.getElementById('list-view').classList.remove('hidden');
+        document.getElementById('detail-view').classList.remove('active');
+        window.scrollTo(0, 0);
+    }
+
+    // Stodge tags + filtering
+    const stodgeMap = {
+        'Lasagne': 'pasta', 'Risotto': 'rice', 'Carbonara': 'pasta',
+        'Dahl': 'fancy', 'Rosiecurry': 'rice', 'Hash': 'potato',
+        'Oven Gemüse': 'potato', 'Wraps': 'fancy', 'Moussaka': 'fancy',
+        'Barley Risotto': 'fancy', 'Spaghetti Bolognaise': 'pasta',
+        'Chilli Con Carne': 'rice', 'Tom Feta Pasta': 'pasta',
+    };
+
+    document.querySelectorAll('#meals .recipe').forEach(card => {
+        const recipeName = card.querySelector('.recipe-name').textContent.trim();
+        const stodge = stodgeMap[recipeName];
+        if (!stodge) return;
+        card.dataset.stodge = stodge;
+
+        const badge = document.createElement('span');
+        badge.className = 'stodge-badge';
+        badge.dataset.stodge = stodge;
+        badge.textContent = stodge;
+        badge.addEventListener('click', e => {
+            e.stopPropagation();
+            setFilter(stodge);
+        });
+        card.querySelector('.recipe-name').after(badge);
+    });
+
+    function setFilter(filter) {
+        document.querySelectorAll('.filter-btn').forEach(b => {
+            b.classList.toggle('active', b.dataset.filter === filter);
+        });
+        document.querySelectorAll('#meals .recipe').forEach(card => {
+            card.classList.toggle('filtered-out', filter !== 'all' && card.dataset.stodge !== filter);
+        });
+    }
+
+    document.querySelectorAll('.filter-btn').forEach(btn => {
+        btn.addEventListener('click', () => setFilter(btn.dataset.filter));
+    });
+
+    document.getElementById('back-btn').addEventListener('click', () => history.back());
+
+    window.addEventListener('popstate', (e) => {
+        if (!e.state || e.state.view !== 'detail') showListView();
+    });
+</script>
+
+</body>
+</html>
