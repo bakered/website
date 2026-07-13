@@ -301,9 +301,29 @@
         }
         .veg-times tr:last-child td { border-bottom: none; }
 
+        /* ingredients section */
+        .ingredients {
+            padding: 0 16px 4px;
+        }
+        .ingredients ul {
+            padding-left: 20px;
+            margin: 0;
+        }
+        .ingredients ul li {
+            font-size: 0.9rem;
+            color: #444;
+            line-height: 1.65;
+            margin-bottom: 5px;
+        }
+        @media (min-width: 580px) {
+            .ingredients { padding: 0 20px 4px; }
+            .ingredients ul li { font-size: 0.95rem; }
+        }
+
         /* hide label and full recipe on the list cards */
         .quick-label { display: none; }
         #list-view .full-recipe { display: none; }
+        #list-view .ingredients { display: none; }
         #list-view .veg-times { display: none; }
 
         /* detail body inherits .quick and .full-recipe styles as-is */
@@ -377,6 +397,24 @@
             <span class="step-chip">top grated cheddar</span>
             <span class="step-chip">bake 180°C ~30min</span>
         </div>
+        <div class="ingredients">
+            <div class="full-label">Ingredients · Serves 6</div>
+            <ul>
+                <li>500g beef mince</li>
+                <li>2 tbsp olive oil</li>
+                <li>3 onions, diced</li>
+                <li>3 garlic cloves, minced</li>
+                <li>1 tsp each: salt, pepper, herbs de Provence, sugar</li>
+                <li>1 × 400g tin chopped tomatoes</li>
+                <li>70g butter</li>
+                <li>3–4 tbsp flour</li>
+                <li>750ml milk</li>
+                <li>Pinch of nutmeg</li>
+                <li>Lasagne sheets</li>
+                <li>Mozzarella, sliced</li>
+                <li>Grated cheddar</li>
+            </ul>
+        </div>
         <div class="full-recipe">
             <div class="full-label">Full Recipe · Serves 6</div>
             <ol>
@@ -400,13 +438,27 @@
     <article class="recipe">
         <h2 class="recipe-name">Risotto</h2>
         <div class="quick">
-            <div class="quick-label">Memory Jog</div>
+            <div class="quick-label">tldr</div>
             <span class="step-chip">sauté onion garlic</span>
             <span class="step-chip">toast arborio</span>
             <span class="step-chip">add white wine</span>
             <span class="step-chip">ladle warm stock → stir</span>
             <span class="step-chip">18–20min</span>
             <span class="step-chip">finish cold butter + parmesan</span>
+        </div>
+        <div class="ingredients">
+            <div class="full-label">Ingredients · Serves 4</div>
+            <ul>
+                <li>1–1.2L chicken or vegetable stock</li>
+                <li>1 onion, finely diced</li>
+                <li>2 tbsp olive oil</li>
+                <li>2 garlic cloves</li>
+                <li>300g arborio rice</li>
+                <li>1 large glass dry white wine</li>
+                <li>60g cold butter, diced</li>
+                <li>80g parmesan, grated</li>
+                <li>Salt and pepper</li>
+            </ul>
         </div>
         <div class="full-recipe">
             <div class="full-label">Full Recipe · Serves 4</div>
@@ -425,13 +477,23 @@
     <article class="recipe">
         <h2 class="recipe-name">Carbonara</h2>
         <div class="quick">
-            <div class="quick-label">Memory Jog</div>
+            <div class="quick-label">tldr</div>
             <span class="step-chip">fry guanciale</span>
             <span class="step-chip">whisk egg yolks + pecorino + pepper</span>
             <span class="step-chip">cook pasta al dente</span>
             <span class="step-chip">reserve pasta water</span>
             <span class="step-chip">combine off heat</span>
             <span class="step-chip">toss + loosen with water</span>
+        </div>
+        <div class="ingredients">
+            <div class="full-label">Ingredients · Serves 4</div>
+            <ul>
+                <li>150g guanciale (or pancetta)</li>
+                <li>4 egg yolks + 1 whole egg</li>
+                <li>80g pecorino romano, finely grated</li>
+                <li>Black pepper</li>
+                <li>400g spaghetti or rigatoni</li>
+            </ul>
         </div>
         <div class="full-recipe">
             <div class="full-label">Full Recipe · Serves 4 · No cream</div>
@@ -449,13 +511,31 @@
     <article class="recipe">
         <h2 class="recipe-name">Dahl</h2>
         <div class="quick">
-            <div class="quick-label">Memory Jog</div>
+            <div class="quick-label">tldr</div>
             <span class="step-chip">fry onion garlic ginger</span>
             <span class="step-chip">add spices</span>
             <span class="step-chip">add red lentils</span>
             <span class="step-chip">add tinned toms + coconut milk + stock</span>
             <span class="step-chip">simmer 25min</span>
             <span class="step-chip">lemon + coriander</span>
+        </div>
+        <div class="ingredients">
+            <div class="full-label">Ingredients · Serves 4</div>
+            <ul>
+                <li>1 large onion, diced</li>
+                <li>Oil</li>
+                <li>3 garlic cloves</li>
+                <li>1 tbsp fresh ginger, grated</li>
+                <li>1 tsp cumin</li>
+                <li>1 tsp turmeric</li>
+                <li>1 tsp garam masala</li>
+                <li>½ tsp chilli flakes</li>
+                <li>250g red lentils, rinsed</li>
+                <li>1 × 400g tin chopped tomatoes</li>
+                <li>400ml coconut milk</li>
+                <li>300ml vegetable stock</li>
+                <li>Salt, lemon juice, fresh coriander, yoghurt to serve</li>
+            </ul>
         </div>
         <div class="full-recipe">
             <div class="full-label">Full Recipe · Serves 4</div>
@@ -473,37 +553,77 @@
     <article class="recipe">
         <h2 class="recipe-name">Rosiecurry</h2>
         <div class="quick">
-            <div class="quick-label">Memory Jog</div>
-            <span class="step-chip">fry onion garlic ginger</span>
-            <span class="step-chip">add curry paste</span>
-            <span class="step-chip">add chicken</span>
-            <span class="step-chip">add coconut cream + stock</span>
-            <span class="step-chip">simmer 20min</span>
-            <span class="step-chip">fish sauce + lime</span>
+            <div class="quick-label">tldr</div>
+            <span class="step-chip">fry onion + garlic</span>
+            <span class="step-chip">add cumin + chilli</span>
+            <span class="step-chip">add chickpeas + veg</span>
+            <span class="step-chip">add chopped toms + garam masala + turmeric → simmer 20min</span>
+            <span class="step-chip">stir in cream + season</span>
+        </div>
+        <div class="ingredients">
+            <div class="full-label">Ingredients · Serves 4</div>
+            <ul>
+                <li>2 onions, diced</li>
+                <li>Oil</li>
+                <li>4 garlic cloves, minced</li>
+                <li>1 tsp cumin</li>
+                <li>1 tsp chilli (to taste)</li>
+                <li>1 tsp salt</li>
+                <li>2 × 400g tins chickpeas, drained and rinsed</li>
+                <li>Veg of choice (peppers, spinach, courgette)</li>
+                <li>1 × 400g tin chopped tomatoes</li>
+                <li>1 tsp garam masala</li>
+                <li>½ tsp turmeric</li>
+                <li>100ml single cream or coconut cream</li>
+            </ul>
         </div>
         <div class="full-recipe">
             <div class="full-label">Full Recipe · Serves 4</div>
             <ol>
-                <li>Sauté 1 diced onion, 3 garlic cloves, and 1 tbsp grated ginger in oil over medium heat until soft.</li>
-                <li>Add 2–3 tbsp red (or green) curry paste. Stir and fry 2min until fragrant.</li>
-                <li>Add 500g diced chicken thighs. Stir to coat and cook 3–4min until sealed.</li>
-                <li>Pour in 400ml coconut cream and 200ml chicken stock. Add 2 kaffir lime leaves and 1 bruised lemongrass stalk.</li>
-                <li>Simmer 20min. Add peppers or green beans in the last 5min.</li>
-                <li>Season with fish sauce, squeeze of lime, and a pinch of sugar. Serve with jasmine rice and fresh coriander.</li>
+                <li>Sauté 2 diced onions in oil over medium heat until golden, about 8–10min. Add 4 minced garlic cloves, cook 2min.</li>
+                <li>Add 1 tsp cumin, 1 tsp chilli (to taste), and 1 tsp salt. Stir and fry 1min until fragrant.</li>
+                <li>Add 2 × 400g tins of chickpeas (drained and rinsed). Add any other veg you have — peppers, spinach, courgette all work well.</li>
+                <li>Pour in 1 × 400g tin chopped tomatoes. Add 1 tsp garam masala and ½ tsp turmeric. Stir well, bring to a simmer, and cook uncovered for 20min.</li>
+                <li>Stir in 100ml single cream or coconut cream. Taste and season with more salt if needed.</li>
             </ol>
+            <div style="margin-top:14px; padding-top:12px; border-top:1px solid #f0ede8;">
+                <div class="full-label" style="margin-bottom:8px;">Variations</div>
+                <ul style="padding-left:20px;">
+                    <li style="font-size:0.9rem; color:#444; line-height:1.65; margin-bottom:7px;">All amounts are suggestions — this recipe is versatile.</li>
+                    <li style="font-size:0.9rem; color:#444; line-height:1.65; margin-bottom:7px;"><strong>Protein:</strong> any meat works — add in step 3 and cook until sealed before the tomatoes go in. Tofu or paneer work too — fry separately until golden and stir in at the end.</li>
+                    <li style="font-size:0.9rem; color:#444; line-height:1.65; margin-bottom:7px;"><strong>Veg timing:</strong> firm fresh veg (peppers, courgette, cauliflower) — fry with the onion or add before the tomatoes so they soften. Leafy veg (spinach, kale) — stir in at the very end, they just need to wilt. Already roasted veg — also add at the end, they just need warming through.</li>
+                    <li style="font-size:0.9rem; color:#444; line-height:1.65; margin-bottom:7px;"><strong>Chickpeas:</strong> one tin makes a saucier curry, two is more substantial. Red lentils (250g, rinsed) are a good swap and will break down into the sauce.</li>
+                    <li style="font-size:0.9rem; color:#444; line-height:1.65; margin-bottom:7px;"><strong>Spices:</strong> all amounts are vague suggestions.</li>
+                    <li style="font-size:0.9rem; color:#444; line-height:1.65; margin-bottom:7px;"><strong>Cream:</strong> coconut cream gives a richer, slightly sweet sauce; single cream is more neutral. A dollop of yoghurt stirred in off the heat if it's too spicy. Can also skip entirely.</li>
+                    <li style="font-size:0.9rem; color:#444; line-height:1.65; margin-bottom:7px;"><strong>Toppings:</strong> fresh coriander; parsley. Crumbled feta.</li>
+                </ul>
+            </div>
         </div>
     </article>
 
     <article class="recipe">
         <h2 class="recipe-name">Hash</h2>
         <div class="quick">
-            <div class="quick-label">Memory Jog</div>
+            <div class="quick-label">tldr</div>
             <span class="step-chip">parboil potato</span>
             <span class="step-chip">fry onion + pepper</span>
             <span class="step-chip">add chorizo</span>
             <span class="step-chip">add potato → crisp</span>
             <span class="step-chip">make wells → crack eggs</span>
             <span class="step-chip">cover → cook until set</span>
+        </div>
+        <div class="ingredients">
+            <div class="full-label">Ingredients · Serves 2–3</div>
+            <ul>
+                <li>400g potatoes, diced (2cm cubes)</li>
+                <li>Oil</li>
+                <li>1 onion, diced</li>
+                <li>1 red pepper, diced</li>
+                <li>100g chorizo or sausage, sliced</li>
+                <li>3 eggs</li>
+                <li>Salt and pepper</li>
+                <li>Parsley, hot sauce, or sour cream to serve</li>
+            </ul>
         </div>
         <div class="full-recipe">
             <div class="full-label">Full Recipe · Serves 2–3</div>
@@ -522,7 +642,7 @@
     <article class="recipe">
         <h2 class="recipe-name">Oven Gemüse</h2>
         <div class="quick">
-            <div class="quick-label">Memory Jog</div>
+            <div class="quick-label">tldr</div>
             <span class="step-chip">chop veg into chunks</span>
             <span class="step-chip">toss oil + salt + herbs</span>
             <span class="step-chip">spread single layer</span>
@@ -549,6 +669,17 @@
                 </tbody>
             </table>
         </div>
+        <div class="ingredients">
+            <div class="full-label">Ingredients · Serves 3–4</div>
+            <ul>
+                <li>Mixed veg: peppers, zucchini, eggplant, red onion, cherry tomatoes</li>
+                <li>Olive oil</li>
+                <li>Salt, pepper</li>
+                <li>Dried oregano and thyme</li>
+                <li>Whole garlic cloves (unpeeled)</li>
+                <li>Lemon juice or balsamic drizzle to finish</li>
+            </ul>
+        </div>
         <div class="full-recipe">
             <div class="full-label">Full Recipe · Serves 3–4</div>
             <ol>
@@ -565,12 +696,24 @@
     <article class="recipe">
         <h2 class="recipe-name">Wraps</h2>
         <div class="quick">
-            <div class="quick-label">Memory Jog</div>
+            <div class="quick-label">tldr</div>
             <span class="step-chip">season + cook chicken</span>
             <span class="step-chip">rest + slice</span>
             <span class="step-chip">prep fillings</span>
             <span class="step-chip">warm tortillas</span>
             <span class="step-chip">fill + roll</span>
+        </div>
+        <div class="ingredients">
+            <div class="full-label">Ingredients · Serves 4</div>
+            <ul>
+                <li>4 chicken thighs</li>
+                <li>1 tsp each: cumin, smoked paprika, garlic powder, salt, chilli</li>
+                <li>Oil</li>
+                <li>4 large flour tortillas</li>
+                <li>Shredded lettuce, diced tomato, sliced avocado</li>
+                <li>Sour cream, grated cheddar, jalapeños</li>
+                <li>Lime</li>
+            </ul>
         </div>
         <div class="full-recipe">
             <div class="full-label">Full Recipe · Serves 4</div>
@@ -588,7 +731,7 @@
     <article class="recipe">
         <h2 class="recipe-name">Moussaka</h2>
         <div class="quick">
-            <div class="quick-label">Memory Jog</div>
+            <div class="quick-label">tldr</div>
             <span class="step-chip">salt + drain eggplant</span>
             <span class="step-chip">fry eggplant</span>
             <span class="step-chip">brown lamb + onion garlic</span>
@@ -597,6 +740,24 @@
             <span class="step-chip">make béchamel + egg + parmesan</span>
             <span class="step-chip">pour over top</span>
             <span class="step-chip">bake 180°C ~45min</span>
+        </div>
+        <div class="ingredients">
+            <div class="full-label">Ingredients · Serves 4–6</div>
+            <ul>
+                <li>2 large eggplants</li>
+                <li>Olive oil</li>
+                <li>450g ground lamb or beef</li>
+                <li>1 onion, finely chopped</li>
+                <li>2 garlic cloves, minced</li>
+                <li>1 tbsp tomato paste</li>
+                <li>1 tsp cinnamon, 1 tsp allspice</li>
+                <li>Salt and pepper</li>
+                <li>1 × 400g tin diced tomatoes</li>
+                <li>2 tbsp butter, 2 tbsp flour, 500ml milk (béchamel)</li>
+                <li>¼ cup parmesan, grated</li>
+                <li>1 egg, beaten</li>
+                <li>Pinch of nutmeg</li>
+            </ul>
         </div>
         <div class="full-recipe">
             <div class="full-label">Full Recipe · Serves 4–6</div>
@@ -614,7 +775,7 @@
     <article class="recipe">
         <h2 class="recipe-name">Barley Risotto</h2>
         <div class="quick">
-            <div class="quick-label">Memory Jog</div>
+            <div class="quick-label">tldr</div>
             <span class="step-chip">warm beef broth</span>
             <span class="step-chip">sauté shallot + garlic in butter</span>
             <span class="step-chip">fry mushrooms + thyme</span>
@@ -622,6 +783,21 @@
             <span class="step-chip">add wine → absorb</span>
             <span class="step-chip">ladle broth → stir until absorbed → repeat</span>
             <span class="step-chip">finish parmesan</span>
+        </div>
+        <div class="ingredients">
+            <div class="full-label">Ingredients · Serves 6</div>
+            <ul>
+                <li>4 cups (≈950ml) beef broth, low sodium</li>
+                <li>3 tbsp butter</li>
+                <li>1 shallot, minced</li>
+                <li>2 garlic cloves, sliced</li>
+                <li>225g (½ lb) fresh mushrooms</li>
+                <li>¼ tsp fresh thyme</li>
+                <li>1 cup pearl barley</li>
+                <li>½ cup dry white wine</li>
+                <li>¼ cup parmesan, grated</li>
+                <li>Salt and pepper</li>
+            </ul>
         </div>
         <div class="full-recipe">
             <div class="full-label">Full Recipe · Serves 6 · seasonsandsuppers.ca</div>
@@ -639,13 +815,26 @@
     <article class="recipe">
         <h2 class="recipe-name">Spaghetti Bolognaise</h2>
         <div class="quick">
-            <div class="quick-label">Memory Jog</div>
+            <div class="quick-label">tldr</div>
             <span class="step-chip">fry mince in oil</span>
             <span class="step-chip">add onion + garlic</span>
             <span class="step-chip">add salt, pepper, herbs de Provence, sugar</span>
             <span class="step-chip">add tinned toms → simmer 20min</span>
             <span class="step-chip">cook spaghetti</span>
             <span class="step-chip">toss together + parmesan</span>
+        </div>
+        <div class="ingredients">
+            <div class="full-label">Ingredients · Serves 4</div>
+            <ul>
+                <li>500g beef mince</li>
+                <li>2 tbsp olive oil</li>
+                <li>3 onions, diced</li>
+                <li>3 garlic cloves, minced</li>
+                <li>1 tsp each: salt, pepper, herbs de Provence, sugar</li>
+                <li>1 × 400g tin chopped tomatoes</li>
+                <li>400g spaghetti</li>
+                <li>Parmesan to serve</li>
+            </ul>
         </div>
         <div class="full-recipe">
             <div class="full-label">Full Recipe · Serves 4</div>
@@ -663,7 +852,7 @@
     <article class="recipe">
         <h2 class="recipe-name">Chilli Con Carne</h2>
         <div class="quick">
-            <div class="quick-label">Memory Jog</div>
+            <div class="quick-label">tldr</div>
             <span class="step-chip">brown mince</span>
             <span class="step-chip">fry onion garlic</span>
             <span class="step-chip">add cumin, smoked paprika, chilli, oregano</span>
@@ -671,6 +860,24 @@
             <span class="step-chip">add tinned toms + kidney beans + stock</span>
             <span class="step-chip">simmer 30min</span>
             <span class="step-chip">dark chocolate + season</span>
+        </div>
+        <div class="ingredients">
+            <div class="full-label">Ingredients · Serves 4</div>
+            <ul>
+                <li>500g beef mince</li>
+                <li>Oil</li>
+                <li>1 large onion, diced</li>
+                <li>3 garlic cloves, minced</li>
+                <li>1 tsp cumin, 1 tsp smoked paprika, 1–2 tsp chilli powder, 1 tsp dried oregano</li>
+                <li>1 tbsp tomato paste</li>
+                <li>1 × 400g tin chopped tomatoes</li>
+                <li>1 × 400g tin kidney beans, drained</li>
+                <li>200ml beef stock</li>
+                <li>Small square dark chocolate</li>
+                <li>Pinch of cinnamon</li>
+                <li>Salt and pepper</li>
+                <li>Rice, sour cream, cheddar, jalapeños to serve</li>
+            </ul>
         </div>
         <div class="full-recipe">
             <div class="full-label">Full Recipe · Serves 4</div>
@@ -690,12 +897,26 @@
     <article class="recipe">
         <h2 class="recipe-name">Oven Cauliflower</h2>
         <div class="quick">
-            <div class="quick-label">Memory Jog</div>
+            <div class="quick-label">tldr</div>
             <span class="step-chip">boil whole cauli 5–7min</span>
             <span class="step-chip">rub oil + cumin + coriander</span>
             <span class="step-chip">roast 200°C 30–40min</span>
             <span class="step-chip">whisk tahini + yoghurt + lemon + garlic</span>
             <span class="step-chip">pour over</span>
+        </div>
+        <div class="ingredients">
+            <div class="full-label">Ingredients · Serves 2–4</div>
+            <ul>
+                <li>1 whole cauliflower</li>
+                <li>3 tbsp olive oil</li>
+                <li>1 tsp ground cumin, 1 tsp ground coriander</li>
+                <li>Salt and pepper</li>
+                <li>4 tbsp tahini</li>
+                <li>150g Greek yoghurt</li>
+                <li>Juice of 1 lemon</li>
+                <li>1 garlic clove, minced</li>
+                <li>Flat-leaf parsley (optional)</li>
+            </ul>
         </div>
         <div class="full-recipe">
             <div class="full-label">Full Recipe · Serves 2–4 · Ottolenghi</div>
@@ -713,13 +934,27 @@
     <article class="recipe">
         <h2 class="recipe-name">Tom-Feta Pasta</h2>
         <div class="quick">
-            <div class="quick-label">Memory Jog</div>
+            <div class="quick-label">tldr</div>
             <span class="step-chip">place feta + cherry toms in dish</span>
             <span class="step-chip">oil + garlic + herbs</span>
             <span class="step-chip">bake 200°C 30min</span>
             <span class="step-chip">cook pasta</span>
             <span class="step-chip">smash feta + toms</span>
             <span class="step-chip">toss pasta through</span>
+        </div>
+        <div class="ingredients">
+            <div class="full-label">Ingredients · Serves 4</div>
+            <ul>
+                <li>200g block feta</li>
+                <li>500g cherry tomatoes</li>
+                <li>4 garlic cloves, whole</li>
+                <li>Sprigs of thyme or basil</li>
+                <li>Chilli flakes</li>
+                <li>Olive oil</li>
+                <li>Black pepper</li>
+                <li>400g penne or rigatoni</li>
+                <li>Fresh basil to finish</li>
+            </ul>
         </div>
         <div class="full-recipe">
             <div class="full-label">Full Recipe · Serves 4</div>
@@ -743,13 +978,28 @@
     <article class="recipe">
         <h2 class="recipe-name">Finnische Lachssuppe</h2>
         <div class="quick">
-            <div class="quick-label">Memory Jog</div>
+            <div class="quick-label">tldr</div>
             <span class="step-chip">sauté leek + carrot in butter</span>
             <span class="step-chip">add potato + fish stock</span>
             <span class="step-chip">simmer 15min</span>
             <span class="step-chip">add salmon + cream</span>
             <span class="step-chip">cook 3–5min + rest 5min</span>
             <span class="step-chip">dill + lemon</span>
+        </div>
+        <div class="ingredients">
+            <div class="full-label">Ingredients · Serves 4</div>
+            <ul>
+                <li>3 leeks, thinly sliced</li>
+                <li>3 carrots, peeled and sliced</li>
+                <li>400g waxy potatoes, diced</li>
+                <li>500g salmon fillet, cut in chunks</li>
+                <li>Butter or olive oil</li>
+                <li>1.2L fish stock</li>
+                <li>Salt and pepper</li>
+                <li>200ml cream</li>
+                <li>Fresh dill</li>
+                <li>Lemon</li>
+            </ul>
         </div>
         <div class="full-recipe">
             <div class="full-label">Full Recipe · Serves 4 · lacuisinedegeraldine.fr</div>
@@ -766,13 +1016,26 @@
     <article class="recipe">
         <h2 class="recipe-name">Carrot, Zucchini & Parmy</h2>
         <div class="quick">
-            <div class="quick-label">Memory Jog</div>
+            <div class="quick-label">tldr</div>
             <span class="step-chip">sauté onion garlic</span>
             <span class="step-chip">add carrot + zucchini</span>
             <span class="step-chip">add stock</span>
             <span class="step-chip">simmer 20min</span>
             <span class="step-chip">blend smooth</span>
             <span class="step-chip">top parmesan + oil</span>
+        </div>
+        <div class="ingredients">
+            <div class="full-label">Ingredients · Serves 4</div>
+            <ul>
+                <li>1 onion, diced</li>
+                <li>2 garlic cloves</li>
+                <li>Olive oil</li>
+                <li>4 large carrots, peeled and chopped</li>
+                <li>2 large zucchini, chopped</li>
+                <li>800ml vegetable or chicken stock</li>
+                <li>Salt, pepper, pinch of nutmeg</li>
+                <li>Parmesan, shaved, to serve</li>
+            </ul>
         </div>
         <div class="full-recipe">
             <div class="full-label">Full Recipe · Serves 4</div>
@@ -790,12 +1053,28 @@
     <article class="recipe">
         <h2 class="recipe-name">Fennel & Salcicia</h2>
         <div class="quick">
-            <div class="quick-label">Memory Jog</div>
+            <div class="quick-label">tldr</div>
             <span class="step-chip">brown sausage</span>
             <span class="step-chip">sauté fennel + onion + fennel seeds</span>
             <span class="step-chip">add white wine</span>
             <span class="step-chip">add tinned toms + stock</span>
             <span class="step-chip">return sausage → simmer 25min</span>
+        </div>
+        <div class="ingredients">
+            <div class="full-label">Ingredients · Serves 4</div>
+            <ul>
+                <li>400g Italian sausage (salcicia)</li>
+                <li>1 large onion, diced</li>
+                <li>1 large fennel bulb, sliced</li>
+                <li>Olive oil</li>
+                <li>3 garlic cloves</li>
+                <li>1 tsp fennel seeds</li>
+                <li>1 glass white wine</li>
+                <li>1 × 400g tin chopped tomatoes</li>
+                <li>600ml stock</li>
+                <li>Salt and pepper</li>
+                <li>Crusty bread to serve</li>
+            </ul>
         </div>
         <div class="full-recipe">
             <div class="full-label">Full Recipe · Serves 4</div>
@@ -813,13 +1092,30 @@
     <article class="recipe">
         <h2 class="recipe-name">Linsen Eintopf mit Wiener</h2>
         <div class="quick">
-            <div class="quick-label">Memory Jog</div>
+            <div class="quick-label">tldr</div>
             <span class="step-chip">sauté onion carrot celery</span>
             <span class="step-chip">add tomato paste</span>
             <span class="step-chip">add lentils + bay + marjoram + stock</span>
             <span class="step-chip">simmer 30min</span>
             <span class="step-chip">slice in Wiener</span>
             <span class="step-chip">red wine vinegar to finish</span>
+        </div>
+        <div class="ingredients">
+            <div class="full-label">Ingredients · Serves 4</div>
+            <ul>
+                <li>1 onion</li>
+                <li>2 carrots</li>
+                <li>2 celery sticks</li>
+                <li>Oil</li>
+                <li>2 garlic cloves</li>
+                <li>1 tbsp tomato paste</li>
+                <li>200g brown or green lentils, rinsed</li>
+                <li>2 bay leaves</li>
+                <li>1 tsp dried marjoram</li>
+                <li>1L vegetable or meat stock</li>
+                <li>4 Wiener (frankfurter) sausages</li>
+                <li>Salt, pepper, red wine vinegar</li>
+            </ul>
         </div>
         <div class="full-recipe">
             <div class="full-label">Full Recipe · Serves 4</div>
@@ -842,11 +1138,24 @@
     <article class="recipe">
         <h2 class="recipe-name">Linsen Salat</h2>
         <div class="quick">
-            <div class="quick-label">Memory Jog</div>
+            <div class="quick-label">tldr</div>
             <span class="step-chip">cook lentils</span>
             <span class="step-chip">dress warm with mustard vinaigrette</span>
             <span class="step-chip">add red onion + toms</span>
             <span class="step-chip">top parsley</span>
+        </div>
+        <div class="ingredients">
+            <div class="full-label">Ingredients · Serves 4</div>
+            <ul>
+                <li>250g puy or green lentils</li>
+                <li>3 tbsp olive oil</li>
+                <li>1½ tbsp red wine vinegar</li>
+                <li>1 tsp Dijon mustard</li>
+                <li>Salt and pepper</li>
+                <li>½ red onion, finely diced</li>
+                <li>Handful cherry tomatoes, halved</li>
+                <li>Fresh flat-leaf parsley</li>
+            </ul>
         </div>
         <div class="full-recipe">
             <div class="full-label">Full Recipe · Serves 4</div>
@@ -862,11 +1171,26 @@
     <article class="recipe">
         <h2 class="recipe-name">Carrot & Feta</h2>
         <div class="quick">
-            <div class="quick-label">Memory Jog</div>
+            <div class="quick-label">tldr</div>
             <span class="step-chip">grate carrot</span>
             <span class="step-chip">crumble feta</span>
             <span class="step-chip">add mint + parsley</span>
             <span class="step-chip">dress lemon + oil + honey + cumin</span>
+        </div>
+        <div class="ingredients">
+            <div class="full-label">Ingredients · Serves 4</div>
+            <ul>
+                <li>4 large carrots</li>
+                <li>150g feta, crumbled</li>
+                <li>Fresh mint</li>
+                <li>Fresh parsley</li>
+                <li>3 tbsp olive oil</li>
+                <li>Juice of 1 lemon</li>
+                <li>1 tsp honey</li>
+                <li>½ tsp cumin</li>
+                <li>Salt and pepper</li>
+                <li>Toasted pine nuts or pomegranate seeds (optional)</li>
+            </ul>
         </div>
         <div class="full-recipe">
             <div class="full-label">Full Recipe · Serves 4</div>
@@ -882,11 +1206,22 @@
     <article class="recipe">
         <h2 class="recipe-name">Tom-Moz</h2>
         <div class="quick">
-            <div class="quick-label">Memory Jog</div>
+            <div class="quick-label">tldr</div>
             <span class="step-chip">slice toms + moz</span>
             <span class="step-chip">alternate on plate</span>
             <span class="step-chip">tuck basil</span>
             <span class="step-chip">olive oil + flaky salt</span>
+        </div>
+        <div class="ingredients">
+            <div class="full-label">Ingredients · Serves 4</div>
+            <ul>
+                <li>Mixed tomatoes (best quality)</li>
+                <li>250g fresh mozzarella</li>
+                <li>Fresh basil</li>
+                <li>Good olive oil</li>
+                <li>Flaky sea salt, cracked black pepper</li>
+                <li>Balsamic glaze (optional)</li>
+            </ul>
         </div>
         <div class="full-recipe">
             <div class="full-label">Full Recipe · Serves 4</div>
@@ -903,12 +1238,24 @@
     <article class="recipe">
         <h2 class="recipe-name">Celery & Burrata</h2>
         <div class="quick">
-            <div class="quick-label">Memory Jog</div>
+            <div class="quick-label">tldr</div>
             <span class="step-chip">thinly slice celery</span>
             <span class="step-chip">plate burrata</span>
             <span class="step-chip">pile celery on top</span>
             <span class="step-chip">lemon + oil + flaky salt</span>
             <span class="step-chip">optional walnuts + chilli</span>
+        </div>
+        <div class="ingredients">
+            <div class="full-label">Ingredients · Serves 2–4</div>
+            <ul>
+                <li>4–5 celery stalks (with pale inner leaves)</li>
+                <li>2 burrata balls</li>
+                <li>Lemon juice</li>
+                <li>Good olive oil</li>
+                <li>Flaky salt, chilli flakes</li>
+                <li>Toasted walnuts or hazelnuts (optional)</li>
+                <li>Fresh tarragon (optional)</li>
+            </ul>
         </div>
         <div class="full-recipe">
             <div class="full-label">Full Recipe · Serves 2–4</div>
@@ -925,12 +1272,28 @@
     <article class="recipe">
         <h2 class="recipe-name">Bulgur + Tom + Gurke + Feta</h2>
         <div class="quick">
-            <div class="quick-label">Memory Jog</div>
+            <div class="quick-label">tldr</div>
             <span class="step-chip">soak bulgur in boiling water 20min</span>
             <span class="step-chip">dice toms + cucumber + red onion</span>
             <span class="step-chip">crumble feta</span>
             <span class="step-chip">add mint + parsley</span>
             <span class="step-chip">dress lemon + oil</span>
+        </div>
+        <div class="ingredients">
+            <div class="full-label">Ingredients · Serves 4</div>
+            <ul>
+                <li>200g bulgur wheat</li>
+                <li>300ml boiling water or stock</li>
+                <li>3 tomatoes, diced</li>
+                <li>½ cucumber, deseeded and diced</li>
+                <li>½ red onion, finely diced</li>
+                <li>150g feta, crumbled</li>
+                <li>Fresh mint</li>
+                <li>Fresh flat-leaf parsley</li>
+                <li>Juice of 1–2 lemons</li>
+                <li>3–4 tbsp olive oil</li>
+                <li>Salt</li>
+            </ul>
         </div>
         <div class="full-recipe">
             <div class="full-label">Full Recipe · Serves 4</div>
@@ -947,12 +1310,24 @@
     <article class="recipe">
         <h2 class="recipe-name">Peas & Moz</h2>
         <div class="quick">
-            <div class="quick-label">Memory Jog</div>
+            <div class="quick-label">tldr</div>
             <span class="step-chip">blanch peas</span>
             <span class="step-chip">tear mozzarella onto plate</span>
             <span class="step-chip">scatter peas</span>
             <span class="step-chip">mint + lemon zest</span>
             <span class="step-chip">oil + flaky salt</span>
+        </div>
+        <div class="ingredients">
+            <div class="full-label">Ingredients · Serves 4</div>
+            <ul>
+                <li>300g peas (fresh or frozen)</li>
+                <li>250g fresh mozzarella</li>
+                <li>Fresh mint</li>
+                <li>Lemon zest and juice</li>
+                <li>Olive oil</li>
+                <li>Flaky salt and pepper</li>
+                <li>Prosciutto (optional)</li>
+            </ul>
         </div>
         <div class="full-recipe">
             <div class="full-label">Full Recipe · Serves 4</div>
@@ -969,12 +1344,25 @@
     <article class="recipe">
         <h2 class="recipe-name">Beans & Parmy</h2>
         <div class="quick">
-            <div class="quick-label">Memory Jog</div>
+            <div class="quick-label">tldr</div>
             <span class="step-chip">drain + rinse beans</span>
             <span class="step-chip">toss lemon + oil + garlic</span>
             <span class="step-chip">add herbs</span>
             <span class="step-chip">shave parmesan on top</span>
             <span class="step-chip">flaky salt + more oil</span>
+        </div>
+        <div class="ingredients">
+            <div class="full-label">Ingredients · Serves 4</div>
+            <ul>
+                <li>2 × 400g tins cannellini or butter beans</li>
+                <li>4 tbsp good olive oil</li>
+                <li>Juice of 1 lemon</li>
+                <li>2 garlic cloves, finely grated</li>
+                <li>Salt and black pepper</li>
+                <li>Fresh flat-leaf parsley</li>
+                <li>Sage leaves (optional, fried in butter)</li>
+                <li>Parmesan for shaving</li>
+            </ul>
         </div>
         <div class="full-recipe">
             <div class="full-label">Full Recipe · Serves 4</div>
@@ -996,7 +1384,7 @@
     <article class="recipe">
         <h2 class="recipe-name">White Choc Cheesecake</h2>
         <div class="quick">
-            <div class="quick-label">Memory Jog</div>
+            <div class="quick-label">tldr</div>
             <span class="step-chip">crush biscuits + melt butter → press into tin</span>
             <span class="step-chip">melt white choc</span>
             <span class="step-chip">mix cream cheese + crème double + mascarpone</span>
@@ -1004,6 +1392,18 @@
             <span class="step-chip">fold in blueberries</span>
             <span class="step-chip">spread over base</span>
             <span class="step-chip">chill 3hrs+</span>
+        </div>
+        <div class="ingredients">
+            <div class="full-label">Ingredients · 20cm springform tin</div>
+            <ul>
+                <li>200g digestive or whole grain biscuits</li>
+                <li>100g butter, melted</li>
+                <li>400g good-quality white chocolate</li>
+                <li>250g cream cheese</li>
+                <li>250ml crème double</li>
+                <li>250g mascarpone</li>
+                <li>250g blueberries</li>
+            </ul>
         </div>
         <div class="full-recipe">
             <div class="full-label">Full Recipe · 20cm springform tin · zuckerzimtundliebe.de</div>
@@ -1063,6 +1463,8 @@
         const body = document.getElementById('detail-body');
         body.innerHTML = '';
         card.querySelectorAll('.quick').forEach(q => body.appendChild(q.cloneNode(true)));
+        const ingr = card.querySelector('.ingredients');
+        if (ingr) body.appendChild(ingr.cloneNode(true));
         const full = card.querySelector('.full-recipe');
         if (full) body.appendChild(full.cloneNode(true));
 
