@@ -1529,6 +1529,27 @@
     window.addEventListener('popstate', (e) => {
         if (!e.state || e.state.view !== 'detail') showListView();
     });
+
+    function initFromHash() {
+        const hash = window.location.hash;
+        if (!hash) return;
+        const slug = decodeURIComponent(hash.slice(1));
+        for (const card of document.querySelectorAll('.recipe')) {
+            const name = card.querySelector('.recipe-name').textContent;
+            if (name.toLowerCase().replace(/\s+/g, '-') === slug) {
+                const pane = card.closest('.tab-pane');
+                if (pane) {
+                    activeTab = pane.id;
+                    document.querySelectorAll('.tab-btn').forEach(b => b.classList.toggle('active', b.dataset.tab === activeTab));
+                    document.querySelectorAll('.tab-pane').forEach(p => p.classList.toggle('active', p.id === activeTab));
+                }
+                openRecipe(card);
+                break;
+            }
+        }
+    }
+
+    initFromHash();
 </script>
 
 </body>
