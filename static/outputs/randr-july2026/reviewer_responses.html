@@ -1461,7 +1461,7 @@ components of SM Approval individually), <code>proSM</code> (composite
 pro-SM score), <code>SM_approval</code> (an alternative approval
 measure), and platform-use dummies: Twitter, Instagram, Facebook,
 Snapchat, LinkedIn, TikTok. Including all of these would expand the test
-count well beyond 100.</p>
+count to 230 total (115 per wave: 23 covariates × 5 treatments).</p>
 <pre class="r"><code># One felm per covariate × wave, matching the paper&#39;s interaction table.R spec exactly.
 # Results.RDS is already recoded (potentialemployers: 1=anti-SM, 7=pro-SM) — no 8-x applied here.
 
@@ -1565,29 +1565,45 @@ bo_recr = bonf_mat2[recr_rows, ]
 ho_orig = holm_mat2[orig_rows, ]
 ho_recr = holm_mat2[recr_rows, ]
 
-count_sig = function(m) sum(m &lt; 0.05, na.rm=TRUE)
-both_sig  = function(a, b) sum(a &lt; 0.05 &amp; b &lt; 0.05, na.rm=TRUE)
+count_sig  = function(m, thr=0.05) sum(m &lt; thr,  na.rm=TRUE)
+both_sig   = function(a, b, thr=0.05) sum(a &lt; thr &amp; b &lt; thr, na.rm=TRUE)
 
 summary_tab = data.frame(
-  Method = c(&quot;Unadjusted&quot;, &quot;Bonferroni&quot;, &quot;Holm&quot;, &quot;Benjamini-Hochberg (BH)&quot;),
-  `General Public (50 tests)` = c(count_sig(pv_orig), count_sig(bo_orig),
-                                   count_sig(ho_orig), count_sig(bh_orig)),
-  `Recruiters (50 tests)`     = c(count_sig(pv_recr), count_sig(bo_recr),
-                                   count_sig(ho_recr), count_sig(bh_recr)),
-  `Significant in both waves` = c(both_sig(pv_orig, pv_recr), both_sig(bo_orig, bo_recr),
-                                   both_sig(ho_orig, ho_recr), both_sig(bh_orig, bh_recr)),
+  Method = c(
+    &quot;Unadjusted p&lt;0.1  (matches original table stars)&quot;,
+    &quot;Unadjusted p&lt;0.05&quot;,
+    &quot;Bonferroni p&lt;0.05&quot;,
+    &quot;Holm p&lt;0.05&quot;,
+    &quot;Benjamini-Hochberg (BH) p&lt;0.05&quot;
+  ),
+  `General Public (50 tests)` = c(
+    count_sig(pv_orig, 0.1),  count_sig(pv_orig),
+    count_sig(bo_orig),       count_sig(ho_orig), count_sig(bh_orig)
+  ),
+  `Recruiters (50 tests)` = c(
+    count_sig(pv_recr, 0.1),  count_sig(pv_recr),
+    count_sig(bo_recr),       count_sig(ho_recr), count_sig(bh_recr)
+  ),
+  `Significant in both waves` = c(
+    both_sig(pv_orig, pv_recr, 0.1), both_sig(pv_orig, pv_recr),
+    both_sig(bo_orig, bo_recr),      both_sig(ho_orig, ho_recr), both_sig(bh_orig, bh_recr)
+  ),
   check.names = FALSE
 )
 
 kable(summary_tab,
-      caption = paste0(&quot;Number of significant interaction terms (p &lt; 0.05) by correction method. &quot;,
-        &quot;10 covariates × 5 treatments = 50 tests per wave, corrected independently. &quot;,
-        &quot;&#39;Significant in both waves&#39; = same covariate × treatment cell passes in both samples.&quot;)) %&gt;%
+      caption = paste0(&quot;Number of significant interaction terms by threshold and correction method. &quot;,
+        &quot;50 tests per wave (10 covariates × 5 treatments), corrected independently per wave. &quot;,
+        &quot;The p&lt;0.1 unadjusted row matches the star count visible in the original Table 2. &quot;,
+        &quot;&#39;Significant in both waves&#39; = same cell passes in both samples.&quot;)) %&gt;%
   kable_styling(bootstrap_options=c(&quot;striped&quot;,&quot;hover&quot;,&quot;condensed&quot;)) %&gt;%
-  row_spec(4, bold=TRUE)</code></pre>
+  row_spec(1, italic=TRUE) %&gt;%
+  row_spec(5, bold=TRUE)</code></pre>
 <table class="table table-striped table-hover table-condensed" style="margin-left: auto; margin-right: auto;">
 <caption>
-Number of significant interaction terms (p
+Number of significant interaction terms by threshold and correction
+method. 50 tests per wave (10 covariates × 5 treatments), corrected
+independently per wave. The p
 </caption>
 <thead>
 <tr>
@@ -1607,8 +1623,22 @@ Significant in both waves
 </thead>
 <tbody>
 <tr>
+<td style="text-align:left;font-style: italic;">
+Unadjusted p&lt;0.1 (matches original table stars)
+</td>
+<td style="text-align:right;font-style: italic;">
+16
+</td>
+<td style="text-align:right;font-style: italic;">
+20
+</td>
+<td style="text-align:right;font-style: italic;">
+13
+</td>
+</tr>
+<tr>
 <td style="text-align:left;">
-Unadjusted
+Unadjusted p&lt;0.05
 </td>
 <td style="text-align:right;">
 10
@@ -1622,7 +1652,7 @@ Unadjusted
 </tr>
 <tr>
 <td style="text-align:left;">
-Bonferroni
+Bonferroni p&lt;0.05
 </td>
 <td style="text-align:right;">
 4
@@ -1636,7 +1666,7 @@ Bonferroni
 </tr>
 <tr>
 <td style="text-align:left;">
-Holm
+Holm p&lt;0.05
 </td>
 <td style="text-align:right;">
 4
@@ -1650,7 +1680,7 @@ Holm
 </tr>
 <tr>
 <td style="text-align:left;font-weight: bold;">
-Benjamini-Hochberg (BH)
+Benjamini-Hochberg (BH) p&lt;0.05
 </td>
 <td style="text-align:right;font-weight: bold;">
 6
@@ -1745,11 +1775,10 @@ exists.</em></p>
 whether they appeared to believe they were participating in a scientific
 experiment or a genuine hiring task. Three categories:</p>
 <ul>
-<li><strong>“experiment”</strong> — evaluator signals awareness
-(e.g. <em>“Very interesting study”</em>, <em>“I notice this is testing
-reactions to social media”</em>)</li>
-<li><strong>“real”</strong> — evaluator treats it as a real task
-(e.g. <em>“I scored candidates as I would in my actual job”</em>)</li>
+<li><strong>“experiment”</strong> — evaluator signals awareness of the
+study</li>
+<li><strong>“real”</strong> — evaluator treats it as a genuine hiring
+task</li>
 <li><strong>“unclear”</strong> — no strong signal either way (the large
 majority)</li>
 </ul>
