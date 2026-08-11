@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>UK Election MRP — Bayesian Multilevel Modelling</title>
+<title>Mapping British Politics: Bayesian MRP on the BES Panel</title>
 <style>
   * { box-sizing: border-box; }
   body {
@@ -15,8 +15,9 @@
     line-height: 1.7;
   }
   a { color: #1C4844; }
-  h1 { color: #1C4844; font-size: 1.8em; margin-bottom: 4px; }
-  h2 { color: #1C4844; font-size: 1.2em; margin-top: 40px; border-bottom: 2px solid #c8d8d7; padding-bottom: 6px; }
+  h1 { color: #1C4844; font-size: 1.75em; margin-bottom: 4px; line-height: 1.3; }
+  h2 { color: #1C4844; font-size: 1.15em; margin-top: 40px; border-bottom: 2px solid #c8d8d7; padding-bottom: 6px; }
+  h3 { color: #1C4844; font-size: 1em; margin-top: 24px; margin-bottom: 6px; }
   .meta { color: #888; font-size: 0.88em; margin-bottom: 28px; }
   .tag {
     display: inline-block;
@@ -26,6 +27,7 @@
     padding: 2px 10px;
     font-size: 0.8em;
     margin-right: 6px;
+    margin-bottom: 4px;
   }
   .status-badge {
     display: inline-block;
@@ -53,24 +55,24 @@
   .btn-primary:hover { background: #155540; }
   .btn-secondary { background: #e8f4f2; color: #1C4844; border: 1px solid #c8d8d7; }
   .btn-secondary:hover { background: #d4eceb; }
-  .figure-row {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 20px;
-    margin: 28px 0;
-  }
-  @media (max-width: 600px) { .figure-row { grid-template-columns: 1fr; } }
+  .figure-block { margin: 28px 0; }
   .figure-block img {
     width: 100%;
     border: 1px solid #c8d8d7;
     border-radius: 6px;
   }
   .figure-block figcaption {
-    font-size: 0.8em;
+    font-size: 0.82em;
     color: #666;
-    margin-top: 6px;
-    text-align: center;
+    margin-top: 8px;
   }
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    margin: 28px 0;
+  }
+  @media (max-width: 600px) { .two-col { grid-template-columns: 1fr; } }
   .explainer {
     background: #f5faf9;
     border-left: 3px solid #1C4844;
@@ -79,8 +81,21 @@
     margin: 24px 0;
     font-size: 0.92em;
   }
-  .findings-list { padding-left: 20px; }
-  .findings-list li { margin-bottom: 8px; }
+  .metric-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin: 16px 0;
+  }
+  .metric {
+    background: #f5faf9;
+    border: 1px solid #c8d8d7;
+    border-radius: 6px;
+    padding: 10px 16px;
+    font-size: 0.88em;
+    flex: 1 1 180px;
+  }
+  .metric strong { display: block; font-size: 1.2em; color: #1C4844; }
   table { border-collapse: collapse; width: 100%; font-size: 0.88em; margin: 20px 0; }
   th { background: #1C4844; color: white; padding: 8px 12px; text-align: left; }
   td { padding: 8px 12px; border-bottom: 1px solid #e0e8e8; }
@@ -94,92 +109,143 @@
     color: #5a3e00;
     margin: 32px 0 0;
   }
+  .party-con  { color: #0087DC; font-weight: 600; }
+  .party-lab  { color: #E4003B; font-weight: 600; }
+  .party-ld   { color: #FAA61A; font-weight: 600; }
+  .party-ref  { color: #12B6CF; font-weight: 600; }
+  .party-grn  { color: #02A95B; font-weight: 600; }
 </style>
 </head>
 <body>
 
 <p style="margin-bottom:24px"><a href="/">&larr; Back to home</a></p>
 
-<h1>Predicting Labour's 2024 Performance with Bayesian MRP</h1>
+<h1>Mapping British Politics: Bayesian MRP on the British Election Study</h1>
 <p class="meta">
   <span class="tag">Bayesian inference</span>
+  <span class="tag">MRP</span>
   <span class="tag">R / brms</span>
   <span class="tag">Python / bambi</span>
+  <span class="tag">BES panel</span>
   <span class="tag">UK politics</span>
-  &nbsp; <span class="status-badge">Work in progress</span>
+  &nbsp;<span class="status-badge">Work in progress</span>
 </p>
 
 <p>
-  Multilevel regression with post-stratification (MRP) is the technique behind YouGov's seat-level polling — used to call the 2019 and 2024 elections more accurately than conventional polling. This project applies MRP to the British Election Study (BES) panel to estimate Labour vote share at constituency level across all 575 England &amp; Wales constituencies, and validates those estimates against the actual 2024 General Election results.
+  A decade of British political opinion — 30 waves of the British Election Study panel, covering five general elections and the Brexit referendum — run through Bayesian multilevel models to produce constituency-level estimates of vote share for every major party across all 575 England &amp; Wales seats. This is an ongoing analysis project; what follows is an introduction to the methodology, the data, and what the models have found so far.
 </p>
 
 <div class="cta-row">
   <a class="btn btn-primary" href="https://bakered.github.io/uk-election-bayesian-multilevel-modelling/" target="_blank">→ Explore constituency profiles</a>
-  <a class="btn btn-secondary" href="https://github.com/bakered/uk-election-bayesian-multilevel-modelling" target="_blank">View code on GitHub</a>
+  <a class="btn btn-secondary" href="https://github.com/bakered/uk-election-bayesian-multilevel-modelling" target="_blank">Code on GitHub</a>
 </div>
 
 <h2>What is MRP?</h2>
 
 <div class="explainer">
-  <strong>The core idea:</strong> fit a multilevel model to a national survey that learns how vote intention varies by demographics (age, education, past vote, etc.). Then use census data to describe the demographic composition of each constituency. Combine the two to produce a constituency-level prediction — essentially re-weighting the survey to match each local area.
+  <strong>Multilevel regression with post-stratification</strong> — the technique behind YouGov's seat-by-seat polling. Fit a multilevel model to a national survey, learning how vote intention varies by demographics. Then use census data to describe who actually lives in each constituency. Combine the two to estimate local vote shares from a single national survey — without running a separate poll in every seat.
 </div>
 
 <p>
-  Standard constituency polls cost £10,000–£20,000 each and would take millions to cover all 650 seats. MRP does it from a single national survey of ~10,000–30,000 respondents. The multilevel structure is crucial: it borrows strength across constituencies, so that even seats with few survey respondents get sensible estimates.
+  The multilevel structure is the key ingredient. A standard regression would either pool all constituencies together (losing local variation) or fit each seat separately (too few respondents per seat to get reliable estimates). Multilevel modelling sits between those extremes: constituency-level estimates are partially pooled towards a national baseline, with the degree of pooling determined by how much local information the data contain. Seats with more respondents get estimates closer to their raw data; sparse seats are pulled toward the national pattern. This is the <em>shrinkage</em> that makes MRP work.
 </p>
 
-<h2>Data</h2>
+<h2>Data: the British Election Study panel</h2>
 
-<table>
-  <tr><th>Source</th><th>Detail</th></tr>
-  <tr><td>British Election Study panel</td><td>Waves 1–30, ~30,000 respondents, 2014–2024</td></tr>
-  <tr><td>2011 Census (ONS)</td><td>Constituency-level demographic margins for post-stratification</td></tr>
-  <tr><td>2021 Census (ONS)</td><td>Updated margins for more recent waves</td></tr>
-  <tr><td>Electoral Commission</td><td>Actual 2024 GE results for validation</td></tr>
-</table>
+<p>
+  The BES panel has tracked the same cohort of ~30,000 respondents across 30 waves from February 2014 to May 2025 — covering the 2015, 2017, 2019, and 2024 general elections, the 2016 Brexit referendum, and the intervening years of political turbulence. Each wave asks about current vote intention; post-election waves capture actual vote. The panel structure means we can track how individual voters move between parties over time, not just how the aggregate shifts.
+</p>
+
+<div class="metric-row">
+  <div class="metric"><strong>30</strong> BES panel waves (Feb 2014 – May 2025)</div>
+  <div class="metric"><strong>~30,000</strong> respondents per wave</div>
+  <div class="metric"><strong>575</strong> England &amp; Wales constituencies (PCON24)</div>
+  <div class="metric"><strong>4</strong> general elections modelled (GE2015–2024)</div>
+</div>
+
+<p>
+  Post-stratification uses joint census marginals: age band × education × tenure × sex, giving a 150-cell demographic frame for each constituency. This means the model's predictions are anchored to who actually lives in each seat, not just who happens to respond to the survey.
+</p>
 
 <h2>Models</h2>
 
+<h3>Binary models (early work)</h3>
 <p>
-  Two implementations for comparison — both Bayesian, both producing posterior distributions over constituency vote shares:
+  The project started with binary Labour vote share models in both <strong>brms</strong> (R, via Stan) and <strong>bambi</strong> (Python, via PyMC). These two implementations produce near-identical posterior means but differ in sampling efficiency — a useful sanity check on the methodology. Multiple formula versions were iterated (v2–v7) adding covariates progressively: constituency past vote share, Brexit Leave %, deprivation, sex, and various interaction terms.
 </p>
 
-<ul class="findings-list">
-  <li><strong>brms (R)</strong> — Bayesian multilevel models via Stan; random effects for constituency, region, age group, and education</li>
-  <li><strong>bambi (Python)</strong> — equivalent model in Python using the bambi formula interface, also backed by Stan/PyMC</li>
-</ul>
+<h3>Multinomial model (current focus)</h3>
+<p>
+  The current model is a <strong>7-party Dirichlet-multinomial MRP</strong> in brms, estimating vote shares simultaneously for <span class="party-lab">Labour</span>, <span class="party-con">Conservative</span>, <span class="party-ld">Liberal Democrat</span>, <span class="party-ref">Reform</span>, <span class="party-grn">Green</span>, Other, and Abstain. Different predictors enter the model for different parties — Brexit Leave share is a strong predictor for Conservative, Reform, and Abstain but not Labour; education gradients are steepest for Conservative and Green.
+</p>
 
-<h2>Key results</h2>
-
-<div class="figure-row">
-  <figure class="figure-block">
-    <img src="mrp_validation_brms.png" alt="MRP predictions vs actual Labour vote share">
-    <figcaption>Predicted vs actual Labour vote share — brms model, 2024 GE. Each point is one constituency.</figcaption>
-  </figure>
-  <figure class="figure-block">
-    <img src="swing_distributions.png" alt="Swing distributions across constituencies">
-    <figcaption>Distribution of predicted vote swing by region.</figcaption>
+<div class="figure-block">
+  <figure>
+    <img src="mrp_validation_multi.png" alt="7-party multinomial MRP: predicted vs actual vote share by party">
+    <figcaption>Predicted vs actual 2024 GE vote share for all seven parties, 575 constituencies. Each point is one seat. The model captures the broad national pattern but undershoots in the tails — very high Reform seats and very strong Labour-holding marginals both present challenges.</figcaption>
   </figure>
 </div>
 
-<ul class="findings-list">
-  <li>RMSE ~8 percentage points across all 575 constituencies — in line with published academic MRP benchmarks at this level of model complexity</li>
-  <li>brms and bambi produce near-identical posterior means; differences lie in sampling efficiency</li>
-  <li>The model captures the broad geography of the Labour landslide but undershoots in strongly Conservative-to-Labour swing seats</li>
-</ul>
+<div class="metric-row">
+  <div class="metric"><span class="party-lab">Labour</span><strong>7.8 pp RMSE</strong></div>
+  <div class="metric"><span class="party-con">Conservative</span><strong>7.6 pp RMSE</strong></div>
+  <div class="metric"><span class="party-ld">Lib Dem</span><strong>5.0 pp RMSE</strong></div>
+  <div class="metric"><span class="party-ref">Reform</span><strong>4.1 pp RMSE</strong></div>
+  <div class="metric"><span class="party-grn">Green</span><strong>3.8 pp RMSE</strong></div>
+</div>
+
+<p>
+  These figures are broadly in line with published academic MRP benchmarks at this level of model complexity, and substantially better than uniform-swing national polls for individual seat prediction. Labour and Conservative errors are higher because their vote shares have the widest variance across seats.
+</p>
+
+<h3>Brexit referendum MRP</h3>
+<p>
+  A separate binary MRP estimates constituency-level Leave/Remain vote share from BES wave 8 (fielded shortly after the referendum). Validated against the Hanretty (2017) estimates: <em>r</em> = 0.986, RMSE 3.4 pp. One finding that stands out: social renters were the most strongly Leave demographic yet have remained among the most Labour-loyal — the "Brexitland paradox" that confounds simple Brexit-realignment narratives. Deindustrialised Labour-Leave seats are systematically underpredicted by demographics alone, suggesting persistent place-based identity effects.
+</p>
+
+<h2>The Brexit–Reform pipeline</h2>
+
+<p>
+  The BES panel makes it possible to track the same voters over a decade. Among those who voted Leave in 2016, Reform UK's share of vote intention was ~5% in waves 20–21 (2022) and has risen to ~40% by wave 26+ (2024–25). The constituency-level correlation between Leave share (Hanretty estimates) and Reform vote share rises from near zero in early waves to <em>r</em> = 0.92 by the most recent wave — one of the sharpest political geographic realignments in recent British history. Among Leave voters, the shift to Reform is concentrated in older, lower-education, social-rent demographics; within that group it is almost universal.
+</p>
+
+<div class="figure-block">
+  <figure>
+    <img src="swing_distributions.png" alt="Vote swing distributions across constituencies">
+    <figcaption>Distribution of predicted vote swing by party and region. The variation across constituencies — not just the national average — is what MRP is built to capture.</figcaption>
+  </figure>
+</div>
+
+<h2>Party switching (2019→2024)</h2>
+
+<p>
+  The panel transition matrix shows where votes actually went between elections. Selected flows:
+</p>
+<table>
+  <tr><th>Flow</th><th>Share of 2019 voters</th></tr>
+  <tr><td><span class="party-con">Conservative</span> → <span class="party-ref">Reform</span></td><td>26.2%</td></tr>
+  <tr><td><span class="party-lab">Labour</span> → <span class="party-grn">Green</span></td><td>9.6%</td></tr>
+  <tr><td><span class="party-lab">Labour</span> → <span class="party-ld">Lib Dem</span></td><td>8.0%</td></tr>
+</table>
+<p>
+  The multi-election alluvial (2015→2017→2019→2024) tracks the same 3,908 respondents present across all four elections — illustrating the cumulative churn behind a landslide that looks decisive at the national level but masks substantial cross-cutting movement.
+</p>
 
 <h2>Output pages</h2>
 
 <table>
   <tr><th>Page</th><th>What it shows</th></tr>
-  <tr><td><a href="https://bakered.github.io/uk-election-bayesian-multilevel-modelling/" target="_blank">Constituency profiles</a></td><td>Interactive hex map of England &amp; Wales; click any seat for MRP predictions vs actual results across all BES waves</td></tr>
-  <tr><td><a href="https://bakered.github.io/uk-election-bayesian-multilevel-modelling/model_comparison.html" target="_blank">Model comparison</a></td><td>brms vs bambi performance across metrics and waves</td></tr>
-  <tr><td><a href="https://bakered.github.io/uk-election-bayesian-multilevel-modelling/edas/how_mrp_works.html" target="_blank">How MRP works</a></td><td>Visual explainer of the post-stratification mechanics</td></tr>
-  <tr><td><a href="https://bakered.github.io/uk-election-bayesian-multilevel-modelling/edas/swing_deep_dive.html" target="_blank">Swing deep dive</a></td><td>Constituency-level swing analysis across demographics</td></tr>
+  <tr><td><a href="https://bakered.github.io/uk-election-bayesian-multilevel-modelling/" target="_blank">Constituency profiles</a></td><td>Interactive hex map; click any seat for MRP vote share predictions vs actual GE results across all 30 BES waves</td></tr>
+  <tr><td><a href="https://bakered.github.io/uk-election-bayesian-multilevel-modelling/edas/how_mrp_works.html" target="_blank">How MRP works</a></td><td>Visual explainer of the post-stratification mechanics with worked examples</td></tr>
+  <tr><td><a href="https://bakered.github.io/uk-election-bayesian-multilevel-modelling/edas/abstention_eda.html" target="_blank">Abstention analysis</a></td><td>Who doesn't vote? How has non-turnout changed across waves and demographics?</td></tr>
+  <tr><td><a href="https://bakered.github.io/uk-election-bayesian-multilevel-modelling/edas/party_switching_sankey.html" target="_blank">Party switching</a></td><td>Sankey flows and multi-election alluvial of voter transitions 2015–2024</td></tr>
+  <tr><td><a href="https://bakered.github.io/uk-election-bayesian-multilevel-modelling/edas/10_brexit_eda.html" target="_blank">Brexit EDA</a></td><td>Brexit vote by demographic; Brexit → 2024 party; Leave% vs Reform share trajectory W1–W30</td></tr>
+  <tr><td><a href="https://bakered.github.io/uk-election-bayesian-multilevel-modelling/edas/prospective_vs_retrospective_eda.html" target="_blank">Prospective vs retrospective</a></td><td>Does asking about past vote or current intention produce better MRP predictions?</td></tr>
+  <tr><td><a href="https://bakered.github.io/uk-election-bayesian-multilevel-modelling/edas/shrinkage_eda.html" target="_blank">Shrinkage EDA</a></td><td>How the multilevel pooling affects constituency estimates — which seats shrink most and why</td></tr>
 </table>
 
 <div class="wip-box">
-  <strong>Still in progress:</strong> this model uses age, education, and past vote as predictors. Next steps are adding deprivation indices, housing tenure, and geographic variables, and fitting a multinomial model to handle multi-party vote shares simultaneously (Labour, Conservative, Reform, Lib Dem, Green). The constituency profiles page will update as the model improves.
+  <strong>Still in progress.</strong> Next steps: additional constituency covariates (deprivation, housing tenure, rurality), refinement of the multinomial model formula, and a wave-by-wave trajectory analysis showing how each party's predicted strength has evolved seat-by-seat across the decade.
 </div>
 
 </body>
