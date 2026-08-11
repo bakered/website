@@ -58,6 +58,27 @@ a:hover {
   color: #a7754d !important;
 }
 
+// Tech stack badges on project cards
+.project-stack {
+  margin-top: 0.75rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+}
+
+.stack-badge {
+  display: inline-block;
+  padding: 0.2rem 0.55rem;
+  font-size: 0.7rem;
+  font-weight: 500;
+  border-radius: 4px;
+  background-color: rgba(28, 72, 68, 0.07);
+  color: #1C4844;
+  border: 1px solid rgba(28, 72, 68, 0.2);
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+}
+
 // Subtle bottom border separates dark navbar from content
 // To revert: remove this block (minimal default has no border)
 .navbar {

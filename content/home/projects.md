@@ -10,7 +10,7 @@ headless: true
 # Order that this section appears on the page.
 weight: 20
 
-title: Projects
+title: Apps & Projects
 subtitle: ''
 
 content:
@@ -20,16 +20,13 @@ content:
   # Default filter index (e.g. 0 corresponds to the first `filter_button` instance below).
   filter_default: 0
 
-  # Filter toolbar (optional).
-  # Add or remove as many filters (`filter_button` instances) as you like.
-  # To show all items, set `tag` to "*".
-  # To filter by a specific tag, set `tag` to an existing tag name.
-  # To remove the toolbar, delete the entire `filter_button` block.
   filter_button:
   - name: All
     tag: '*'
-  - name: Other
-    tag: Demo
+  - name: Live Apps
+    tag: live-app
+  - name: Data Viz
+    tag: data-viz
 
 design:
   # Choose how many columns the section has. Valid values: '1' or '2'.

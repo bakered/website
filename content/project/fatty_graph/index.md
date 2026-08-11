@@ -1,16 +1,10 @@
-
 ---
-summary: Tracker 2.0
-title: Tracker 2.0
-url_code: ""
-url_pdf: ""
-url_slides: ""
-url_video: ""
+title: "Tracker 2.0"
+summary: "Personal health and fitness tracking dashboard with interactive charts — log metrics over time and visualise trends with a live Shiny app."
+external_link: "https://bakered91.shinyapps.io/fatty_graph/"
+tags:
+  - data-viz
+stack:
+  - R Shiny
+  - ggplot2
 ---
-
-
-<iframe src="https://bakered91.shinyapps.io/fatty_graph/" 
-        width="100%" 
-        height="600" 
-        frameborder="0">
-</iframe>
