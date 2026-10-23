@@ -250,7 +250,8 @@
             color: #d4813a;
         }
 
-        /* stodge badge on card */
+        /* stodge badge(s) on card */
+        .stodge-badges { margin: 6px 16px 0; display: flex; gap: 6px; flex-wrap: wrap; }
         .stodge-badge {
             display: inline-block;
             font-size: 0.62rem;
@@ -259,7 +260,6 @@
             letter-spacing: 0.6px;
             padding: 2px 9px;
             border-radius: 10px;
-            margin: 6px 16px 0;
             cursor: pointer;
         }
         .stodge-badge[data-stodge="pasta"]   { background: #fde8d8; color: #b8601c; }
@@ -1541,24 +1541,29 @@
         'Dahl': 'fancy', 'Rosiecurry': 'rice', 'Hash': 'potato',
         'Oven Gemüse': 'potato', 'Oven Cauliflower': 'fancy', 'Wraps': 'fancy', 'Moussaka': 'fancy',
         'Barley Risotto': 'fancy', 'Spaghetti Bolognaise': 'pasta',
-        'Chilli Con Carne': 'rice', 'Tom Feta Pasta': 'pasta', 'Fish Pie': 'fish',
+        'Chilli Con Carne': 'rice', 'Tom-Feta Pasta': 'pasta', 'Fish Pie': ['fish', 'potato'],
     };
 
     document.querySelectorAll('#meals .recipe').forEach(card => {
         const recipeName = card.querySelector('.recipe-name').textContent.trim();
-        const stodge = stodgeMap[recipeName];
-        if (!stodge) return;
-        card.dataset.stodge = stodge;
+        const tags = [].concat(stodgeMap[recipeName] || []);
+        if (!tags.length) return;
+        card.dataset.stodge = tags.join(' ');
 
-        const badge = document.createElement('span');
-        badge.className = 'stodge-badge';
-        badge.dataset.stodge = stodge;
-        badge.textContent = stodge;
-        badge.addEventListener('click', e => {
-            e.stopPropagation();
-            setFilter(stodge);
+        const badges = document.createElement('div');
+        badges.className = 'stodge-badges';
+        tags.forEach(stodge => {
+            const badge = document.createElement('span');
+            badge.className = 'stodge-badge';
+            badge.dataset.stodge = stodge;
+            badge.textContent = stodge;
+            badge.addEventListener('click', e => {
+                e.stopPropagation();
+                setFilter(stodge);
+            });
+            badges.appendChild(badge);
         });
-        card.querySelector('.recipe-name').after(badge);
+        card.querySelector('.recipe-name').after(badges);
     });
 
     function setFilter(filter) {
@@ -1566,7 +1571,8 @@
             b.classList.toggle('active', b.dataset.filter === filter);
         });
         document.querySelectorAll('#meals .recipe').forEach(card => {
-            card.classList.toggle('filtered-out', filter !== 'all' && card.dataset.stodge !== filter);
+            const tags = (card.dataset.stodge || '').split(' ');
+            card.classList.toggle('filtered-out', filter !== 'all' && !tags.includes(filter));
         });
     }
 
